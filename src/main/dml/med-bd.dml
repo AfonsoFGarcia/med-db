@@ -1,6 +1,6 @@
 package pt.ist.sirs.domain;
 
-enum pt.ist.sirs.domain.ObjectType as ObjectType;
+enum pt.ist.sirs.domain.enums.ObjectType as ObjectType;
 
 class MedDBRoot {
   	Integer objectId;
