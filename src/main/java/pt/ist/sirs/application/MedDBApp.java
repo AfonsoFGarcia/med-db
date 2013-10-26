@@ -9,10 +9,10 @@ public class MedDBApp {
 
     public static void main(String[] args) {
         Bootstrap.init();
-        initMedBDRoot();
+        initMedDBRoot();
     }
 
-    private static void initMedBDRoot() {
+    private static void initMedDBRoot() {
         Transaction.begin();
         MedDBRoot app = (MedDBRoot) FenixFramework.getRoot();
         if (app.getObjectId() < 1) {
