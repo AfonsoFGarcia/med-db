@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>pt.ist.sirs</groupId>
+  <artifactId>med-bd</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <name>med-bd</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <dml.maven.plugin.version>1.0.0</dml.maven.plugin.version>
+    <fenix.framework.version>1.0.0</fenix.framework.version>
+    <skipTests>true</skipTests>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>dml</groupId>
+        <artifactId>dml-maven-plugin</artifactId>
+        <version>${dml.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-domain</goal>
+              <goal>post-compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    
+    
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>sql-maven-plugin</artifactId>
+        <version>1.5</version>
+        <dependencies>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.9</version>
+            </dependency>
+        </dependencies>
+        <configuration>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <url>jdbc:mysql://localhost:3306</url>
+            <username>med-db</username>
+            <password>med-db-pass</password>
+        </configuration>
+        <executions>
+            <execution>
+                <id>create-db</id>
+                <phase>compile</phase>
+                <goals>
+                    <goal>execute</goal>
+                </goals>
+                <configuration>
+                    <autocommit>true</autocommit>
+                    <sqlCommand>CREATE DATABASE IF NOT EXISTS `med-db`</sqlCommand>
+                </configuration>
+            </execution>
+            <execution>
+                <id>default-cli</id>
+                <configuration>
+                    <autocommit>true</autocommit>
+                    <fileset>
+                        <basedir>${basedir}/src/main/resources</basedir>
+                        <includes>
+                            <include>command-line.sql</include>
+                        </includes>
+                    </fileset>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+	  <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>pt.ist</groupId>
+      <artifactId>fenix-framework-core</artifactId>
+      <version>${fenix.framework.version}</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>fenix-ashes-maven-repository</id>
+      <url>https://fenix-ashes.ist.utl.pt/nexus/content/repositories/fenix-ashes-maven-repository</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>fenix-ashes-maven-repository</id>
+      <url>https://fenix-ashes.ist.utl.pt/nexus/content/repositories/fenix-ashes-maven-repository</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+</project>

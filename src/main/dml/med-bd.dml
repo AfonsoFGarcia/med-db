@@ -1,0 +1,17 @@
+package pt.ist.sirs.domain;
+
+enum pt.ist.sirs.domain.ObjectType as ObjectType;
+
+class MedDBRoot {
+  	Integer objectId;
+}
+
+class MedDBCommon {
+	ObjectType type;
+	Integer objectId;
+}
+
+relation Root {
+	MedDBRoot playsRole root { multiplicity 1; }
+	MedDBCommon playsRole object { multiplicity *; }
+}
