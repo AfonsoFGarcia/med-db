@@ -1,2 +1,40 @@
-med-db
+SIRS 2013/14 - Medical Database Records - 28
 ======
+
+O projecto tem como objectivo a criação de um sistema electrónico de armazenamento de registos médicos com base nos seguintes princípios:
+
+- Criação/estruturação de uma base de dados médica;
+- Definição de politicas de acesso com base em autenticação;
+- Garantia de Confidencialidade e Integridade da informação;
+- Definição de políticas de acesso aos registos com base em roles personalizáveis/dinâmicos;
+
+O Med-DB usa a Fénix Framework como abstracção entre o mundo relacional e o mundo dos objectos.
+
+Começo Rápido
+-----
+
+Ciclo rápido: `mvn clean dml:generate-domain package exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
+
+Compilar domínio: `mvn dml:generate-domain` (apenas é necessário depois de alterar a dml)
+
+Compilar projecto: `mvn package`
+
+Correr projecto: `mvn exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
+
+Limpar base de dados: `mvn sql:execute`
+
+Software Necessário
+-----
+
+Maven 3.0.5 - http://maven.apache.org/download.cgi
+
+Java 7 SDK - http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+
+MySQL 5 - http://dev.mysql.com/downloads/mysql/
+
+Software Recomendado
+-----
+
+Eclipse Kepler - http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/keplersr1
+
+MySQL Workbench - http://dev.mysql.com/downloads/tools/workbench/
