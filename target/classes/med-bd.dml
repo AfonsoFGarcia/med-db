@@ -1,5 +1,0 @@
-package pt.ist.sirs.domain;
-
-class MedBDRoot {
-  	Integer objectId;
-}
