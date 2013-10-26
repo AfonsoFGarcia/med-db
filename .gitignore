@@ -1,4 +1,4 @@
-# Compilation files #
+# Compilation Files #
 *.class
 target
 
@@ -6,3 +6,6 @@ target
 *.jar
 *.war
 *.ear
+
+# Eclipse Files #
+.classpath
