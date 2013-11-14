@@ -14,5 +14,5 @@ import pt.ist.sirs.domain.MedDBCommon;
 public enum ObjectType {
 
     /** Objecto do tipo pt.ist.sirs.domain.Utente */
-    UTENTE
+    PESSOA, REGISTO, MEDICO, ESTABELECIMENTO, ESPECIALIDADE;
 }

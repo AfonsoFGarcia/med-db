@@ -2,6 +2,12 @@ package pt.ist.sirs.domain;
 
 enum pt.ist.sirs.domain.enums.ObjectType as ObjectType;
 
+valueType pt.ist.sirs.permissoes.Permissao as Permissao {
+	externalizeWith {
+		String toString();
+	}
+}
+
 class MedDBRoot {
   	Integer objectId;
 }
@@ -11,7 +17,57 @@ class MedDBCommon {
 	Integer objectId;
 }
 
+class Pessoa extends MedDBCommon {
+	String nome;
+}
+
+class Medico extends Pessoa {
+}
+
+class Especialidade extends MedDBCommon {
+	String nome;
+}
+
+class Estabelecimento extends MedDBCommon {
+	String nome;
+}
+
+class Registo extends MedDBCommon {
+	String conteudo;
+	Permissao permissao;
+}
+
 relation Root {
 	MedDBRoot playsRole root { multiplicity 1; }
 	MedDBCommon playsRole object { multiplicity *; }
+}
+
+relation RegistoContainsPessoa {
+	Pessoa playsRole pessoa { multiplicity 1; }
+	Registo playsRole registosDaPessoa { multiplicity *; }
+}
+
+relation RegistoContainsMedico {
+	Medico playsRole medico { multiplicity 1; }
+	Registo playsRole registosDoMedico { multiplicity *; }
+}
+
+relation RegistoContainsEspecialidade {
+	Especialidade playsRole especialidade { multiplicity 1; }
+	Registo playsRole registos { multiplicity *; }
+}
+
+relation MedicoContainsEspecialidade {
+	Medico playsRole medicos { multiplicity *; }
+	Especialidade playsRole especialidades { multiplicity 1..*; }
+}
+
+relation EstabelecimentoContainsMedico {
+	Medico playsRole medicos { multiplicity 1..*; }
+	Estabelecimento playsRole estabelecimentos { multiplicity *; }
+}
+
+relation EstabelecimentoContainsRegisto {
+	Estabelecimento playsRole estabelecimento { multiplicity 1; }
+	Registo playsRole registos { multiplicity *;}
 }
