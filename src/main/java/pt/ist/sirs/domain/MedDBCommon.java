@@ -11,8 +11,10 @@ public class MedDBCommon extends MedDBCommon_Base {
 
     /**
      * Cria um objecto MedDBCommon
+     * 
+     * @deprecated Deve ser utilizado o outro construtor.
+     * @see #MedDBCommon(MedDBRoot)
      */
-    @Deprecated
     public MedDBCommon() {
         super();
     }
