@@ -12,12 +12,12 @@ import pt.ist.sirs.domain.Registo;
 
 public abstract class Permissao implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    Registo registo;
-
-    Permissao(Registo r) {
+    protected Permissao(Registo r) {
         registo = r;
     }
+
+    private static final long serialVersionUID = 1L;
+    Registo registo;
 
     public abstract boolean isAllowed(Pessoa pessoa);
 
