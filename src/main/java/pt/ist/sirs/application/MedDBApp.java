@@ -1,9 +1,14 @@
 package pt.ist.sirs.application;
 
-import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.Transaction;
+import jvstm.Atomic;
 import pt.ist.sirs.Bootstrap;
-import pt.ist.sirs.domain.MedDBRoot;
+import pt.ist.sirs.domain.Especialidade;
+import pt.ist.sirs.domain.Estabelecimento;
+import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.Pessoa;
+import pt.ist.sirs.domain.Registo;
+import pt.ist.sirs.permissoes.Permissao;
+import pt.ist.sirs.permissoes.PermissaoPublica;
 
 /**
  * Classe <b>MedDBApp</b>. <br>
@@ -21,18 +26,38 @@ public class MedDBApp {
      */
     public static void main(String[] args) {
         Bootstrap.init();
-        initMedDBRoot();
+
+        System.out.println("Fenix Framework inited");
+
+        testApp();
     }
 
-    /**
-     * Inicializa o objecto {@link MedDBRoot}
-     */
-    private static void initMedDBRoot() {
-        Transaction.begin();
-        MedDBRoot app = (MedDBRoot) FenixFramework.getRoot();
-        if (app.getObjectId() < 1) {
-            app.setObjectId(0);
-        }
-        Transaction.commit();
+    @Atomic
+    private static void testApp() {
+        Pessoa p = new Pessoa();
+        Medico m = new Medico();
+        Registo r = new Registo();
+        Especialidade e = new Especialidade();
+        Estabelecimento h = new Estabelecimento();
+        PermissaoPublica pp = new PermissaoPublica(r);
+
+        System.out.println("Objects created");
+
+        m.addEspecialidades(e);
+
+        h.addMedicos(m);
+
+        r.setMedico(m);
+
+        r.setPessoa(p);
+
+        r.setEspecialidade(e);
+
+        r.setEstabelecimento(h);
+
+        r.setPermissao(pp);
+
+        String perm = pp.toString();
+        PermissaoPublica pps = (PermissaoPublica) Permissao.fromString(perm);
     }
 }

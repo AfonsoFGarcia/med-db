@@ -6,6 +6,8 @@ valueType pt.ist.sirs.permissoes.Permissao as Permissao {
 	externalizeWith {
 		String toString();
 	}
+	
+	internalizeWith fromString();
 }
 
 class MedDBRoot {
@@ -59,11 +61,11 @@ relation RegistoContainsEspecialidade {
 
 relation MedicoContainsEspecialidade {
 	Medico playsRole medicos { multiplicity *; }
-	Especialidade playsRole especialidades { multiplicity 1..*; }
+	Especialidade playsRole especialidades { multiplicity *; }
 }
 
 relation EstabelecimentoContainsMedico {
-	Medico playsRole medicos { multiplicity 1..*; }
+	Medico playsRole medicos { multiplicity *; }
 	Estabelecimento playsRole estabelecimentos { multiplicity *; }
 }
 

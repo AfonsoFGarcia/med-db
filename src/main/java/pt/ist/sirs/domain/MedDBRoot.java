@@ -15,6 +15,7 @@ public class MedDBRoot extends MedDBRoot_Base {
      */
     public MedDBRoot() {
         super();
+        this.setObjectId(0);
     }
 
     /**
