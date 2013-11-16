@@ -11,7 +11,8 @@ import pt.ist.sirs.domain.Registo;
  * Define um conjunto de métodos utilizados em todas as permissões compostas.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Permissao}, {@link Registo}
+ * @see Permissao
+ * @see Registo
  */
 public abstract class PermissaoComposta extends Permissao {
 

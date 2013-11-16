@@ -10,7 +10,8 @@ import pt.ist.sirs.permissoes.Permissao;
  * Permissão que implementa o não lógico.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Permissao}, {@link Registo}
+ * @see Permissao
+ * @see Registo
  */
 public class PermissaoNaoLogico extends Permissao {
 

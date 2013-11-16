@@ -15,7 +15,11 @@ import pt.ist.sirs.domain.Registo;
  * Utilizado para verificações de permissões.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Pessoa}, {@link Registo}, {@link Medico}, {@link Estabelecimento}, {@link Especialidade}
+ * @see Pessoa
+ * @see Registo
+ * @see Medico
+ * @see Estabelecimento
+ * @see Especialidade
  */
 public enum ObjectType {
 

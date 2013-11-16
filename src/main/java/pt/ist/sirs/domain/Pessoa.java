@@ -9,7 +9,8 @@ import pt.ist.sirs.domain.enums.ObjectType;
  * Permite obter os médicos da pessoa e os registos a ela associados.
  * 
  * @author Afonso F. Garcia (70001), José Góis (79261), João Santos (79276)
- * @see {@link MEdico}, {@link Registo}
+ * @see Medico
+ * @see Registo
  */
 public class Pessoa extends Pessoa_Base {
 

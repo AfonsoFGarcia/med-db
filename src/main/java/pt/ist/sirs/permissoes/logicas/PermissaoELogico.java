@@ -13,7 +13,8 @@ import pt.ist.sirs.permissoes.PermissaoComposta;
  * Permissão composta por outras permissões que implementa o e lógico.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Permissao}, {@link Registo}
+ * @see Permissao
+ * @see Registo
  */
 public class PermissaoELogico extends PermissaoComposta {
 

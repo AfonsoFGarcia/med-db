@@ -17,7 +17,8 @@ import pt.ist.sirs.domain.Registo;
  * autorizado a aceder-lhes.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Registo}, {@link Pessoa}
+ * @see Registo
+ * @see Pessoa
  */
 public abstract class Permissao implements Serializable {
 
