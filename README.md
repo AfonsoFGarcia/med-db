@@ -13,7 +13,7 @@ O Med-DB usa a Fénix Framework como abstracção entre o mundo relacional e o m
 Começo Rápido
 -----
 
-Ciclo rápido: `mvn clean dml:generate-domain package exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
+Ciclo rápido: `mvn clean package exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
 
 Compilar domínio: `mvn dml:generate-domain` (apenas é necessário depois de alterar a dml)
 
@@ -32,6 +32,10 @@ Java 7 SDK - http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downlo
 
 MySQL 5 - http://dev.mysql.com/downloads/mysql/
 
+### Instalação do software em Ubuntu/Debian
+
+	wget --quiet https://raw.github.com/davidmartinho/pillow/develop/pillow.sh && sudo bash pillow.sh && rm -rf pillow.sh && source .bashrc
+	
 Software Recomendado
 -----
 

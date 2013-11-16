@@ -9,3 +9,6 @@ target
 
 # Eclipse Files #
 .classpath
+
+# Bootstrap - Sensivel #
+src/main/java/pt/ist/sirs/Bootstrap.java

@@ -6,7 +6,7 @@ package pt.ist.sirs.domain;
  * Disponibiliza a gestão centralizada de identificadores únicos utilizados pela classe {@link MedDBCommon}. <br>
  * Permite a procura de objectos pelo identificador.
  * 
- * @author Afonso F. Garcia
+ * @author Afonso F. Garcia (70001)
  */
 public class MedDBRoot extends MedDBRoot_Base {
 
@@ -15,6 +15,7 @@ public class MedDBRoot extends MedDBRoot_Base {
      */
     public MedDBRoot() {
         super();
+        this.setObjectId(0);
     }
 
     /**

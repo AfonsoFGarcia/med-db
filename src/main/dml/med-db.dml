@@ -6,6 +6,8 @@ valueType pt.ist.sirs.permissoes.Permissao as Permissao {
 	externalizeWith {
 		String toString();
 	}
+	
+	internalizeWith fromString();
 }
 
 class MedDBRoot {
@@ -42,9 +44,14 @@ relation Root {
 	MedDBCommon playsRole object { multiplicity *; }
 }
 
+relation PessoaContainsMedico {
+	Pessoa playsRole pacientes { multiplicity *; }
+	Medico playsRole medicos { multiplicity *; }
+}
+
 relation RegistoContainsPessoa {
-	Pessoa playsRole pessoa { multiplicity 1; }
-	Registo playsRole registosDaPessoa { multiplicity *; }
+	Pessoa playsRole paciente { multiplicity 1; }
+	Registo playsRole registosDoPaciente { multiplicity *; }
 }
 
 relation RegistoContainsMedico {
@@ -54,20 +61,20 @@ relation RegistoContainsMedico {
 
 relation RegistoContainsEspecialidade {
 	Especialidade playsRole especialidade { multiplicity 1; }
-	Registo playsRole registos { multiplicity *; }
+	Registo playsRole registosDaEspecialidade { multiplicity *; }
 }
 
 relation MedicoContainsEspecialidade {
 	Medico playsRole medicos { multiplicity *; }
-	Especialidade playsRole especialidades { multiplicity 1..*; }
+	Especialidade playsRole especialidades { multiplicity *; }
 }
 
 relation EstabelecimentoContainsMedico {
-	Medico playsRole medicos { multiplicity 1..*; }
+	Medico playsRole medicos { multiplicity *; }
 	Estabelecimento playsRole estabelecimentos { multiplicity *; }
 }
 
 relation EstabelecimentoContainsRegisto {
 	Estabelecimento playsRole estabelecimento { multiplicity 1; }
-	Registo playsRole registos { multiplicity *;}
+	Registo playsRole registosDoEstabelecimento { multiplicity *;}
 }

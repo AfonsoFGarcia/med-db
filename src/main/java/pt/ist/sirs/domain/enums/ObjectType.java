@@ -1,6 +1,11 @@
 package pt.ist.sirs.domain.enums;
 
+import pt.ist.sirs.domain.Especialidade;
+import pt.ist.sirs.domain.Estabelecimento;
 import pt.ist.sirs.domain.MedDBCommon;
+import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.Pessoa;
+import pt.ist.sirs.domain.Registo;
 
 /**
  * Enumumerado <b>ObjectType</b>. <br>
@@ -9,10 +14,10 @@ import pt.ist.sirs.domain.MedDBCommon;
  * <br>
  * Utilizado para verificações de permissões.
  * 
- * @author Afonso F. Garcia
+ * @author Afonso F. Garcia (70001)
+ * @see {@link Pessoa}, {@link Registo}, {@link Medico}, {@link Estabelecimento}, {@link Especialidade}
  */
 public enum ObjectType {
 
-    /** Objecto do tipo pt.ist.sirs.domain.Utente */
     PESSOA, REGISTO, MEDICO, ESTABELECIMENTO, ESPECIALIDADE;
 }
