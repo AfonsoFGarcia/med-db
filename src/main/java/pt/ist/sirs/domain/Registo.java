@@ -2,7 +2,6 @@ package pt.ist.sirs.domain;
 
 import pt.ist.sirs.domain.enums.ObjectType;
 
-// TODO: Auto-generated Javadoc
 /**
  * Classe <b>Registo</b>.<br>
  * <br>
