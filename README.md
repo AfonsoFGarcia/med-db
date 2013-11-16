@@ -32,6 +32,10 @@ Java 7 SDK - http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downlo
 
 MySQL 5 - http://dev.mysql.com/downloads/mysql/
 
+### Instalação do software em Ubuntu/Debian
+
+`wget --quiet https://raw.github.com/davidmartinho/pillow/develop/pillow.sh && sudo bash pillow.sh && rm -rf pillow.sh && source .bashrc`
+
 Software Recomendado
 -----
 
