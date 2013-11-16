@@ -34,8 +34,8 @@ MySQL 5 - http://dev.mysql.com/downloads/mysql/
 
 ### Instalação do software em Ubuntu/Debian
 
-`wget --quiet https://raw.github.com/davidmartinho/pillow/develop/pillow.sh && sudo bash pillow.sh && rm -rf pillow.sh && source .bashrc`
-
+	wget --quiet https://raw.github.com/davidmartinho/pillow/develop/pillow.sh && sudo bash pillow.sh && rm -rf pillow.sh && source .bashrc
+	
 Software Recomendado
 -----
 
