@@ -1,5 +1,7 @@
 package pt.ist.sirs.permissoes.logicas;
 
+import java.util.Set;
+
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.permissoes.Permissao;
@@ -11,6 +13,10 @@ public class PermissaoOuLogico extends PermissaoComposta {
 
     public PermissaoOuLogico(Registo r) {
         super(r);
+    }
+
+    public PermissaoOuLogico(Registo r, Set<Permissao> p) {
+        super(r, p);
     }
 
     @Override
