@@ -87,16 +87,22 @@
     		<docencoding>UTF-8</docencoding>
     		<docfilesubdirs>true</docfilesubdirs>
     		<links>
-    			<link>http://docs.oracle.com/javase/7/docs/api/</link>
+    			<link>http://docs.oracle.com/javase/6/docs/api/</link>
+    			<link>http://fenix-framework.github.io/apidocs/1.1.4/</link>
     		</links>
     		<show>private</show>
-    		<source>1.7</source>
+    		<source>1.6</source>
     		<sourceFileExcludes>
     			<exclude>pt/ist/sirs/Bootstrap.java</exclude>
     		</sourceFileExcludes>
     		<sourcepath>${basedir}/src/main/java</sourcepath>
     		<reportOutputDirectory>${basedir}</reportOutputDirectory>
     		<destDir>docs</destDir>
+    		<bottom>Copyright &#169; 2013: Afonso F. Garcia, José Góis, João Santos - Grupo 28 - SIRS</bottom>
+    		<doctitle>Medical Database Records - SIRS 2013 - Grupo 28 | Release ${project.version}</doctitle>
+    		<windowtitle>Medical Database Records Release ${project.version}</windowtitle>
+    		<quiet>true</quiet>
+    		<nohelp>true</nohelp>
     	</configuration>
     </plugin>
     </plugins>
