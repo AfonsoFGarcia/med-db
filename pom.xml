@@ -15,7 +15,7 @@
     <dml.maven.plugin.version>1.0.0</dml.maven.plugin.version>
     <fenix.framework.version>1.0.0</fenix.framework.version>
     <skipTests>true</skipTests>
-    <javaSourceVersion>1.7</javaSourceVersion>
+    <javaSourceVersion>1.6</javaSourceVersion>
   </properties>
 
   <build>
