@@ -9,7 +9,7 @@ import pt.ist.sirs.domain.Registo;
 public class PermissaoMedicoDaPessoa extends Permissao {
     private static final long serialVersionUID = 1L;
 
-    protected PermissaoMedicoDaPessoa(Registo r) {
+    public PermissaoMedicoDaPessoa(Registo r) {
         super(r);
     }
 

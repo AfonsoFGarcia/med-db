@@ -7,7 +7,7 @@ public class PermissaoMedicoDoRegisto extends Permissao {
 
     private static final long serialVersionUID = 1L;
 
-    protected PermissaoMedicoDoRegisto(Registo r) {
+    public PermissaoMedicoDoRegisto(Registo r) {
         super(r);
     }
 

@@ -1,6 +1,7 @@
 package pt.ist.sirs.domain;
 
 import pt.ist.sirs.domain.enums.ObjectType;
+import pt.ist.sirs.permissoes.PermissaoPoliticaDeEspecialidade;
 
 /**
  * Classe <b>Registo</b>.<br>
@@ -22,6 +23,7 @@ public class Registo extends Registo_Base {
     public Registo() {
         super();
         this.setType(ObjectType.REGISTO);
+        this.setPermissao(new PermissaoPoliticaDeEspecialidade(this));
     }
 
 }

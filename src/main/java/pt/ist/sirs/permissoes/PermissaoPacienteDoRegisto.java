@@ -6,9 +6,8 @@ import pt.ist.sirs.domain.Registo;
 public class PermissaoPacienteDoRegisto extends Permissao {
     private static final long serialVersionUID = 1L;
 
-    protected PermissaoPacienteDoRegisto(Registo r) {
+    public PermissaoPacienteDoRegisto(Registo r) {
         super(r);
-
     }
 
     @Override
