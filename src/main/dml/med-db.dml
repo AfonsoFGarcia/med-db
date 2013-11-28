@@ -39,6 +39,11 @@ class Registo extends MedDBCommon {
 	Permissao permissao;
 }
 
+class PoliticaDeEspecialidade {
+	Integer acessorObjectID;
+	Integer acedidaObjectID;
+}
+
 relation Root {
 	MedDBRoot playsRole root { multiplicity 1; }
 	MedDBCommon playsRole object { multiplicity *; }
@@ -77,4 +82,9 @@ relation EstabelecimentoContainsMedico {
 relation EstabelecimentoContainsRegisto {
 	Estabelecimento playsRole estabelecimento { multiplicity 1; }
 	Registo playsRole registosDoEstabelecimento { multiplicity *;}
+}
+
+relation RootContainsPoliticaDeEspecialidade {
+	PoliticaDeEspecialidade playsRole PoliticaDeEspecialidade { multiplicity *; }
+	MedDBRoot playsRole root { multiplicity 1; }
 }
