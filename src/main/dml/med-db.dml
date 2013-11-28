@@ -24,6 +24,7 @@ class Pessoa extends MedDBCommon {
 }
 
 class Medico extends Pessoa {
+	boolean medicoDeUrgencia;
 }
 
 class Especialidade extends MedDBCommon {
