@@ -1,6 +1,6 @@
 package pt.ist.sirs.permissoes.logicas;
 
-import java.util.Set;
+import java.util.List;
 
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
@@ -35,8 +35,17 @@ public class PermissaoOuLogico extends PermissaoComposta {
      * @param r Registo associado à permissão.
      * @param p Set de permissões.
      */
-    public PermissaoOuLogico(Registo r, Set<Permissao> p) {
+    public PermissaoOuLogico(Registo r, List<Permissao> p) {
         super(r, p);
+    }
+    
+    /**
+     * Cria um objecto PermissaoOuLogico.
+     *
+     * @param p Set de permissões.
+     */
+    public PermissaoOuLogico(List<Permissao> p) {
+        super(p);
     }
 
     /* (non-Javadoc)

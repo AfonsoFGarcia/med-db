@@ -1,7 +1,7 @@
 package pt.ist.sirs.permissoes;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
+import java.util.ArrayList;
 
 import pt.ist.sirs.domain.Registo;
 
@@ -17,7 +17,7 @@ import pt.ist.sirs.domain.Registo;
 public abstract class PermissaoComposta extends Permissao {
 
     private static final long serialVersionUID = 1L;
-    private Set<Permissao> permissoes;
+    private List<Permissao> permissoes;
 
     /**
      * Construtor que disponibiliza a associação entre o registo e a permissao.<br>
@@ -27,7 +27,7 @@ public abstract class PermissaoComposta extends Permissao {
      */
     public PermissaoComposta(Registo r) {
         super(r);
-        permissoes = new TreeSet<Permissao>();
+        permissoes = new ArrayList<Permissao>();
     }
 
     /**
@@ -38,8 +38,19 @@ public abstract class PermissaoComposta extends Permissao {
      * @param r Registo associado à permissão.
      * @param p Set de permissões para compor.
      */
-    public PermissaoComposta(Registo r, Set<Permissao> p) {
+    public PermissaoComposta(Registo r, List<Permissao> p) {
         super(r);
+        permissoes = p;
+    }
+    
+    /**
+     * Permite criar uma permissão composta com um set de permissões já existente.<br>
+     * Não cria nenhum objecto pois a classe é abstracta.
+     *
+     * @param p Set de permissões para compor.
+     */
+    public PermissaoComposta(List<Permissao> p) {
+        super(null);
         permissoes = p;
     }
 
@@ -66,7 +77,7 @@ public abstract class PermissaoComposta extends Permissao {
      * 
      * @return Set de permissões.
      */
-    public Set<Permissao> getPermissoes() {
+    public List<Permissao> getPermissoes() {
         return permissoes;
     }
 }
