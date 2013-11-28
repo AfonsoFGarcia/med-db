@@ -15,7 +15,7 @@ public class PermissaoMedicoDaPessoa extends Permissao {
 
     @Override
     public boolean isAllowed(Pessoa pessoa) {
-        List<Medico> medicos = pessoa.getMedicos();
+        List<Medico> medicos = registo.getPaciente().getMedicos();
 
         for (Medico medico : medicos) {
             if (registo.getMedico().getObjectId().equals(medico.getObjectId())) {
