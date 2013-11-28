@@ -62,6 +62,15 @@ public abstract class PermissaoComposta extends Permissao {
     public void addPermissao(Permissao p) {
         permissoes.add(p);
     }
+    
+    /**
+     * Adiciona uma lista de permissões à permissão composta.
+     *
+     * @param p Permissão a adicionar.
+     */
+    public void addPermissao(List<Permissao> p) {
+        permissoes.addAll(p);
+    }
 
     /**
      * Retira uma permissão da permissão composta.
