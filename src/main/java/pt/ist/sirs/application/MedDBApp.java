@@ -18,5 +18,14 @@ public class MedDBApp {
      */
     public static void main(String[] args) {
         Bootstrap.init();
+
+        System.out.println("######################## MED_DB_APP BEGIN ###########################\n");
+
+        /*
+         * TODO:
+         */
+
+        System.out.println("\n");
+        System.out.println("########################  MED_DB_APP END ############################\n");
     }
 }
