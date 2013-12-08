@@ -27,6 +27,7 @@ public class MedDBApp {
         Bootstrap.init();
 
         System.out.println("######################## MED_DB_APP BEGIN ###########################");
+        System.out.println();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Introduza o seu username: ");

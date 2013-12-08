@@ -1,6 +1,7 @@
 package pt.ist.sirs.application;
 
 import pt.ist.sirs.Bootstrap;
+import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.services.CreateMedicoService;
 
 /**
@@ -16,8 +17,9 @@ public class PopulateDB {
      * Main da aplicação
      * 
      * @param args Não utilizado
+     * @throws MedDBException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MedDBException {
         Bootstrap.init();
 
         //Objectos a adicionar a DB no inicio
