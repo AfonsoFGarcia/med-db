@@ -1,6 +1,7 @@
 package pt.ist.sirs.application;
 
 import pt.ist.sirs.Bootstrap;
+import pt.ist.sirs.services.CreateMedicoService;
 
 /**
  * Classe <b>MedDBApp</b>. <br>
@@ -20,5 +21,7 @@ public class PopulateDB {
         Bootstrap.init();
 
         //Objectos a adicionar a DB no inicio
+        CreateMedicoService medico1 = new CreateMedicoService("Jose", false);
+        medico1.execute();
     }
 }

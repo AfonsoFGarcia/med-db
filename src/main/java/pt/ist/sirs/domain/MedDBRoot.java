@@ -1,5 +1,7 @@
 package pt.ist.sirs.domain;
 
+import pt.ist.sirs.exceptions.PessoaNaoExisteException;
+
 /**
  * Classe <b>MedDBRoot</b>. <br>
  * <br>
@@ -36,6 +38,15 @@ public class MedDBRoot extends MedDBRoot_Base {
             }
         }
         return null;
+    }
+
+    public Pessoa getPersonByUsername(String username) throws PessoaNaoExisteException {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Pessoa && ((Pessoa) object).getNome().equals(username)) {
+                return (Pessoa) object;
+            }
+        }
+        throw new PessoaNaoExisteException(username);
     }
 
     /**
