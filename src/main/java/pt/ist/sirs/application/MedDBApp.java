@@ -6,6 +6,7 @@ import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.CreateMedicoService;
+import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.LoginService;
 
 /**
@@ -34,6 +35,35 @@ public class MedDBApp {
         System.out.println("########################  MED_DB_APP END ############################");
     }
 
+    private static void createPessoa() {
+
+        System.out.print("Introduza o nome: ");
+        String nome = System.console().readLine();
+        String password;
+
+        while (true) {
+            System.out.print("Introduza a password: ");
+            password = new String(System.console().readPassword());
+            System.out.print("Confirme a password: ");
+            String passconf = new String(System.console().readPassword());
+
+            if (password.equals(passconf)) {
+                break;
+            } else {
+                System.out.println();
+                System.out.println("Passwords nao iguais!");
+            }
+        }
+
+        CreatePessoaService pessoaServ = new CreatePessoaService(nome, password);
+        try {
+            pessoaServ.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     private static void createMedico() {
         System.out.print("Introduza o nome: ");
         String nome = System.console().readLine();
@@ -57,10 +87,10 @@ public class MedDBApp {
         while (true) {
             System.out.print("Medico de urgencia (T/F): ");
             String mDU = System.console().readLine();
-            if (mDU.equals("T")) {
+            if (mDU.equals("T") || mDU.equals("t")) {
                 medicoDeUrgencia = true;
                 break;
-            } else if (mDU.equals("F")) {
+            } else if (mDU.equals("F") || mDU.equals("f")) {
                 medicoDeUrgencia = false;
                 break;
             } else {
@@ -106,10 +136,10 @@ public class MedDBApp {
                 createMedico();
                 break;
             case 3:
-                System.out.println("Ainda nao implementado!");
+                createPessoa();
                 break;
             default:
-                System.out.println("Opcao errada!");
+                System.out.println("Opcao inválida!");
                 break;
             }
         }
