@@ -5,22 +5,33 @@ import pt.ist.sirs.exceptions.IncorrectPasswordException;
 
 public class LoggedPerson {
 
-    private static Pessoa loggedPerson;
+    private Pessoa loggedPerson;
+    private static LoggedPerson me = null;
 
-    public static void setLoggedPerson(Pessoa p, String password) throws IncorrectPasswordException {
+    private LoggedPerson() {
+    }
+
+    public static LoggedPerson getInstance() {
+        if (me == null) {
+            me = new LoggedPerson();
+        }
+        return me;
+    }
+
+    public void setLoggedPerson(Pessoa p, String password) throws IncorrectPasswordException {
         if (p.getPassword().equals(password)) {
-            loggedPerson = p;
+            this.loggedPerson = p;
         } else {
             throw new IncorrectPasswordException();
         }
     }
 
-    public static Pessoa getLoggedPerson() {
-        return loggedPerson;
+    public Pessoa getLoggedPerson() {
+        return this.loggedPerson;
     }
 
-    public static void removeLoggedPerson() {
-        loggedPerson = null;
+    public void removeLoggedPerson() {
+        this.loggedPerson = null;
 
     }
 

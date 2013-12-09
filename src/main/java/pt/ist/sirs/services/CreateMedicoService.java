@@ -3,6 +3,7 @@ package pt.ist.sirs.services;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.exceptions.UsernameJaExisteException;
 
 public class CreateMedicoService extends MedDBService {
 
@@ -19,7 +20,7 @@ public class CreateMedicoService extends MedDBService {
     }
 
     @Override
-    public void run() {
+    public void run() throws UsernameJaExisteException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
 
         if (!root.hasPerson(this.username)) {
@@ -29,7 +30,7 @@ public class CreateMedicoService extends MedDBService {
             novoMedico.setPassword(this.password);
             novoMedico.setMedicoDeUrgencia(this.medicoDeUrgencia);
         } else {
-            // UsernameJaExisteException
+            throw new UsernameJaExisteException(this.username);
         }
     }
 }

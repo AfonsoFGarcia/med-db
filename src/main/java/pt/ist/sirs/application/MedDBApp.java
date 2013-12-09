@@ -36,7 +36,7 @@ public class MedDBApp {
         System.out.println("########################  MED_DB_APP END ############################");
     }
 
-    private static void pintMedicoMenu() {
+    private static void printMedicoMenu() {
         System.out.println();
         System.out.println("1 - Registos Por Paciente");
         System.out.println("2 - XXX");
@@ -56,9 +56,9 @@ public class MedDBApp {
 
         switch (num) {
         case 0:
-            LoggedPerson.removeLoggedPerson();
+            LoggedPerson.getInstance().removeLoggedPerson();
             printMenu();
-            return;
+            break;
         case 1:
             registosPorPaciente();
             break;
@@ -76,16 +76,14 @@ public class MedDBApp {
     }
 
     private static void registosPorPaciente() {
-        System.out.print("Introduza o nome do paciente: ");
-        String nome = System.console().readLine();
-
-//        Pelo nome não é boa ideia! :/
+        System.out.print("Introduza o username do paciente: ");
+        String username = System.console().readLine();
     }
 
     private static void createPessoa() {
 
-        System.out.print("Introduza o nome: ");
-        String nome = System.console().readLine();
+        System.out.print("Introduza o username: ");
+        String username = System.console().readLine();
         String password;
 
         while (true) {
@@ -102,7 +100,10 @@ public class MedDBApp {
             }
         }
 
-        CreatePessoaService pessoaServ = new CreatePessoaService(nome, password);
+        System.out.print("Introduza o nome: ");
+        String nome = System.console().readLine();
+
+        CreatePessoaService pessoaServ = new CreatePessoaService(username, password, nome);
         try {
             pessoaServ.execute();
         } catch (MedDBException e) {
@@ -158,9 +159,9 @@ public class MedDBApp {
 
     private static void printMenu() {
         while (true) {
-            if (LoggedPerson.getLoggedPerson() instanceof Medico) {
+            if (LoggedPerson.getInstance().getLoggedPerson() instanceof Medico) {
 
-                pintMedicoMenu();
+                printMedicoMenu();
 
             } else {
 
@@ -183,7 +184,7 @@ public class MedDBApp {
 
                 switch (num) {
                 case 0:
-                    LoggedPerson.removeLoggedPerson();
+                    LoggedPerson.getInstance().removeLoggedPerson();
                     return;
                 case 1:
                     personLogin();
@@ -203,7 +204,7 @@ public class MedDBApp {
     }
 
     private static void personLogin() {
-        while (LoggedPerson.getLoggedPerson() == null) {
+        while (LoggedPerson.getInstance().getLoggedPerson() == null) {
             System.out.println();
             System.out.print("Introduza o seu username: ");
             String username = System.console().readLine();
@@ -213,8 +214,7 @@ public class MedDBApp {
             LoginService login = new LoginService(username, password);
             try {
                 login.execute();
-                System.out.println("Bem vindo " + username + "!");
-
+                System.out.println("Bem vindo " + login.getNome() + "!");
             } catch (MedDBException e) {
                 System.out.println(e.getMessage());
             }
