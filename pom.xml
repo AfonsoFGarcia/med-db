@@ -129,6 +129,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+        	<groupId>commons-codec</groupId>
+        	<artifactId>commons-codec</artifactId>
+        	<version>1.7</version>
+      	</dependency>
+		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>fenix-framework-core</artifactId>
 			<version>${fenix.framework.version}</version>
