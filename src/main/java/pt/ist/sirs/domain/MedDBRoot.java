@@ -42,11 +42,20 @@ public class MedDBRoot extends MedDBRoot_Base {
 
     public Pessoa getPersonByUsername(String username) throws PessoaNaoExisteException {
         for (MedDBCommon object : this.getObject()) {
-            if (object instanceof Pessoa && ((Pessoa) object).getNome().equals(username)) {
+            if (object instanceof Pessoa && ((Pessoa) object).getUsername().equals(username)) {
                 return (Pessoa) object;
             }
         }
         throw new PessoaNaoExisteException(username);
+    }
+
+    public boolean hasPerson(String username) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Pessoa && ((Pessoa) object).getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
