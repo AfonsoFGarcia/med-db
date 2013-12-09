@@ -40,8 +40,8 @@ public class MedDBApp {
 
     private static void printMedicoMenu() {
         System.out.println();
-        System.out.println("1 - Registos Por Paciente");
-        System.out.println("2 - XXX");
+        System.out.println("1 - Criar Novo Registo");
+        System.out.println("2 - Consultar Registos por Paciente");
         System.out.println("3 - XXX");
         System.out.println("0 - Logout");
         System.out.println();
@@ -61,10 +61,11 @@ public class MedDBApp {
             LoggedPerson.getInstance().removeLoggedPerson();
             return;
         case 1:
-            registosPorPaciente();
+            criarNovoRegisto();
             break;
         case 2:
-            System.out.println("Nao implementado!");
+            registosPorPaciente();
+
             break;
         case 3:
             System.out.println("Nao implementado!");
@@ -76,9 +77,18 @@ public class MedDBApp {
 
     }
 
-    private static void registosPorPaciente() {
+    private static void criarNovoRegisto() {
         System.out.print("Introduza o username do paciente: ");
         String username = System.console().readLine();
+
+    }
+
+    private static void registosPorPaciente() {
+        System.out.println("Nao implementado!");
+        // System.out.print("Introduza o username do paciente: ");
+        // String username = System.console().readLine();
+        //TODO:
+
     }
 
     private static void createPessoa() {
