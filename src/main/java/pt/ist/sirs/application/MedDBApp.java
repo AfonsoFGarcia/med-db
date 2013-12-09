@@ -65,8 +65,8 @@ public class MedDBApp {
     }
 
     private static void createMedico() {
-        System.out.print("Introduza o nome: ");
-        String nome = System.console().readLine();
+        System.out.print("Introduza o username: ");
+        String username = System.console().readLine();
         String password;
         Boolean medicoDeUrgencia;
 
@@ -84,6 +84,9 @@ public class MedDBApp {
             }
         }
 
+        System.out.print("Introduza o nome: ");
+        String nome = System.console().readLine();
+
         while (true) {
             System.out.print("Medico de urgencia (T/F): ");
             String mDU = System.console().readLine();
@@ -98,7 +101,7 @@ public class MedDBApp {
             }
         }
 
-        CreateMedicoService serv = new CreateMedicoService(nome, password, medicoDeUrgencia);
+        CreateMedicoService serv = new CreateMedicoService(username, password, nome, medicoDeUrgencia);
         try {
             serv.execute();
         } catch (MedDBException e) {
