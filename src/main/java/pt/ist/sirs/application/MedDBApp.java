@@ -57,8 +57,7 @@ public class MedDBApp {
         switch (num) {
         case 0:
             LoggedPerson.getInstance().removeLoggedPerson();
-            printMenu();
-            break;
+            return;
         case 1:
             registosPorPaciente();
             break;
