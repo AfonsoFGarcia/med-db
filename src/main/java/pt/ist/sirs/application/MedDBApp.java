@@ -3,6 +3,7 @@ package pt.ist.sirs.application;
 import java.io.IOException;
 
 import pt.ist.sirs.Bootstrap;
+import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.CreateMedicoService;
@@ -33,6 +34,52 @@ public class MedDBApp {
 
         System.out.println();
         System.out.println("########################  MED_DB_APP END ############################");
+    }
+
+    private static void pintMedicoMenu() {
+        System.out.println();
+        System.out.println("1 - Registos Por Paciente");
+        System.out.println("2 - XXX");
+        System.out.println("3 - XXX");
+        System.out.println("0 - Logout");
+        System.out.println();
+        System.out.print("Seleccione a opcao pretendida: ");
+        String opcao = System.console().readLine();
+
+        Integer num;
+
+        try {
+            num = Integer.parseInt(opcao);
+        } catch (Exception e) {
+            num = 69;
+        }
+
+        switch (num) {
+        case 0:
+            LoggedPerson.removeLoggedPerson();
+            printMenu();
+            return;
+        case 1:
+            registosPorPaciente();
+            break;
+        case 2:
+            System.out.println("Nao implementado!");
+            break;
+        case 3:
+            System.out.println("Nao implementado!");
+            break;
+        default:
+            System.out.println("Opcao inválida!");
+            break;
+        }
+
+    }
+
+    private static void registosPorPaciente() {
+        System.out.print("Introduza o nome do paciente: ");
+        String nome = System.console().readLine();
+
+//        Pelo nome não é boa ideia! :/
     }
 
     private static void createPessoa() {
@@ -108,39 +155,46 @@ public class MedDBApp {
 
     private static void printMenu() {
         while (true) {
-            System.out.println();
-            System.out.println("1 - Login Med-DB");
-            System.out.println("2 - Registar Medico");
-            System.out.println("3 - Registar Pessoa");
-            System.out.println("0 - Sair");
-            System.out.println();
-            System.out.print("Seleccione a opcao pretendida: ");
-            String opcao = System.console().readLine();
+            if (LoggedPerson.getLoggedPerson() instanceof Medico) {
 
-            Integer num;
+                pintMedicoMenu();
 
-            try {
-                num = Integer.parseInt(opcao);
-            } catch (Exception e) {
-                num = 69;
-            }
+            } else {
 
-            switch (num) {
-            case 0:
-                LoggedPerson.removeLoggedPerson();
-                return;
-            case 1:
-                personLogin();
-                break;
-            case 2:
-                createMedico();
-                break;
-            case 3:
-                createPessoa();
-                break;
-            default:
-                System.out.println("Opcao inválida!");
-                break;
+                System.out.println();
+                System.out.println("1 - Login Med-DB");
+                System.out.println("2 - Registar Medico");
+                System.out.println("3 - Registar Pessoa");
+                System.out.println("0 - Sair");
+                System.out.println();
+                System.out.print("Seleccione a opcao pretendida: ");
+                String opcao = System.console().readLine();
+
+                Integer num;
+
+                try {
+                    num = Integer.parseInt(opcao);
+                } catch (Exception e) {
+                    num = 69;
+                }
+
+                switch (num) {
+                case 0:
+                    LoggedPerson.removeLoggedPerson();
+                    return;
+                case 1:
+                    personLogin();
+                    break;
+                case 2:
+                    createMedico();
+                    break;
+                case 3:
+                    createPessoa();
+                    break;
+                default:
+                    System.out.println("Opcao inválida!");
+                    break;
+                }
             }
         }
     }
@@ -157,9 +211,11 @@ public class MedDBApp {
             try {
                 login.execute();
                 System.out.println("Bem vindo " + username + "!");
+
             } catch (MedDBException e) {
                 System.out.println(e.getMessage());
             }
+
         }
     }
 }
