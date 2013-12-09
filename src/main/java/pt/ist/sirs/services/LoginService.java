@@ -18,6 +18,6 @@ public class LoginService extends MedDBService {
     @Override
     public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        LoggedPerson.setLoggedPerson(root.getPersonByUsername(username));
+        LoggedPerson.setLoggedPerson(root.getPersonByUsername(username), password);
     }
 }

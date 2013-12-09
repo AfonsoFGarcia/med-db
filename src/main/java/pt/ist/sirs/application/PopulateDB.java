@@ -23,7 +23,7 @@ public class PopulateDB {
         Bootstrap.init();
 
         //Objectos a adicionar a DB no inicio
-        CreateMedicoService medico1 = new CreateMedicoService("Jose", false);
+        CreateMedicoService medico1 = new CreateMedicoService("Jose", "1234", false);
         medico1.execute();
     }
 }
