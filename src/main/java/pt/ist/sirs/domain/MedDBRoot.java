@@ -117,20 +117,10 @@ public class MedDBRoot extends MedDBRoot_Base {
             if (object instanceof Registo && ((Registo) object).getPaciente().getUsername().equals(pacienteUsername)) {
                 Registo r = (Registo) object;
                 Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
-                if (m.getObjectId().equals(r.getMedico().getObjectId()) || m.getMedicoDeUrgencia()) {
+                if (r.getPermissao().isAllowed(m)) {
                     registos.add(r);
                     continue;
                 }
-
-                for (Especialidade especialidade : m.getEspecialidades()) {
-                    if (verificaAcessoAEspecialidade(especialidade, r.getEspecialidade())) {
-                        registos.add(r);
-                        continue;
-
-                    }
-
-                }
-
             }
         }
 
@@ -145,20 +135,10 @@ public class MedDBRoot extends MedDBRoot_Base {
             if (object instanceof Registo) {
                 Registo r = (Registo) object;
                 Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
-                if (m.getObjectId().equals(r.getMedico().getObjectId()) || m.getMedicoDeUrgencia()) {
+                if (r.getPermissao().isAllowed(m)) {
                     registos.add(r);
                     continue;
                 }
-
-                for (Especialidade especialidade : m.getEspecialidades()) {
-                    if (verificaAcessoAEspecialidade(especialidade, r.getEspecialidade())) {
-                        registos.add(r);
-                        continue;
-
-                    }
-
-                }
-
             }
         }
 
