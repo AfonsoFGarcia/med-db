@@ -333,6 +333,7 @@ public class MedDBApp {
     private static void printPacienteMenu() {
         System.out.println();
         System.out.println("1 - Alterar permissao de registo");
+        System.out.println("9 - Ajuda");
         System.out.println("0 - Sair");
         System.out.println();
         System.out.print("Seleccione a opcao pretendida: ");
@@ -353,11 +354,40 @@ public class MedDBApp {
         case 1:
             changePermReg();
             break;
+        case 9:
+            printAjudaPaciente();
+            break;
         default:
             System.out.println("Opcao inválida!");
             break;
         }
 
+    }
+
+    private static void printAjudaPaciente() {
+        System.out.println();
+        System.out.println("Como definir permissoes:");
+        System.out
+                .println("O Med-DB tem um poderoso compilador de permissoes para que seja possivel, escrevendo, definir permissoes para o registo. As seguintes opcoes são validas:");
+        System.out.println();
+        System.out.println("mdesp - Permite o acesso aos medicos da especialidade do registo");
+        System.out.println("mdp - Permite o acesso aos medicos do paciente do registo");
+        System.out.println("mdu - Permite o acesso aos medicos de urgencia (RECOMENDADO)");
+        System.out.println("mdest - Permite o acesso aos medicos do estabelecimento do registo");
+        System.out.println("mdr - Permite o acesso ao medico do registo (RECOMENDADO)");
+        System.out.println("pdr - Permite o acesso ao paciente do registo (RECOMENDADO)");
+        System.out.println("ppde - Permite o acesso aos medicos de acordo com as politicas de especialidade");
+        System.out.println("pp - Permite o acesso a todos os utilizadores");
+        System.out.println();
+        System.out.println("Existem ainda um conjunto de permissoes que implementam operadores logicos. Estas sao:");
+        System.out.println();
+        System.out.println("and - Operador logico e");
+        System.out.println("or - Operador logico ou");
+        System.out.println("not - Operador logico not");
+        System.out.println();
+        System.out.println("O seguinte exemplo mostra como escrever o conjunto de permissoes recomendadas:");
+        System.out.println();
+        System.out.println("or(mdu,mdr,pdr)");
     }
 
     private static void changePermReg() {
