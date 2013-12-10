@@ -116,17 +116,12 @@ public class MedDBApp {
             negarAcessoARegisto();
             break;
         case 3:
-            acessoMedicoAEspecialidade(3);
+            permitirAcessoAEspecialidade();
             break;
         case 4:
-            acessoMedicoAEspecialidade(4);
+            negarAcessoAEspecialidade();
             break;
-        case 5:
-            System.out.print("Nao implementado");
-            break;
-        case 6:
-            System.out.print("Nao implementado");
-            break;
+
         default:
             break;
         }
@@ -134,30 +129,31 @@ public class MedDBApp {
         LoggedPerson.getInstance().removeLoggedPerson();
     }
 
-//TODO: Modificar função!!
-    private static void acessoMedicoAEspecialidade(Integer num) {
+    private static void permitirAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
 
         System.out.print("Indique o id da Especialidade: ");
         Integer idEspecialidade = Integer.parseInt(System.console().readLine());
 
-        //TODO:
-        switch (num) {
-        case 3://Permitir
-               //TODO:Adicionar especialidade ao medico
+        //TODO:Adicionar especialidade ao medico
 
-            break;
-        case 4://Negar
-               //Adicioar elemento MedicoBanidoDeEspecialidade
-            CreateMedicoBanidoDeEspecialidadeService cmbeServ =
-                    new CreateMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
-            try {
-                cmbeServ.execute();
-            } catch (MedDBException e) {
-                System.out.println(e.getMessage());
-            }
-            break;
+    }
+
+    private static void negarAcessoAEspecialidade() {
+        System.out.print("Indique o username do Medico: ");
+        String usernameMedico = System.console().readLine();
+
+        System.out.print("Indique o id da Especialidade: ");
+        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
+
+        //Adicioar elemento MedicoBanidoDeEspecialidade
+        CreateMedicoBanidoDeEspecialidadeService cmbeServ =
+                new CreateMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+        try {
+            cmbeServ.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
         }
 
     }
