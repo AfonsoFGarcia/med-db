@@ -1,5 +1,6 @@
 package pt.ist.sirs.permissoes.logicas;
 
+import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.permissoes.Permissao;
@@ -34,7 +35,7 @@ public class PermissaoNaoLogico extends Permissao {
      */
     @Override
     public boolean isAllowed(Pessoa pessoa) {
-        return !permissao.isAllowed(pessoa);
+        return !permissao.isAllowed(pessoa) && !super.medicoBanido((Medico) pessoa);
     }
 
 }

@@ -14,7 +14,11 @@ public class PermissaoMedicoDeUrgencia extends Permissao {
 
     @Override
     public boolean isAllowed(Pessoa pessoa) {
-        return ((Medico) pessoa).getMedicoDeUrgencia();
+        if (pessoa instanceof Medico) {
+            return ((Medico) pessoa).getMedicoDeUrgencia() && !super.medicoBanido((Medico) pessoa);
+        } else {
+            return false;
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 package pt.ist.sirs.permissoes;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import pt.ist.sirs.domain.Registo;
 
@@ -42,11 +42,11 @@ public abstract class PermissaoComposta extends Permissao {
         super(r);
         permissoes = p;
     }
-    
+
     /**
      * Permite criar uma permissão composta com um set de permissões já existente.<br>
      * Não cria nenhum objecto pois a classe é abstracta.
-     *
+     * 
      * @param p Set de permissões para compor.
      */
     public PermissaoComposta(List<Permissao> p) {
@@ -62,10 +62,10 @@ public abstract class PermissaoComposta extends Permissao {
     public void addPermissao(Permissao p) {
         permissoes.add(p);
     }
-    
+
     /**
      * Adiciona uma lista de permissões à permissão composta.
-     *
+     * 
      * @param p Permissão a adicionar.
      */
     public void addPermissao(List<Permissao> p) {
@@ -88,5 +88,13 @@ public abstract class PermissaoComposta extends Permissao {
      */
     public List<Permissao> getPermissoes() {
         return permissoes;
+    }
+
+    @Override
+    public void setRegisto(Registo registo) {
+        this.registo = registo;
+        for (Permissao p : this.permissoes) {
+            p.setRegisto(registo);
+        }
     }
 }

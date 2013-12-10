@@ -1,5 +1,6 @@
 package pt.ist.sirs.permissoes;
 
+import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 
@@ -13,7 +14,7 @@ public class PermissaoMedicoDoRegisto extends Permissao {
 
     @Override
     public boolean isAllowed(Pessoa pessoa) {
-        return registo.getMedico().getObjectId().equals(pessoa.getObjectId());
+        return registo.getMedico().getObjectId().equals(pessoa.getObjectId()) && !super.medicoBanido((Medico) pessoa);
     }
 
 }

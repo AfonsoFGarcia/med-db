@@ -19,7 +19,7 @@ public class PermissaoMedicoDaPessoa extends Permissao {
 
         for (Medico medico : medicos) {
             if (registo.getMedico().getObjectId().equals(medico.getObjectId())) {
-                return true;
+                return true && !super.medicoBanido(medico);
             }
         }
 

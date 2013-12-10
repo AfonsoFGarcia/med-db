@@ -7,6 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.sirs.domain.MedDBRoot;
+import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.MedicoBanidoDeEspecialidade;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 
@@ -113,4 +117,14 @@ public abstract class Permissao implements Serializable {
         this.registo = registo;
     }
 
+    protected boolean medicoBanido(Medico medico) {
+        MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
+        for (MedicoBanidoDeEspecialidade m : root.getMedicoBanidoDeEspecialidade()) {
+            if (this.registo.getEspecialidade().getObjectId().equals(m.getEspecialidadeObjectID())
+                    && medico.getObjectId().equals(m.getMedicoObjectID())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

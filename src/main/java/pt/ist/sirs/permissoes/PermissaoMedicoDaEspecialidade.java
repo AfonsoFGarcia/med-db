@@ -21,7 +21,7 @@ public class PermissaoMedicoDaEspecialidade extends Permissao {
 
         for (Especialidade especialidade : especialidades) {
             if (registo.getEspecialidade().getObjectId().equals(especialidade.getObjectId())) {
-                return true;
+                return true && !super.medicoBanido(medico);
             }
         }
 
