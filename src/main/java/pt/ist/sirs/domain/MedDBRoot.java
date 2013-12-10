@@ -22,7 +22,7 @@ public class MedDBRoot extends MedDBRoot_Base {
     public MedDBRoot() {
         super();
         this.setObjectId(0);
-        this.setDefaultPermission("or(pdr,mdu,and(ppde,mdest))");
+        this.setDefaultPermission("or(pdr,mdu,mdr,and(ppde,mdest))");
     }
 
     /**

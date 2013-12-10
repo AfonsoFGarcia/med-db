@@ -38,4 +38,18 @@ public class PermissaoNaoLogico extends Permissao {
         return !permissao.isAllowed(pessoa) && !super.medicoBanido((Medico) pessoa);
     }
 
+    @Override
+    public void setRegisto(Registo registo) {
+        super.setRegisto(registo);
+        this.permissao.setRegisto(registo);
+    }
+
+    public Permissao getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(Permissao permissao) {
+        this.permissao = permissao;
+    }
+
 }
