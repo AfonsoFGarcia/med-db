@@ -1,8 +1,13 @@
 package pt.ist.sirs.application;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.exceptions.MedDBException;
+import pt.ist.sirs.services.CreateEspecialidadeService;
+import pt.ist.sirs.services.CreateEstabelecimentoService;
 import pt.ist.sirs.services.CreateMedicoService;
+import pt.ist.sirs.services.CreatePessoaService;
 
 /**
  * Classe <b>MedDBApp</b>. <br>
@@ -23,7 +28,17 @@ public class PopulateDB {
         Bootstrap.init();
 
         //Objectos a adicionar a DB no inicio
-        CreateMedicoService medico1 = new CreateMedicoService("josel", "1234", "Jose", false);
+        CreateMedicoService medico1 =
+                new CreateMedicoService("josel", new String(DigestUtils.sha1("1234")), "Jose Lagarto", false);
         medico1.execute();
+
+        CreatePessoaService pessoa1 = new CreatePessoaService("bertor", new String(DigestUtils.sha1("1234")), "Alberto Ramalho");
+        pessoa1.execute();
+
+        CreateEspecialidadeService espec1 = new CreateEspecialidadeService("Psicologia");
+        espec1.execute();
+
+        CreateEstabelecimentoService estab1 = new CreateEstabelecimentoService("Hospital Julio de Matos");
+        estab1.execute();
     }
 }
