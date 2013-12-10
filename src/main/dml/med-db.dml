@@ -12,6 +12,7 @@ valueType pt.ist.sirs.permissoes.Permissao as Permissao {
 
 class MedDBRoot {
   	Integer objectId;
+  	String defaultPermission;
 }
 
 class MedDBCommon {
