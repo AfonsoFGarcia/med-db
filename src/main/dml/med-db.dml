@@ -25,6 +25,7 @@ class Pessoa extends MedDBCommon {
 	String username;
 	String password;
 	String salt;
+	boolean admin;
 }
 
 class Medico extends Pessoa {
@@ -47,6 +48,11 @@ class Registo extends MedDBCommon {
 class PoliticaDeEspecialidade {
 	Integer acessorObjectID;
 	Integer acedidaObjectID;
+}
+
+class MedicoBanidoDeEspecialidade {
+	Integer medicoObjectID;
+	Integer especialidadeObjectID;
 }
 
 relation Root {
@@ -90,6 +96,11 @@ relation EstabelecimentoContainsRegisto {
 }
 
 relation RootContainsPoliticaDeEspecialidade {
-	PoliticaDeEspecialidade playsRole PoliticaDeEspecialidade { multiplicity *; }
+	PoliticaDeEspecialidade playsRole politicaDeEspecialidade { multiplicity *; }
+	MedDBRoot playsRole root { multiplicity 1; }
+}
+
+relation RootContainsMedicoBanidoDeEspecialidade {
+	MedicoBanidoDeEspecialidade playsRole medicoBanidoDeEspecialidade { multiplicity *; }
 	MedDBRoot playsRole root { multiplicity 1; }
 }
