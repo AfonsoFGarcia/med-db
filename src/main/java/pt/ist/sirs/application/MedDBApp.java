@@ -14,6 +14,7 @@ import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.LoginService;
+import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
 
 /**
@@ -118,7 +119,8 @@ public class MedDBApp {
             int i = 1;
             for (Registo registo : registos) {
 
-                System.out.println(i + "- " + registo.getEspecialidade().getNome() + " - " + registo.getMedico().getNome());
+                System.out.println(i + "- Especialidade: " + registo.getEspecialidade().getNome() + " - Medico: "
+                        + registo.getMedico().getNome());
                 System.out.println("Conteudo: " + registo.getConteudo());
                 i++;
             }
@@ -131,6 +133,27 @@ public class MedDBApp {
     private static void registosPorEspecialidade() {
         System.out.print("Introduza o id da especialidade: ");
         Integer especialidade = Integer.parseInt(System.console().readLine());
+        RegistosByEspecialidadeService rbeServ = new RegistosByEspecialidadeService(especialidade);
+        ArrayList<Registo> registos = new ArrayList<Registo>();
+        try {
+            rbeServ.execute();
+            registos = rbeServ.getRegistos();
+
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+        if (registos.size() > 0) {
+            int i = 1;
+            for (Registo registo : registos) {
+                System.out.println(i + "- Paciente: " + registo.getPaciente().getNome() + " - Medico: "
+                        + registo.getMedico().getNome());
+                System.out.println("Conteudo: " + registo.getConteudo());
+                i++;
+            }
+        } else {
+            System.out.println("Não há registos para mostrar");
+        }
 
     }
 

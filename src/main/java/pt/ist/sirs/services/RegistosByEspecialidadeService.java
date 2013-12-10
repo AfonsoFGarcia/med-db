@@ -10,16 +10,16 @@ import pt.ist.sirs.exceptions.MedDBException;
 public class RegistosByEspecialidadeService extends MedDBService {
 
     private ArrayList<Registo> registos;
-    private String pacienteUsername;
+    private Integer idEspecialidade;
 
-    public RegistosByEspecialidadeService(String pacienteUsername) {
-        this.pacienteUsername = pacienteUsername;
+    public RegistosByEspecialidadeService(Integer idEspecialidade) {
+        this.idEspecialidade = idEspecialidade;
     }
 
     @Override
     public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        this.registos = root.getRegistosFromPaciente(pacienteUsername);
+        this.registos = root.getRegistosByEspecialidade(idEspecialidade);
     }
 
     public ArrayList<Registo> getRegistos() {
