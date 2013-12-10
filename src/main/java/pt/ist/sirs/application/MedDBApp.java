@@ -82,6 +82,47 @@ public class MedDBApp {
 
     }
 
+    private static void printAdminMenu() {
+        System.out.println();
+        System.out.println("- Acesso a Registo (1-Permitir 2-Negar)");
+        System.out.println("- Acesso a Especialidade (3-Permitir 4-Negar)");
+
+        System.out.println("0 - Logout");
+        System.out.println();
+        System.out.print("Seleccione a opcao pretendida: ");
+        String opcao = System.console().readLine();
+
+        Integer num;
+
+        try {
+            num = Integer.parseInt(opcao);
+        } catch (Exception e) {
+            num = 69;
+        }
+
+        switch (num) {
+        case 0:
+            LoggedPerson.getInstance().removeLoggedPerson();
+            return;
+        case 1:
+            System.out.print("Nao implementado");
+            break;
+        case 2:
+            System.out.print("Nao implementado");
+            break;
+        case 3:
+            System.out.print("Nao implementado");
+            break;
+        case 4:
+            System.out.print("Nao implementado");
+            break;
+        default:
+            System.out.println("Opcao inválida!");
+            break;
+        }
+
+    }
+
     private static void criarNovoRegisto() {
         System.out.print("Introduza o username do paciente: ");
         String paciente = System.console().readLine();
@@ -248,6 +289,7 @@ public class MedDBApp {
                 System.out.println("3 - Registar Pessoa");
                 System.out.println("4 - Registar Estabelecimento");
                 System.out.println("5 - Registar Especialidade");
+                System.out.println("6 - Login Administracao - [Por agora sem login]");
                 System.out.println("0 - Sair");
                 System.out.println();
                 System.out.print("Seleccione a opcao pretendida: ");
@@ -279,6 +321,10 @@ public class MedDBApp {
                     break;
                 case 5:
                     createEspecialidade();
+                    break;
+                case 6:
+                    //TODO: login para admin
+                    printAdminMenu();
                     break;
                 default:
                     System.out.println("Opcao inválida!");
