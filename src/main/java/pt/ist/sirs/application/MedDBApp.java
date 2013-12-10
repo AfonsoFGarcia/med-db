@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
-import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.ChangePermissaoService;
@@ -18,6 +17,7 @@ import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
+import pt.ist.sirs.services.dto.RegistoDTO;
 
 /**
  * Classe <b>MedDBApp</b>. <br>
@@ -147,7 +147,7 @@ public class MedDBApp {
     private static void registosPorPaciente() {
         System.out.print("Introduza o username do paciente: ");
         String username = System.console().readLine();
-        ArrayList<Registo> registos = new ArrayList<Registo>();
+        ArrayList<RegistoDTO> registos = null;
 
         RegistosFromPacienteService rfpServ = new RegistosFromPacienteService(username);
         try {
@@ -158,14 +158,11 @@ public class MedDBApp {
             System.out.println(e.getMessage());
         }
 
-        if (registos.size() > 0) {
-            int i = 1;
-            for (Registo registo : registos) {
-
-                System.out.println(i + "- Especialidade: " + registo.getEspecialidade().getNome() + " - Medico: "
-                        + registo.getMedico().getNome());
+        if (registos != null && registos.size() > 0) {
+            for (RegistoDTO registo : registos) {
+                System.out.println(registo.getObjectID() + "- Especialidade: " + registo.getNomeEspecialidade() + " - Medico: "
+                        + registo.getNomeMedico());
                 System.out.println("Conteudo: " + registo.getConteudo());
-                i++;
             }
         } else {
             System.out.println("Não há registos para mostrar");
@@ -177,7 +174,7 @@ public class MedDBApp {
         System.out.print("Introduza o id da especialidade: ");
         Integer especialidade = Integer.parseInt(System.console().readLine());
         RegistosByEspecialidadeService rbeServ = new RegistosByEspecialidadeService(especialidade);
-        ArrayList<Registo> registos = new ArrayList<Registo>();
+        ArrayList<RegistoDTO> registos = null;
         try {
             rbeServ.execute();
             registos = rbeServ.getRegistos();
@@ -186,13 +183,11 @@ public class MedDBApp {
             System.out.println(e.getMessage());
         }
 
-        if (registos.size() > 0) {
-            int i = 1;
-            for (Registo registo : registos) {
-                System.out.println(i + "- Paciente: " + registo.getPaciente().getNome() + " - Medico: "
-                        + registo.getMedico().getNome());
+        if (registos != null && registos.size() > 0) {
+            for (RegistoDTO registo : registos) {
+                System.out.println(registo.getObjectID() + "- Paciente: " + registo.getNomePaciente() + " - Medico: "
+                        + registo.getNomeMedico());
                 System.out.println("Conteudo: " + registo.getConteudo());
-                i++;
             }
         } else {
             System.out.println("Não há registos para mostrar");
