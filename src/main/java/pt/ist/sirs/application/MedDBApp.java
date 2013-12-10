@@ -11,6 +11,7 @@ import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.ChangePermissaoService;
 import pt.ist.sirs.services.CreateEspecialidadeService;
 import pt.ist.sirs.services.CreateEstabelecimentoService;
+import pt.ist.sirs.services.CreateMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
@@ -86,8 +87,9 @@ public class MedDBApp {
 
     private static void printAdminMenu() {
         System.out.println();
-        System.out.println("- Acesso a Registo (1-Permitir 2-Negar)");
-        System.out.println("- Acesso a Especialidade (3-Permitir 4-Negar)");
+        System.out.println("- Acesso de Medico a Registo (1-Permitir 2-Negar)");
+        System.out.println("- Acesso de Medico a Especialidade (3-Permitir 4-Negar)");
+        System.out.println("- Acesso de Especialidade a Especialidade (5-Permitir 6-Negar)");
 
         System.out.println("0 - Logout");
         System.out.println();
@@ -107,15 +109,22 @@ public class MedDBApp {
             LoggedPerson.getInstance().removeLoggedPerson();
             return;
         case 1:
-            System.out.print("Nao implementado");
+
+            acessoMedicoARegisto(1);
             break;
         case 2:
-            System.out.print("Nao implementado");
+            acessoMedicoARegisto(2);
             break;
         case 3:
-            System.out.print("Nao implementado");
+            acessoMedicoAEspecialidade(3);
             break;
         case 4:
+            acessoMedicoAEspecialidade(4);
+            break;
+        case 5:
+            System.out.print("Nao implementado");
+            break;
+        case 6:
             System.out.print("Nao implementado");
             break;
         default:
@@ -123,6 +132,52 @@ public class MedDBApp {
             break;
         }
 
+    }
+
+    private static void acessoMedicoAEspecialidade(Integer num) {
+        System.out.print("Indique o username do Medico: ");
+        String usernameMedico = System.console().readLine();
+
+        System.out.print("Indique o id da Especialidade: ");
+        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
+
+        //TODO:
+        switch (num) {
+        case 3://Permitir
+               //TODO:Adicionar especialidade ao medico
+
+            break;
+        case 4://Negar
+               //Adicioar elemento MedicoBanidoDeEspecialidade
+            CreateMedicoBanidoDeEspecialidadeService cmbeServ =
+                    new CreateMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+            try {
+                cmbeServ.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+        }
+
+    }
+
+    private static void acessoMedicoARegisto(Integer num) {
+
+        System.out.print("Indique o username do Medico: ");
+        String medico = System.console().readLine();
+
+        System.out.print("Indique o id do registo: ");
+        Integer idregisto = Integer.parseInt(System.console().readLine());
+
+        //TODO:
+        switch (num) {
+        case 1://Permitir
+
+            break;
+        case 2://Negar
+
+            break;
+        }
     }
 
     private static void criarNovoRegisto() {

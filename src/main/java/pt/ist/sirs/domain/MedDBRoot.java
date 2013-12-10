@@ -110,6 +110,15 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    public boolean hasEspecialidade(Integer id) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Especialidade && ((Especialidade) object).getObjectId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Registo> getRegistosFromPaciente(String pacienteUsername) {
         ArrayList<Registo> registos = new ArrayList<Registo>();
 
