@@ -1,67 +1,60 @@
 grammar PermissaoBuilder;
 
 @header {
-	import java.util.ArrayList;
-	import pt.ist.sirs.permissoes.Permissao;
+import java.util.ArrayList;
+import pt.ist.sirs.permissoes.Permissao;
+import pt.ist.sirs.permissoes.logicas.*;
 }
 
 @members {
-	public static void main(String[] args) throws Exception {
-		PermissaoBuilderLexer lex = new PermissaoBuilderLexer(new ANTLRFileStream(args[0]));
+	public static Permissao getPermissao(String perm) {
+		String sanitizedPerm = perm.toLowerCase().replaceAll(" ", "");
+		PermissaoBuilderLexer lex = new PermissaoBuilderLexer(new ANTLRInputStream(sanitizedPerm));
 		CommonTokenStream tokens = new CommonTokenStream(lex);
-
 		PermissaoBuilderParser parser = new PermissaoBuilderParser(tokens);
-
+		
+		Permissao permissao = null;
+		
 		try {
-			parser.b();
+			permissao = parser.b().value;
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		}
+		
+		return permissao;
 	}
 }
 
 /* PARSER RULES */
 
 b returns [Permissao value]
- :	s 				{$b.value = $s.value.get(0);}
+ :	OR BP s CP		{$b.value = new PermissaoOuLogico(null, $s.value);}
+ |	AND BP s CP		{$b.value = new PermissaoELogico(null, $s.value);}
+ |	NOT BP b_1 CP	{$b.value = new PermissaoNaoLogico(null, $b_1.value);}
+ |	MDESP			{$b.value = new PermissaoMedicoDaEspecialidade(null);}
+ |	MDP				{$b.value = new PermissaoMedicoDaPessoa(null);}
+ |	MDU				{$b.value = new PermissaoMedicoDeUrgencia(null);}
+ |	MDEST			{$b.value = new PermissaoMedicoDoEstabelecimento(null);}
+ |	MDR				{$b.value = new PermissaoMedicoDoRegisto(null);}
+ |	PDR				{$b.value = new PermissaoPacienteDoRegisto(null);}
+ |	PPDE			{$b.value = new PermissaoPoliticaDeEspecialidade(null);}
+ |	PP				{$b.value = new PermissaoPublica(null);}
+ ;
+
+b_1 returns [Permissao value]
+ :	b				{$b_1.value = $b.value;}
+ ;
+ 
+s_1 returns [ArrayList<Permissao> value]
+ :	s		{$s_1.value = $s.value;}
  ;
 
 s returns [ArrayList<Permissao> value]
 @init {
 	$value = new ArrayList<Permissao>();
 }
- :	OR BP s_1 CP	{$s.value.add(new PermissaoOuLogico($s_1.value))}
- |	AND BP s_1 CP {$s.value.add(new PermissaoOuLogico($s_1.value))}
- |	c				{$s.value = $c.value;}
- ;
-
-s_1 returns [ArrayList<Permissao> value]
- :	s 				{$s_1.value = $s.value;}
- ;
-
-s_2 returns [ArrayList<Permissao> value]
- :	s 				{$s_2.value = $s.value;}
- ;
-
-c returns [ArrayList<Permissao> value]
-@init {
-	$value = new ArrayList<Permissao>();
-}
- :	s_1 VR s_2		{$c.value.addAll($s_1.value); $c.value.addAll($s_2.value);}
- |	NOT BP t CP		{$c.value.add($t.value);}
- |	t
- ;
-
-t returns [Permissao value]
- :	
- |	MDESP			{$t.value = new PermissaoMedicoDaEspecialidade(null);}
- |	MDP				{$t.value = new PermissaoMedicoDaPessoa(null);}
- |	MDU				{$t.value = new PermissaoMedicoDeUrgencia(null);}
- |	MDEST			{$t.value = new PermissaoMedicoDoEstabelecimento(null);}
- |	MDR				{$t.value = new PermissaoMedicoDoRegisto(null);}
- |	PDR				{$t.value = new PermissaoPacienteDoRegisto(null);}
- |	PPDE			{$t.value = new PermissaoPoliticaDeEspecialidade(null);}
- |	PP				{$t.value = new PermissaoPublica(null);}
+ :	b VR s_1		{$s.value.add($b.value); $s.value.addAll($s_1.value);}
+ |	b				{$s.value.add($b.value);}
  ;
 
 /* LEXER RULES */
