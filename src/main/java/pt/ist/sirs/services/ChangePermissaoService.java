@@ -28,6 +28,7 @@ public class ChangePermissaoService extends MedDBService {
 
         if (loggedPerson.getUsername().equals(reg.getPaciente().getUsername())) {
             Permissao perm = PermissaoBuilderParser.getPermissao(this.perm);
+            perm.setRegisto(reg);
             reg.setPermissao(perm);
         } else {
             throw new OperacaoNaoPermitidaException("mudar permissao", loggedPerson.getUsername());
