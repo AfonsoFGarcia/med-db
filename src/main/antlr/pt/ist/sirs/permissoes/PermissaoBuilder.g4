@@ -5,23 +5,6 @@ grammar PermissaoBuilder;
 	import pt.ist.sirs.permissoes.Permissao;
 }
 
-tokens{
-	OR		"or"
-	AND		"and"
-	NOT		"not"
-	MDESP 	"mdesp"
-	MDP		"mdp"
-	MDU		"mdu"
-	MDEST	"mdest"
-	MDR		"mdr"
-	PDR		"pdr"
-	PPDE	"ppde"
-	PP		"pp"
-	BP		'('
-	CP		')'
-	VR		','
-}
-
 @members {
 	public static void main(String[] args) throws Exception {
 		PermissaoBuilderLexer lex = new PermissaoBuilderLexer(new ANTLRFileStream(args[0]));
@@ -83,10 +66,51 @@ t returns [Permissao value]
 
 /* LEXER RULES */
 
+ OR
+ :	'or'
+ ;
+ AND
+ :	'and'
+ ;
+ NOT
+ :	'not'
+ ;
+ MDESP
+ : 	'mdesp'
+ ;
+ MDP
+ :	'mdp'
+ ;
+ MDU
+ :	'mdu'
+ ;
+ MDEST
+ :	'mdest'
+ ;
+ MDR
+ :	'mdr'
+ ;
+ PDR
+ :	'pdr'
+ ;
+ PPDE
+ :	'ppde'
+ ;
+ PP
+ :	'pp'
+ ;
+ BP
+ :	'('
+ ;
+ CP
+ :	')'
+ ;
+ VR
+ :	','
+ ;
  INT
  :	(DIGIT)+
- ;
- 
- fragment DIGIT
- :	'0'...'9'
+ ; 
+ DIGIT
+ :	'0'..'9'
  ;
