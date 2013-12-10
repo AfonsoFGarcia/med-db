@@ -1,7 +1,10 @@
 package pt.ist.sirs.domain;
 
+import java.util.ArrayList;
+
 import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
+import pt.ist.sirs.login.LoggedPerson;
 
 /**
  * Classe <b>MedDBRoot</b>. <br>
@@ -104,5 +107,33 @@ public class MedDBRoot extends MedDBRoot_Base {
             }
         }
         return false;
+    }
+
+    public ArrayList<Registo> getRegistosFromPaciente(String pacienteUsername) {
+        ArrayList<Registo> registos = new ArrayList<Registo>();
+
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Registo && ((Registo) object).getPaciente().getUsername().equals(pacienteUsername)) {
+                Registo r = (Registo) object;
+                Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
+                if (m.getObjectId().equals(r.getMedico().getObjectId())) {
+                    registos.add(r);
+                    continue;
+                }
+
+                for (Especialidade especialidade : m.getEspecialidades()) {
+                    if (verificaAcessoAEspecialidade(especialidade, r.getEspecialidade())) {
+                        registos.add(r);
+                        continue;
+
+                    }
+
+                }
+
+            }
+        }
+
+        return registos;
+
     }
 }
