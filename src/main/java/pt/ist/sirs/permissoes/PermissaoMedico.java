@@ -29,4 +29,13 @@ public class PermissaoMedico extends Permissao {
         }
         return false;
     }
+
+    public Medico getMedico() {
+        return m;
+    }
+
+    public void setMedico(Medico m) {
+        this.m = m;
+    }
+
 }

@@ -14,6 +14,7 @@ import pt.ist.sirs.services.CreateEstabelecimentoService;
 import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
+import pt.ist.sirs.services.DevolverAcessoAMedicoService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
@@ -108,7 +109,7 @@ public class MedDBApp {
             LoggedPerson.getInstance().removeLoggedPerson();
             return;
         case 1:
-            System.out.print("Nao implementado");
+            reporAcessoARegisto();
             break;
         case 2:
             negarAcessoARegisto();
@@ -139,7 +140,21 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    private static void reporAcessoARegisto() {
+        System.out.print("Introduza o ID do registo: ");
+        Integer idRegisto = Integer.parseInt(System.console().readLine());
+        System.out.print("Introduza o username do medico: ");
+        String userMedico = System.console().readLine();
+
+        DevolverAcessoAMedicoService serv = new DevolverAcessoAMedicoService(userMedico, idRegisto);
+
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void criarNovoRegisto() {

@@ -43,4 +43,13 @@ public class PermissaoNaoLogico extends Permissao {
         super.setRegisto(registo);
         this.permissao.setRegisto(registo);
     }
+
+    public Permissao getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(Permissao permissao) {
+        this.permissao = permissao;
+    }
+
 }
