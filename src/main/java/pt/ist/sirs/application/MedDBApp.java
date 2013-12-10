@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.services.ChangePermissaoService;
 import pt.ist.sirs.services.CreateEspecialidadeService;
 import pt.ist.sirs.services.CreateEstabelecimentoService;
 import pt.ist.sirs.services.CreateMedicoService;
@@ -278,11 +280,10 @@ public class MedDBApp {
     private static void printMenu() {
         while (true) {
             if (LoggedPerson.getInstance().getLoggedPerson() instanceof Medico) {
-
                 printMedicoMenu();
-
+            } else if (LoggedPerson.getInstance().getLoggedPerson() instanceof Pessoa) {
+                printPacienteMenu();
             } else {
-
                 System.out.println();
                 System.out.println("1 - Login Med-DB");
                 System.out.println("2 - Registar Medico");
@@ -332,6 +333,52 @@ public class MedDBApp {
                 }
             }
         }
+    }
+
+    private static void printPacienteMenu() {
+        System.out.println();
+        System.out.println("1 - Alterar permissao de registo");
+        System.out.println("0 - Sair");
+        System.out.println();
+        System.out.print("Seleccione a opcao pretendida: ");
+        String opcao = System.console().readLine();
+
+        Integer num;
+
+        try {
+            num = Integer.parseInt(opcao);
+        } catch (Exception e) {
+            num = 69;
+        }
+
+        switch (num) {
+        case 0:
+            LoggedPerson.getInstance().removeLoggedPerson();
+            return;
+        case 1:
+            changePermReg();
+            break;
+        default:
+            System.out.println("Opcao inválida!");
+            break;
+        }
+
+    }
+
+    private static void changePermReg() {
+        System.out.println();
+        System.out.print("Introduza o ID do registo: ");
+        Integer idReg = Integer.parseInt(System.console().readLine());
+        System.out.print("Introduza a permissao pretendida: ");
+        String perm = System.console().readLine();
+
+        ChangePermissaoService serv = new ChangePermissaoService(perm, idReg);
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private static void createEstabelecimento() {
