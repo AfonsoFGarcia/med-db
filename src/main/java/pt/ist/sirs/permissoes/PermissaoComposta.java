@@ -92,7 +92,7 @@ public abstract class PermissaoComposta extends Permissao {
 
     @Override
     public void setRegisto(Registo registo) {
-        this.registo = registo;
+        super.setRegisto(registo);
         for (Permissao p : this.permissoes) {
             p.setRegisto(registo);
         }
