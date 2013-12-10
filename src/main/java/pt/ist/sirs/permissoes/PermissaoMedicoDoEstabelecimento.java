@@ -21,7 +21,7 @@ public class PermissaoMedicoDoEstabelecimento extends Permissao {
 
         for (Estabelecimento estabelecimento : estabelecimentos) {
             if (registo.getEstabelecimento().getObjectId().equals(estabelecimento.getObjectId())) {
-                return true;
+                return true && !super.medicoBanido(medico);
             }
         }
         return false;

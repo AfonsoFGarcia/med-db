@@ -25,7 +25,7 @@ public class PermissaoPoliticaDeEspecialidade extends Permissao {
 
         for (Especialidade especialidade : especialidades) {
             if (root.verificaAcessoAEspecialidade(especialidade, especialidadeDoRegisto)) {
-                return true;
+                return true && !super.medicoBanido(medico);
             }
         }
 
