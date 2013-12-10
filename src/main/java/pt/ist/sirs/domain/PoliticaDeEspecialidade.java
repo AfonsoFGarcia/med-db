@@ -1,6 +1,7 @@
 package pt.ist.sirs.domain;
 
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
 
 public class PoliticaDeEspecialidade extends PoliticaDeEspecialidade_Base {
 
@@ -8,11 +9,11 @@ public class PoliticaDeEspecialidade extends PoliticaDeEspecialidade_Base {
         super();
     }
 
-    public Especialidade getAcessor() {
+    public Especialidade getAcessor() throws ObjectoNaoExisteException {
         return (Especialidade) ((MedDBRoot) FenixFramework.getRoot()).getObjectByObjectID(getAcessorObjectID());
     }
 
-    public Especialidade getAcedida() {
+    public Especialidade getAcedida() throws ObjectoNaoExisteException {
         return (Especialidade) ((MedDBRoot) FenixFramework.getRoot()).getObjectByObjectID(getAcedidaObjectID());
     }
 

@@ -1,7 +1,7 @@
 package pt.ist.sirs.domain;
 
+import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
-import pt.ist.sirs.permissoes.Permissao;
 
 /**
  * Classe <b>MedDBRoot</b>. <br>
@@ -32,13 +32,13 @@ public class MedDBRoot extends MedDBRoot_Base {
         return newObjectId;
     }
 
-    public MedDBCommon getObjectByObjectID(Integer objectID) {
+    public MedDBCommon getObjectByObjectID(Integer objectID) throws ObjectoNaoExisteException {
         for (MedDBCommon object : this.getObject()) {
             if (object.getObjectId().equals(objectID)) {
                 return object;
             }
         }
-        return null;
+        throw new ObjectoNaoExisteException(objectID);
     }
 
     public Pessoa getPersonByUsername(String username) throws PessoaNaoExisteException {
@@ -59,13 +59,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
-    public boolean hasRegisto(Medico medico, Pessoa paciente, String conteudo, Especialidade especialidade, Permissao permissao,
+    public boolean hasRegisto(Medico medico, Pessoa paciente, String conteudo, Especialidade especialidade,
             Estabelecimento estabelecimento) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Registo && ((Registo) object).getMedico().equals(medico)
                     && ((Registo) object).getPaciente().equals(paciente) && ((Registo) object).getConteudo().equals(conteudo)
                     && ((Registo) object).getEspecialidade().equals(especialidade)
-                    && ((Registo) object).getPermissao().equals(permissao)
                     && ((Registo) object).getEstabelecimento().equals(estabelecimento)) {
                 return true;
             }
@@ -83,6 +82,24 @@ public class MedDBRoot extends MedDBRoot_Base {
     public boolean verificaAcessoAEspecialidade(Especialidade acessor, Especialidade acedida) {
         for (PoliticaDeEspecialidade p : this.getPoliticaDeEspecialidade()) {
             if (p.equals(acessor, acedida)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasEstabelecimento(String nome) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Estabelecimento && ((Estabelecimento) object).getNome().equals(nome)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasEspecialidade(String nome) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Especialidade && ((Especialidade) object).getNome().equals(nome)) {
                 return true;
             }
         }

@@ -8,8 +8,11 @@ import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.services.CreateEspecialidadeService;
+import pt.ist.sirs.services.CreateEstabelecimentoService;
 import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
+import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.LoginService;
 
 /**
@@ -80,15 +83,20 @@ public class MedDBApp {
     private static void criarNovoRegisto() {
         System.out.print("Introduza o username do paciente: ");
         String paciente = System.console().readLine();
+        System.out.print("Introduza o id da especialidade: ");
+        Integer especialidade = Integer.parseInt(System.console().readLine());
+        System.out.print("Introduza o id do estabelecimento: ");
+        Integer estabelecimento = Integer.parseInt(System.console().readLine());
+        System.out.println();
         System.out.print("Conteudo: ");
         String conteudo = System.console().readLine();
-//TODO:
-//        CreateRegistoService registoSrv = new CreateRegistoService(LoggedPerson.getInstance(), paciente, conteudo, especialidade, permissao, estabelecimento)
-//        try {
-//            registoSrv.execute();
-//        } catch (MedDBException e) {
-//            System.out.println(e.getMessage());
-//        }
+
+        CreateRegistoService registoSrv = new CreateRegistoService(paciente, conteudo, especialidade, estabelecimento);
+        try {
+            registoSrv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void registosPorPaciente() {
@@ -189,6 +197,8 @@ public class MedDBApp {
                 System.out.println("1 - Login Med-DB");
                 System.out.println("2 - Registar Medico");
                 System.out.println("3 - Registar Pessoa");
+                System.out.println("4 - Registar Estabelecimento");
+                System.out.println("5 - Registar Especialidade");
                 System.out.println("0 - Sair");
                 System.out.println();
                 System.out.print("Seleccione a opcao pretendida: ");
@@ -215,12 +225,48 @@ public class MedDBApp {
                 case 3:
                     createPessoa();
                     break;
+                case 4:
+                    createEstabelecimento();
+                    break;
+                case 5:
+                    createEspecialidade();
+                    break;
                 default:
                     System.out.println("Opcao inválida!");
                     break;
                 }
             }
         }
+    }
+
+    private static void createEstabelecimento() {
+        System.out.println();
+        System.out.print("Introduza o nome do estabelecimento: ");
+        String nome = System.console().readLine();
+
+        CreateEstabelecimentoService serv = new CreateEstabelecimentoService(nome);
+
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private static void createEspecialidade() {
+        System.out.println();
+        System.out.print("Introduza o nome da especialidade: ");
+        String nome = System.console().readLine();
+
+        CreateEspecialidadeService serv = new CreateEspecialidadeService(nome);
+
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private static void personLogin() {
