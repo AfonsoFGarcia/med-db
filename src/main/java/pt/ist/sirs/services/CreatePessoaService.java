@@ -1,5 +1,9 @@
 package pt.ist.sirs.services;
 
+import java.security.SecureRandom;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Pessoa;
@@ -28,10 +32,17 @@ public class CreatePessoaService extends MedDBService {
             Pessoa pessoa = new Pessoa();
             pessoa.setNome(this.nome);
             pessoa.setUsername(this.username);
-            pessoa.setPassword(this.password);
+
+            SecureRandom rand = new SecureRandom(pessoa.getObjectId().toString().getBytes());
+            byte[] saltBytes = new byte[32];
+            rand.nextBytes(saltBytes);
+            String salt = new String(saltBytes);
+            String saltedPass = new String(DigestUtils.sha1(this.password + salt));
+
+            pessoa.setPassword(saltedPass);
+            pessoa.setSalt(salt);
         } else {
             throw new UsernameJaExisteException(this.username);
         }
     }
-
 }

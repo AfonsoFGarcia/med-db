@@ -2,8 +2,6 @@ package pt.ist.sirs.application;
 
 import java.io.IOException;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.exceptions.MedDBException;
@@ -130,7 +128,7 @@ public class MedDBApp {
         System.out.print("Introduza o nome: ");
         String nome = System.console().readLine();
 
-        CreatePessoaService pessoaServ = new CreatePessoaService(username, new String(DigestUtils.sha1(password)), nome);
+        CreatePessoaService pessoaServ = new CreatePessoaService(username, password, nome);
         try {
             pessoaServ.execute();
         } catch (MedDBException e) {
@@ -176,8 +174,7 @@ public class MedDBApp {
             }
         }
 
-        CreateMedicoService serv =
-                new CreateMedicoService(username, new String(DigestUtils.sha1(password)), nome, medicoDeUrgencia);
+        CreateMedicoService serv = new CreateMedicoService(username, password, nome, medicoDeUrgencia);
         try {
             serv.execute();
         } catch (MedDBException e) {
@@ -275,7 +272,7 @@ public class MedDBApp {
             System.out.print("Introduza o seu username: ");
             String username = System.console().readLine();
             System.out.print("Introduza a sua password: ");
-            String password = new String(DigestUtils.sha1(new String(System.console().readPassword())));
+            String password = new String(System.console().readPassword());
 
             LoginService login = new LoginService(username, password);
             try {

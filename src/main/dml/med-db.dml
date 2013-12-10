@@ -23,6 +23,7 @@ class Pessoa extends MedDBCommon {
 	String nome;
 	String username;
 	String password;
+	String salt;
 }
 
 class Medico extends Pessoa {
