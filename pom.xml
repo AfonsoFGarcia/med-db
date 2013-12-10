@@ -118,6 +118,24 @@
 					<target>${javaSourceVersion}</target>
 				</configuration>
 			</plugin>
+
+
+			<plugin>
+        		<groupId>org.antlr</groupId>
+        		<artifactId>antlr4-maven-plugin</artifactId>
+        		<version>4.0</version>
+        		<configuration>
+          			<sourceDirectory>src/main/antlr</sourceDirectory>
+        		</configuration>
+        		<executions>
+          			<execution>
+            			<goals>
+              				<goal>antlr4</goal>
+           	 			</goals>
+          			</execution>
+        		</executions>
+      		</plugin>
+ 	
 		</plugins>
 	</build>
 
@@ -138,6 +156,12 @@
 			<artifactId>fenix-framework-core</artifactId>
 			<version>${fenix.framework.version}</version>
 		</dependency>
+		<dependency>
+      		<groupId>org.antlr</groupId>
+      		<artifactId>antlr4-runtime</artifactId>
+      		<version>4.0</version>
+      		<scope>compile</scope>
+    	</dependency>
 	</dependencies>
 
 	<repositories>

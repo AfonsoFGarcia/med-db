@@ -5,17 +5,39 @@ grammar PermissaoBuilder;
 	import pt.ist.sirs.permissoes.Permissao;
 }
 
-#token OR		"or"
-#token AND		"and"
-#token NOT		"not"
-#token MDESP 	"mdesp"
-#token MDP		"mdp"
-#token MDU		"mdu"
-#token MDEST	"mdest"
-#token MDR		"mdr"
-#token PDR		"pdr"
-#token PPDE		"ppde"
-#token PP		"pp"
+tokens{
+	OR		"or"
+	AND		"and"
+	NOT		"not"
+	MDESP 	"mdesp"
+	MDP		"mdp"
+	MDU		"mdu"
+	MDEST	"mdest"
+	MDR		"mdr"
+	PDR		"pdr"
+	PPDE	"ppde"
+	PP		"pp"
+	BP		'('
+	CP		')'
+	VR		','
+}
+
+@members {
+	public static void main(String[] args) throws Exception {
+		PermissaoBuilderLexer lex = new PermissaoBuilderLexer(new ANTLRFileStream(args[0]));
+		CommonTokenStream tokens = new CommonTokenStream(lex);
+
+		PermissaoBuilderParser parser = new PermissaoBuilderParser(tokens);
+
+		try {
+			parser.b();
+		} catch (RecognitionException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+/* PARSER RULES */
 
 b returns [Permissao value]
  :	s 				{$b.value = $s.value.get(0);}
@@ -25,8 +47,8 @@ s returns [ArrayList<Permissao> value]
 @init {
 	$value = new ArrayList<Permissao>();
 }
- :	OR "(" s_1 ")"	{$s.value.add(new PermissaoOuLogico($s_1.value))}
- |	AND "(" s_1 ")" {$s.value.add(new PermissaoOuLogico($s_1.value))}
+ :	OR BP s_1 CP	{$s.value.add(new PermissaoOuLogico($s_1.value))}
+ |	AND BP s_1 CP {$s.value.add(new PermissaoOuLogico($s_1.value))}
  |	c				{$s.value = $c.value;}
  ;
 
@@ -42,8 +64,8 @@ c returns [ArrayList<Permissao> value]
 @init {
 	$value = new ArrayList<Permissao>();
 }
- :	s_1 "," s_2		{$c.value.addAll($s_1.value); $c.value.addAll($s_2.value);}
- |	NOT "(" t ")"	{$c.value.add($t.value);}
+ :	s_1 VR s_2		{$c.value.addAll($s_1.value); $c.value.addAll($s_2.value);}
+ |	NOT BP t CP		{$c.value.add($t.value);}
  |	t
  ;
 
@@ -59,6 +81,12 @@ t returns [Permissao value]
  |	PP				{$t.value = new PermissaoPublica(null);}
  ;
 
+/* LEXER RULES */
+
  INT
- :	"0"..."9"+
+ :	(DIGIT)+
+ ;
+ 
+ fragment DIGIT
+ :	'0'...'9'
  ;
