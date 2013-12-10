@@ -136,4 +136,31 @@ public class MedDBRoot extends MedDBRoot_Base {
         return registos;
 
     }
+
+    public ArrayList<Registo> getRegistosByEspecialidade(Integer idEspecialidade) {
+        ArrayList<Registo> registos = new ArrayList<Registo>();
+
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Registo) {
+                Registo r = (Registo) object;
+                Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
+                if (m.getObjectId().equals(r.getMedico().getObjectId()) || m.getMedicoDeUrgencia()) {
+                    registos.add(r);
+                    continue;
+                }
+
+                for (Especialidade especialidade : m.getEspecialidades()) {
+                    if (verificaAcessoAEspecialidade(especialidade, r.getEspecialidade())) {
+                        registos.add(r);
+                        continue;
+
+                    }
+
+                }
+
+            }
+        }
+
+        return registos;
+    }
 }

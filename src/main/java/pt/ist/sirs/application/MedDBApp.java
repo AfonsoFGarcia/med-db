@@ -46,7 +46,7 @@ public class MedDBApp {
         System.out.println();
         System.out.println("1 - Criar Novo Registo");
         System.out.println("2 - Consultar Registos por Paciente");
-        System.out.println("3 - XXX");
+        System.out.println("3 - Consultar Registos por Especialidade");
         System.out.println("0 - Logout");
         System.out.println();
         System.out.print("Seleccione a opcao pretendida: ");
@@ -72,7 +72,7 @@ public class MedDBApp {
 
             break;
         case 3:
-            System.out.println("Nao implementado!");
+            registosPorEspecialidade();
             break;
         default:
             System.out.println("Opcao inválida!");
@@ -125,6 +125,12 @@ public class MedDBApp {
         } else {
             System.out.println("Não há registos para mostrar");
         }
+
+    }
+
+    private static void registosPorEspecialidade() {
+        System.out.print("Introduza o id da especialidade: ");
+        Integer especialidade = Integer.parseInt(System.console().readLine());
 
     }
 
