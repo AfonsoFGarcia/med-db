@@ -40,6 +40,7 @@ public class CreateRegistoService extends MedDBService {
             novoRegisto.setMedico(medico);
             novoRegisto.setPaciente(pessoa);
             novoRegisto.setEstabelecimento(estabelecimento);
+            pessoa.addMedicos(medico);
         } else {
             throw new RegistoJaExisteException();
         }
