@@ -15,6 +15,7 @@ import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.LoginService;
+import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
 import pt.ist.sirs.services.dto.RegistoDTO;
@@ -110,7 +111,7 @@ public class MedDBApp {
             System.out.print("Nao implementado");
             break;
         case 2:
-            System.out.print("Nao implementado");
+            negarAcessoARegisto();
             break;
         case 3:
             System.out.print("Nao implementado");
@@ -121,6 +122,22 @@ public class MedDBApp {
         default:
             System.out.println("Opcao inválida!");
             break;
+        }
+
+    }
+
+    private static void negarAcessoARegisto() {
+        System.out.print("Introduza o ID do registo: ");
+        Integer idRegisto = Integer.parseInt(System.console().readLine());
+        System.out.print("Introduza o username do medico: ");
+        String userMedico = System.console().readLine();
+
+        ProibirAcessoAMedicoService serv = new ProibirAcessoAMedicoService(userMedico, idRegisto);
+
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
         }
 
     }
