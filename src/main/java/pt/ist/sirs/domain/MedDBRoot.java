@@ -1,6 +1,7 @@
 package pt.ist.sirs.domain;
 
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
+import pt.ist.sirs.permissoes.Permissao;
 
 /**
  * Classe <b>MedDBRoot</b>. <br>
@@ -52,6 +53,20 @@ public class MedDBRoot extends MedDBRoot_Base {
     public boolean hasPerson(String username) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Pessoa && ((Pessoa) object).getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasRegisto(Medico medico, Pessoa paciente, String conteudo, Especialidade especialidade, Permissao permissao,
+            Estabelecimento estabelecimento) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Registo && ((Registo) object).getMedico().equals(medico)
+                    && ((Registo) object).getPaciente().equals(paciente) && ((Registo) object).getConteudo().equals(conteudo)
+                    && ((Registo) object).getEspecialidade().equals(especialidade)
+                    && ((Registo) object).getPermissao().equals(permissao)
+                    && ((Registo) object).getEstabelecimento().equals(estabelecimento)) {
                 return true;
             }
         }

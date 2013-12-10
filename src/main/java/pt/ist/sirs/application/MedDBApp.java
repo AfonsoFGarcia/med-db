@@ -79,8 +79,16 @@ public class MedDBApp {
 
     private static void criarNovoRegisto() {
         System.out.print("Introduza o username do paciente: ");
-        String username = System.console().readLine();
-
+        String paciente = System.console().readLine();
+        System.out.print("Conteudo: ");
+        String conteudo = System.console().readLine();
+//TODO:
+//        CreateRegistoService registoSrv = new CreateRegistoService(LoggedPerson.getInstance(), paciente, conteudo, especialidade, permissao, estabelecimento)
+//        try {
+//            registoSrv.execute();
+//        } catch (MedDBException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private static void registosPorPaciente() {
