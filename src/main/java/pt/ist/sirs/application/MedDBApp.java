@@ -1,9 +1,11 @@
 package pt.ist.sirs.application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.CreateEspecialidadeService;
@@ -12,6 +14,7 @@ import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.LoginService;
+import pt.ist.sirs.services.RegistosFromPacienteService;
 
 /**
  * Classe <b>MedDBApp</b>. <br>
@@ -98,10 +101,30 @@ public class MedDBApp {
     }
 
     private static void registosPorPaciente() {
-        System.out.println("Nao implementado!");
-        // System.out.print("Introduza o username do paciente: ");
-        // String username = System.console().readLine();
-        //TODO:
+        System.out.print("Introduza o username do paciente: ");
+        String username = System.console().readLine();
+        ArrayList<Registo> registos = new ArrayList<Registo>();
+
+        RegistosFromPacienteService rfpServ = new RegistosFromPacienteService(username);
+        try {
+            rfpServ.execute();
+            registos = rfpServ.getRegistos();
+
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+        if (registos.size() > 0) {
+            int i = 1;
+            for (Registo registo : registos) {
+
+                System.out.println(i + "- " + registo.getEspecialidade().getNome() + " - " + registo.getMedico().getNome());
+                System.out.println("Conteudo: " + registo.getConteudo());
+                i++;
+            }
+        } else {
+            System.out.println("Não há registos para mostrar");
+        }
 
     }
 

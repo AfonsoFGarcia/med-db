@@ -116,7 +116,7 @@ public class MedDBRoot extends MedDBRoot_Base {
             if (object instanceof Registo && ((Registo) object).getPaciente().getUsername().equals(pacienteUsername)) {
                 Registo r = (Registo) object;
                 Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
-                if (m.getObjectId().equals(r.getMedico().getObjectId())) {
+                if (m.getObjectId().equals(r.getMedico().getObjectId()) || m.getMedicoDeUrgencia()) {
                     registos.add(r);
                     continue;
                 }
