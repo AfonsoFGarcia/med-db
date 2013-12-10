@@ -8,6 +8,7 @@ import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.services.AdminLoginService;
 import pt.ist.sirs.services.ChangePermissaoService;
 import pt.ist.sirs.services.CreateEspecialidadeService;
 import pt.ist.sirs.services.CreateEstabelecimentoService;
@@ -88,9 +89,10 @@ public class MedDBApp {
 
     private static void printAdminMenu() {
         System.out.println();
-        System.out.println("- Acesso a Registo (1-Permitir 2-Negar)");
-        System.out.println("- Acesso a Especialidade (3-Permitir 4-Negar)");
-
+        System.out.println("1 - Permitir acesso a registo");
+        System.out.println("2 - Negar acesso a registo");
+        System.out.println("3 - Permitir acesso a especialidade");
+        System.out.println("4 - Negar acesso a especialidade");
         System.out.println("0 - Logout");
         System.out.println();
         System.out.print("Seleccione a opcao pretendida: ");
@@ -105,9 +107,6 @@ public class MedDBApp {
         }
 
         switch (num) {
-        case 0:
-            LoggedPerson.getInstance().removeLoggedPerson();
-            return;
         case 1:
             reporAcessoARegisto();
             break;
@@ -121,10 +120,10 @@ public class MedDBApp {
             System.out.print("Nao implementado");
             break;
         default:
-            System.out.println("Opcao inválida!");
             break;
         }
 
+        LoggedPerson.getInstance().removeLoggedPerson();
     }
 
     private static void negarAcessoARegisto() {
@@ -197,7 +196,7 @@ public class MedDBApp {
                 System.out.println("Conteudo: " + registo.getConteudo());
             }
         } else {
-            System.out.println("Não há registos para mostrar");
+            System.out.println("Nao ha registos para mostrar");
         }
 
     }
@@ -222,7 +221,7 @@ public class MedDBApp {
                 System.out.println("Conteudo: " + registo.getConteudo());
             }
         } else {
-            System.out.println("Não há registos para mostrar");
+            System.out.println("Nao ha registos para mostrar");
         }
 
     }
@@ -317,7 +316,7 @@ public class MedDBApp {
                 System.out.println("3 - Registar Pessoa");
                 System.out.println("4 - Registar Estabelecimento");
                 System.out.println("5 - Registar Especialidade");
-                System.out.println("6 - Login Administracao - [Por agora sem login]");
+                System.out.println("6 - Login Administracao");
                 System.out.println("0 - Sair");
                 System.out.println();
                 System.out.print("Seleccione a opcao pretendida: ");
@@ -351,8 +350,7 @@ public class MedDBApp {
                     createEspecialidade();
                     break;
                 case 6:
-                    //TODO: login para admin
-                    printAdminMenu();
+                    adminLogin();
                     break;
                 default:
                     System.out.println("Opcao inválida!");
@@ -484,6 +482,25 @@ public class MedDBApp {
                 System.out.println(e.getMessage());
             }
 
+        }
+    }
+
+    private static void adminLogin() {
+        System.out.println();
+        System.out.print("Introduza o seu username: ");
+        String username = System.console().readLine();
+        System.out.print("Introduza a sua password: ");
+        String password = new String(System.console().readPassword());
+
+        AdminLoginService login = new AdminLoginService(username, password);
+        try {
+            login.execute();
+            System.out.println("Bem vindo " + login.getNome() + "!");
+
+            printAdminMenu();
+            return;
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -28,6 +28,7 @@ public class DevolverAcessoAMedicoService extends MedDBService {
         PermissaoNaoLogico pnl = getPermissao(pc);
         pc.removePermissao(pnl);
 
+        registo.setPermissao(pc);
     }
 
     private PermissaoNaoLogico getPermissao(PermissaoComposta pc) {

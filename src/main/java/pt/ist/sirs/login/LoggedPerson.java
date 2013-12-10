@@ -9,8 +9,10 @@ public class LoggedPerson {
 
     private Pessoa loggedPerson;
     private static LoggedPerson me = null;
+    private boolean admin;
 
     private LoggedPerson() {
+        admin = false;
     }
 
     public static LoggedPerson getInstance() {
@@ -26,6 +28,7 @@ public class LoggedPerson {
 
         if (p.getPassword().equals(saltedPass)) {
             this.loggedPerson = p;
+            this.admin = p.getAdmin();
         } else {
             throw new IncorrectPasswordException();
         }
@@ -37,7 +40,10 @@ public class LoggedPerson {
 
     public void removeLoggedPerson() {
         this.loggedPerson = null;
-
+        this.admin = false;
     }
 
+    public boolean loggedPersonIsAdmin() {
+        return this.admin;
+    }
 }
