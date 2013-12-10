@@ -6,6 +6,7 @@ import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.OperacaoNaoPermitidaException;
+import pt.ist.sirs.exceptions.PermissaoIncorrectaException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.PermissaoBuilderParser;
@@ -28,6 +29,9 @@ public class ChangePermissaoService extends MedDBService {
 
         if (loggedPerson.getUsername().equals(reg.getPaciente().getUsername())) {
             Permissao perm = PermissaoBuilderParser.getPermissao(this.perm);
+            if (perm == null) {
+                throw new PermissaoIncorrectaException(this.perm);
+            }
             perm.setRegisto(reg);
             reg.setPermissao(perm);
         } else {

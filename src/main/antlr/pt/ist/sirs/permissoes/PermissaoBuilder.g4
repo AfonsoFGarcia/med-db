@@ -4,10 +4,18 @@ grammar PermissaoBuilder;
 import java.util.ArrayList;
 import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.logicas.*;
+import java.io.*;
 }
 
 @members {
 	public static Permissao getPermissao(String perm) {
+		PrintStream stderr = System.err;
+		System.setErr(new PrintStream(new OutputStream() {
+                public void write(int b) {
+                    //DO NOTHING
+                }
+            }));
+		
 		String sanitizedPerm = perm.toLowerCase().replaceAll(" ", "");
 		PermissaoBuilderLexer lex = new PermissaoBuilderLexer(new ANTLRInputStream(sanitizedPerm));
 		CommonTokenStream tokens = new CommonTokenStream(lex);
@@ -20,6 +28,8 @@ import pt.ist.sirs.permissoes.logicas.*;
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		}
+		
+		System.setErr(stderr);
 		
 		return permissao;
 	}

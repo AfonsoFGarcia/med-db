@@ -2,6 +2,7 @@ package pt.ist.sirs.domain;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.enums.ObjectType;
+import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.PermissaoBuilderParser;
 
 /**
@@ -25,7 +26,9 @@ public class Registo extends Registo_Base {
         super();
         this.setType(ObjectType.REGISTO);
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        this.setPermissao(PermissaoBuilderParser.getPermissao(root.getDefaultPermission()));
+        Permissao perm = PermissaoBuilderParser.getPermissao(root.getDefaultPermission());
+        perm.setRegisto(this);
+        this.setPermissao(perm);
     }
 
 }
