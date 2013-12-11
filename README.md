@@ -26,6 +26,8 @@ Compilar domínio: `mvn dml:generate-domain` (apenas é necessário depois de al
 
 Compilar projecto: `mvn package`
 
+Preencher base de dados: `mvn exec:java -Dexec.mainClass="pt.ist.sirs.application.PopulateDB"`
+
 Correr projecto: `mvn exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
 
 Limpar base de dados: `mvn sql:execute`
