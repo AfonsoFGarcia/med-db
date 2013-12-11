@@ -7,6 +7,8 @@ public class PoliticaDeEspecialidade extends PoliticaDeEspecialidade_Base {
 
     public PoliticaDeEspecialidade() {
         super();
+        MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
+        this.setRoot(root);
     }
 
     public Especialidade getAcessor() throws ObjectoNaoExisteException {

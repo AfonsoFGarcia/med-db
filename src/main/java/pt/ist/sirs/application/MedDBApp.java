@@ -150,6 +150,9 @@ public class MedDBApp {
             case 10:
                 createEspecialidade();
                 break;
+            case 11:
+                adicionarAcessoDeEspecialidade();
+                break;
             case 99:
                 printAjudaPaciente();
                 break;
@@ -161,6 +164,15 @@ public class MedDBApp {
                 break;
             }
         }
+    }
+
+    private static void adicionarAcessoDeEspecialidade() {
+        System.out.print("Introduza o ID da especialidade acessora: ");
+        Integer idAcessora = Integer.parseInt(System.console().readLine());
+        System.out.print("Introduza o ID da especialidade acedida: ");
+        Integer idAcedida = Integer.parseInt(System.console().readLine());
+
+        AdicionarAcessoDeEspecialidadeService serv = new AdicionarAcessoDeEspecialidadeService(idAcessora, idAcedida);
     }
 
     private static void writeNewDefaultPermission() {
