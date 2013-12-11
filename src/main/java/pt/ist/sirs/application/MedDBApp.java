@@ -8,6 +8,7 @@ import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.services.AdicionarEspecialidadeAMedicoService;
 import pt.ist.sirs.services.AdminLoginService;
 import pt.ist.sirs.services.ChangePermissaoService;
 import pt.ist.sirs.services.CreateEspecialidadeService;
@@ -136,8 +137,12 @@ public class MedDBApp {
         System.out.print("Indique o id da Especialidade: ");
         Integer idEspecialidade = Integer.parseInt(System.console().readLine());
 
-        //TODO:Adicionar especialidade ao medico
-
+        AdicionarEspecialidadeAMedicoService aemServ = new AdicionarEspecialidadeAMedicoService(usernameMedico, idEspecialidade);
+        try {
+            aemServ.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void negarAcessoAEspecialidade() {
@@ -147,7 +152,6 @@ public class MedDBApp {
         System.out.print("Indique o id da Especialidade: ");
         Integer idEspecialidade = Integer.parseInt(System.console().readLine());
 
-        //Adicioar elemento MedicoBanidoDeEspecialidade
         CreateMedicoBanidoDeEspecialidadeService cmbeServ =
                 new CreateMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
         try {
