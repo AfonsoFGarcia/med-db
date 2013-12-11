@@ -7,7 +7,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Pessoa;
+import pt.ist.sirs.exceptions.MedDBException;
+import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.exceptions.UsernameJaExisteException;
+import pt.ist.sirs.login.LoggedPerson;
 
 /**
  * @author Afonso Garcia (70001), José Góis (79261)
@@ -25,7 +28,10 @@ public class CreatePessoaService extends MedDBService {
     }
 
     @Override
-    public void run() throws UsernameJaExisteException {
+    public void run() throws MedDBException {
+        if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
+            throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
+        }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
 
         if (!root.hasPerson(this.username)) {

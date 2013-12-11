@@ -94,15 +94,19 @@ public class MedDBApp {
     private static void printAdminMenu() {
         while (true) {
             System.out.println();
-            System.out.println("1 - Permitir acesso a registo");
-            System.out.println("2 - Negar acesso a registo");
-            System.out.println("3 - Associar medico a especialidade");
-            System.out.println("4 - Negar acesso de medico a especialidade");
-            System.out.println("5 - Alterar estatuto de Urgencia");
-            System.out.println("6 - Modificar permissao default do registo");
-            System.out.println("9 - Ajuda");
+            System.out.println(" 1 - Permitir acesso a registo");
+            System.out.println(" 2 - Negar acesso a registo");
+            System.out.println(" 3 - Associar medico a especialidade");
+            System.out.println(" 4 - Negar acesso de medico a especialidade");
+            System.out.println(" 5 - Alterar estatuto de Urgencia");
+            System.out.println(" 6 - Modificar permissao default do registo");
+            System.out.println(" 7 - Registar Medico");
+            System.out.println(" 8 - Registar Pessoa");
+            System.out.println(" 9 - Registar Estabelecimento");
+            System.out.println("10 - Registar Especialidade");
+            System.out.println("99 - Ajuda");
 
-            System.out.println("0 - Logout");
+            System.out.println(" 0 - Logout");
             System.out.println();
             System.out.print("Seleccione a opcao pretendida: ");
             String opcao = System.console().readLine();
@@ -134,7 +138,19 @@ public class MedDBApp {
             case 6:
                 writeNewDefaultPermission();
                 break;
+            case 7:
+                createMedico();
+                break;
+            case 8:
+                createPessoa();
+                break;
             case 9:
+                createEstabelecimento();
+                break;
+            case 10:
+                createEspecialidade();
+                break;
+            case 99:
                 printAjudaPaciente();
                 break;
             case 0:
@@ -391,11 +407,7 @@ public class MedDBApp {
             } else {
                 System.out.println();
                 System.out.println("1 - Login Med-DB");
-                System.out.println("2 - Registar Medico");
-                System.out.println("3 - Registar Pessoa");
-                System.out.println("4 - Registar Estabelecimento");
-                System.out.println("5 - Registar Especialidade");
-                System.out.println("6 - Login Administracao");
+                System.out.println("2 - Login Administracao");
                 System.out.println("0 - Sair");
                 System.out.println();
                 System.out.print("Seleccione a opcao pretendida: ");
@@ -417,18 +429,6 @@ public class MedDBApp {
                     personLogin();
                     break;
                 case 2:
-                    createMedico();
-                    break;
-                case 3:
-                    createPessoa();
-                    break;
-                case 4:
-                    createEstabelecimento();
-                    break;
-                case 5:
-                    createEspecialidade();
-                    break;
-                case 6:
                     adminLogin();
                     break;
                 default:

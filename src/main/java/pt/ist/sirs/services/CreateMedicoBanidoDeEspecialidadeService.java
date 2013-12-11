@@ -4,8 +4,11 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.MedicoBanidoDeEspecialidade;
 import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
+import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.MedicoNaoExisteException;
+import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
+import pt.ist.sirs.login.LoggedPerson;
 
 public class CreateMedicoBanidoDeEspecialidadeService extends MedDBService {
 
@@ -19,7 +22,10 @@ public class CreateMedicoBanidoDeEspecialidadeService extends MedDBService {
     }
 
     @Override
-    public void run() throws MedicoNaoExisteException, EspecialidadeNaoExisteException {
+    public void run() throws MedDBException {
+        if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
+            throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
+        }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
 
         if (root.hasPerson(this.usernameMedico)) {
