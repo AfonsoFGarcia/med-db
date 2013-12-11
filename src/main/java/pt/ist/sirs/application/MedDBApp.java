@@ -24,6 +24,7 @@ import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
+import pt.ist.sirs.services.RemoveMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.RegistoDTO;
@@ -100,14 +101,15 @@ public class MedDBApp {
             System.out.println(" 2 - Negar acesso a registo");
             System.out.println(" 3 - Associar medico a especialidade");
             System.out.println(" 4 - Negar acesso de medico a especialidade");
-            System.out.println(" 5 - Alterar estatuto de Urgencia");
-            System.out.println(" 6 - Modificar permissao default do registo");
-            System.out.println(" 7 - Registar Medico");
-            System.out.println(" 8 - Registar Pessoa");
-            System.out.println(" 9 - Registar Estabelecimento");
-            System.out.println("10 - Registar Especialidade");
-            System.out.println("11 - Adicionar politica de especialidade");
-            System.out.println("12 - Remover politica de especialidade");
+            System.out.println(" 5 - Devolver acesso de medico a especialidade");
+            System.out.println(" 6 - Alterar estatuto de Urgencia");
+            System.out.println(" 7 - Modificar permissao default do registo");
+            System.out.println(" 8 - Registar Medico");
+            System.out.println(" 9 - Registar Pessoa");
+            System.out.println("10 - Registar Estabelecimento");
+            System.out.println("11 - Registar Especialidade");
+            System.out.println("12 - Adicionar politica de especialidade");
+            System.out.println("13 - Remover politica de especialidade");
             System.out.println("99 - Ajuda");
 
             System.out.println(" 0 - Logout");
@@ -137,27 +139,30 @@ public class MedDBApp {
                 negarAcessoAEspecialidade();
                 break;
             case 5:
-                toogleMedicoUrgencia();
+                devolverAcessoAEspecialidade();
                 break;
             case 6:
-                writeNewDefaultPermission();
+                toogleMedicoUrgencia();
                 break;
             case 7:
-                createMedico();
+                writeNewDefaultPermission();
                 break;
             case 8:
-                createPessoa();
+                createMedico();
                 break;
             case 9:
-                createEstabelecimento();
+                createPessoa();
                 break;
             case 10:
-                createEspecialidade();
+                createEstabelecimento();
                 break;
             case 11:
-                adicionarAcessoDeEspecialidade();
+                createEspecialidade();
                 break;
             case 12:
+                adicionarAcessoDeEspecialidade();
+                break;
+            case 13:
                 removerAcessoDeEspecialidade();
                 break;
             case 99:
@@ -256,7 +261,22 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    private static void devolverAcessoAEspecialidade() {
+        System.out.print("Indique o username do Medico: ");
+        String usernameMedico = System.console().readLine();
+
+        System.out.print("Indique o id da Especialidade: ");
+        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
+
+        RemoveMedicoBanidoDeEspecialidadeService cmbeServ =
+                new RemoveMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+        try {
+            cmbeServ.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void negarAcessoARegisto() {
