@@ -13,7 +13,9 @@ O Med-DB usa a Fénix Framework como abstracção entre o mundo relacional e o m
 **IMPORTANTE - LER**
 -----
 
-9/12/2013 - Devido a alteração no modelo de domínio é necessário limpar a base de dados!
+**11/12/2013 - A forma como as permissoes sao serializadas foi alterada, e *obrigadorio* apagar a base de dados!**
+
+09/12/2013 - Devido a alteração no modelo de domínio é necessário limpar a base de dados!
 
 Começo Rápido
 -----
