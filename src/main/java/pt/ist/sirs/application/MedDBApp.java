@@ -8,6 +8,7 @@ import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.services.AdicionarAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.AdicionarEspecialidadeAMedicoService;
 import pt.ist.sirs.services.AdminLoginService;
 import pt.ist.sirs.services.AlterarPermissaoDefaultService;
@@ -23,6 +24,7 @@ import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
+import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
@@ -104,6 +106,8 @@ public class MedDBApp {
             System.out.println(" 8 - Registar Pessoa");
             System.out.println(" 9 - Registar Estabelecimento");
             System.out.println("10 - Registar Especialidade");
+            System.out.println("11 - Adicionar politica de especialidade");
+            System.out.println("12 - Remover politica de especialidade");
             System.out.println("99 - Ajuda");
 
             System.out.println(" 0 - Logout");
@@ -153,6 +157,9 @@ public class MedDBApp {
             case 11:
                 adicionarAcessoDeEspecialidade();
                 break;
+            case 12:
+                removerAcessoDeEspecialidade();
+                break;
             case 99:
                 printAjudaPaciente();
                 break;
@@ -173,6 +180,25 @@ public class MedDBApp {
         Integer idAcedida = Integer.parseInt(System.console().readLine());
 
         AdicionarAcessoDeEspecialidadeService serv = new AdicionarAcessoDeEspecialidadeService(idAcessora, idAcedida);
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void removerAcessoDeEspecialidade() {
+        System.out.print("Introduza o ID da especialidade acessora: ");
+        Integer idAcessora = Integer.parseInt(System.console().readLine());
+        System.out.print("Introduza o ID da especialidade acedida: ");
+        Integer idAcedida = Integer.parseInt(System.console().readLine());
+
+        RemoverAcessoDeEspecialidadeService serv = new RemoverAcessoDeEspecialidadeService(idAcessora, idAcedida);
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void writeNewDefaultPermission() {

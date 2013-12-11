@@ -1,16 +1,18 @@
 package pt.ist.sirs.services;
 
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.PoliticaDeEspecialidade;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.login.LoggedPerson;
 
-public class AdicionarAcessoDeEspecialidadeService extends MedDBService {
+public class RemoverAcessoDeEspecialidadeService extends MedDBService {
 
     private Integer idAcessora;
     private Integer idAcedida;
 
-    public AdicionarAcessoDeEspecialidadeService(Integer idAcessora, Integer idAcedida) {
+    public RemoverAcessoDeEspecialidadeService(Integer idAcessora, Integer idAcedida) {
         this.idAcessora = idAcessora;
         this.idAcedida = idAcedida;
     }
@@ -19,10 +21,12 @@ public class AdicionarAcessoDeEspecialidadeService extends MedDBService {
     public void run() throws MedDBException {
         if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
+        MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
+        for(PoliticaDeEspecialidade p : root.getPoliticaDeEspecialidade()) {
+            if(p.getAcedidaObjectID().equals(idAcedida) && p.getAcessorObjectID().equals(idAcessora)) {
+                root.removePoliticaDeEspecialidade(p);
+            }
         }
-        PoliticaDeEspecialidade politica = new PoliticaDeEspecialidade();
-        politica.setAcedidaObjectID(idAcedida);
-        politica.setAcessorObjectID(idAcessora);
     }
 
 }
