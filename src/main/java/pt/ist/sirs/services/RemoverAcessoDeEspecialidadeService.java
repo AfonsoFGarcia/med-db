@@ -21,12 +21,12 @@ public class RemoverAcessoDeEspecialidadeService extends MedDBService {
     public void run() throws MedDBException {
         if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
+        }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        for(PoliticaDeEspecialidade p : root.getPoliticaDeEspecialidade()) {
-            if(p.getAcedidaObjectID().equals(idAcedida) && p.getAcessorObjectID().equals(idAcessora)) {
+        for (PoliticaDeEspecialidade p : root.getPoliticaDeEspecialidade()) {
+            if (p.getAcedidaObjectID().equals(idAcedida) && p.getAcessorObjectID().equals(idAcessora)) {
                 root.removePoliticaDeEspecialidade(p);
             }
         }
     }
-
 }
