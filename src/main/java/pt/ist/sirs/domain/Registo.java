@@ -1,8 +1,10 @@
 package pt.ist.sirs.domain;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.enums.ObjectType;
+import pt.ist.sirs.permissoes.Permissao;
+import pt.ist.sirs.permissoes.PermissaoBuilderParser;
 
-// TODO: Auto-generated Javadoc
 /**
  * Classe <b>Registo</b>.<br>
  * <br>
@@ -10,7 +12,10 @@ import pt.ist.sirs.domain.enums.ObjectType;
  * Permite obter o médico, pessoa, estabelecimento e especialidade associados.
  * 
  * @author Afonso F. Garcia (70001), José Góis (79261), João Santos (79276)
- * @see {@link Medico}, {@link Pessoa}, {@link Estabelecimento}, {@link Especialidade}
+ * @see Medico
+ * @see Pessoa
+ * @see Estabelecimento
+ * @see Especialidade
  */
 public class Registo extends Registo_Base {
 
@@ -20,6 +25,10 @@ public class Registo extends Registo_Base {
     public Registo() {
         super();
         this.setType(ObjectType.REGISTO);
+        MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
+        Permissao perm = PermissaoBuilderParser.getPermissao(root.getDefaultPermission());
+        perm.setRegisto(this);
+        this.setPermissao(perm);
     }
 
 }

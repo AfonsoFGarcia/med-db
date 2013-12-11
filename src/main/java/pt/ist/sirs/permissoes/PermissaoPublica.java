@@ -9,7 +9,8 @@ import pt.ist.sirs.domain.Registo;
  * Permite o acesso de qualquer pessoa a um registo.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Registo}, {@link Pessoa}
+ * @see Registo
+ * @see Pessoa
  */
 public class PermissaoPublica extends Permissao {
 

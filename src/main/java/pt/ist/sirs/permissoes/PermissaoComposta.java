@@ -1,7 +1,7 @@
 package pt.ist.sirs.permissoes;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import pt.ist.sirs.domain.Registo;
 
@@ -11,12 +11,13 @@ import pt.ist.sirs.domain.Registo;
  * Define um conjunto de métodos utilizados em todas as permissões compostas.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Permissao}, {@link Registo}
+ * @see Permissao
+ * @see Registo
  */
 public abstract class PermissaoComposta extends Permissao {
 
     private static final long serialVersionUID = 1L;
-    private Set<Permissao> permissoes;
+    private List<Permissao> permissoes;
 
     /**
      * Construtor que disponibiliza a associação entre o registo e a permissao.<br>
@@ -26,7 +27,7 @@ public abstract class PermissaoComposta extends Permissao {
      */
     public PermissaoComposta(Registo r) {
         super(r);
-        permissoes = new TreeSet<Permissao>();
+        permissoes = new ArrayList<Permissao>();
     }
 
     /**
@@ -37,8 +38,19 @@ public abstract class PermissaoComposta extends Permissao {
      * @param r Registo associado à permissão.
      * @param p Set de permissões para compor.
      */
-    public PermissaoComposta(Registo r, Set<Permissao> p) {
+    public PermissaoComposta(Registo r, List<Permissao> p) {
         super(r);
+        permissoes = p;
+    }
+
+    /**
+     * Permite criar uma permissão composta com um set de permissões já existente.<br>
+     * Não cria nenhum objecto pois a classe é abstracta.
+     * 
+     * @param p Set de permissões para compor.
+     */
+    public PermissaoComposta(List<Permissao> p) {
+        super(null);
         permissoes = p;
     }
 
@@ -49,6 +61,15 @@ public abstract class PermissaoComposta extends Permissao {
      */
     public void addPermissao(Permissao p) {
         permissoes.add(p);
+    }
+
+    /**
+     * Adiciona uma lista de permissões à permissão composta.
+     * 
+     * @param p Permissão a adicionar.
+     */
+    public void addPermissao(List<Permissao> p) {
+        permissoes.addAll(p);
     }
 
     /**
@@ -65,7 +86,15 @@ public abstract class PermissaoComposta extends Permissao {
      * 
      * @return Set de permissões.
      */
-    public Set<Permissao> getPermissoes() {
+    public List<Permissao> getPermissoes() {
         return permissoes;
+    }
+
+    @Override
+    public void setRegisto(Registo registo) {
+        super.setRegisto(registo);
+        for (Permissao p : this.permissoes) {
+            p.setRegisto(registo);
+        }
     }
 }

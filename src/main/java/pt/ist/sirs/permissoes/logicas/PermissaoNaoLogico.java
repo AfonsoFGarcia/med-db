@@ -1,5 +1,6 @@
 package pt.ist.sirs.permissoes.logicas;
 
+import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.permissoes.Permissao;
@@ -10,7 +11,8 @@ import pt.ist.sirs.permissoes.Permissao;
  * Permissão que implementa o não lógico.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Permissao}, {@link Registo}
+ * @see Permissao
+ * @see Registo
  */
 public class PermissaoNaoLogico extends Permissao {
 
@@ -33,7 +35,21 @@ public class PermissaoNaoLogico extends Permissao {
      */
     @Override
     public boolean isAllowed(Pessoa pessoa) {
-        return !permissao.isAllowed(pessoa);
+        return !permissao.isAllowed(pessoa) && !super.medicoBanido((Medico) pessoa);
+    }
+
+    @Override
+    public void setRegisto(Registo registo) {
+        super.setRegisto(registo);
+        this.permissao.setRegisto(registo);
+    }
+
+    public Permissao getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(Permissao permissao) {
+        this.permissao = permissao;
     }
 
 }

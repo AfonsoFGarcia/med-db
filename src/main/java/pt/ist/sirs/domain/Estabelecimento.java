@@ -9,7 +9,8 @@ import pt.ist.sirs.domain.enums.ObjectType;
  * Permite obter os médicos do estabelecimento bem como os registos associados.
  * 
  * @author Afonso F. Garcia (70001), José Góis (79261), João Santos (79276)
- * @see {@link Medico}, {@link Registo}
+ * @see Medico
+ * @see Registo
  */
 public class Estabelecimento extends Estabelecimento_Base {
 

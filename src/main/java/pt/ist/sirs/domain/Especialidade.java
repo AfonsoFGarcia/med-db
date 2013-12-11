@@ -9,7 +9,8 @@ import pt.ist.sirs.domain.enums.ObjectType;
  * Permite obter os médicos da especialidade, bem como todos os registos associados a esta especialidade.
  * 
  * @author Afonso F. Garcia (70001), José Góis (79261), João Santos (79276)
- * @see {@link Medico}, {@link Registo}
+ * @see Medico
+ * @see Registo
  */
 public class Especialidade extends Especialidade_Base {
 

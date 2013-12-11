@@ -1,6 +1,6 @@
 package pt.ist.sirs.permissoes.logicas;
 
-import java.util.Set;
+import java.util.List;
 
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
@@ -13,7 +13,8 @@ import pt.ist.sirs.permissoes.PermissaoComposta;
  * Permissão composta por outras permissões que implementa o e lógico.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Permissao}, {@link Registo}
+ * @see Permissao
+ * @see Registo
  */
 public class PermissaoELogico extends PermissaoComposta {
 
@@ -34,8 +35,17 @@ public class PermissaoELogico extends PermissaoComposta {
      * @param r Registo associado à permissão.
      * @param p Set de permissões.
      */
-    public PermissaoELogico(Registo r, Set<Permissao> p) {
+    public PermissaoELogico(Registo r, List<Permissao> p) {
         super(r, p);
+    }
+    
+    /**
+     * Cria um objecto PermissaoELogico.
+     *
+     * @param p Set de permissões.
+     */
+    public PermissaoELogico(List<Permissao> p) {
+        super(p);
     }
 
     /* (non-Javadoc)

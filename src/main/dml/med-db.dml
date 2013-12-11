@@ -12,6 +12,7 @@ valueType pt.ist.sirs.permissoes.Permissao as Permissao {
 
 class MedDBRoot {
   	Integer objectId;
+  	String defaultPermission;
 }
 
 class MedDBCommon {
@@ -21,9 +22,14 @@ class MedDBCommon {
 
 class Pessoa extends MedDBCommon {
 	String nome;
+	String username;
+	String password;
+	String salt;
+	boolean admin;
 }
 
 class Medico extends Pessoa {
+	boolean medicoDeUrgencia;
 }
 
 class Especialidade extends MedDBCommon {
@@ -37,6 +43,16 @@ class Estabelecimento extends MedDBCommon {
 class Registo extends MedDBCommon {
 	String conteudo;
 	Permissao permissao;
+}
+
+class PoliticaDeEspecialidade {
+	Integer acessorObjectID;
+	Integer acedidaObjectID;
+}
+
+class MedicoBanidoDeEspecialidade {
+	Integer medicoObjectID;
+	Integer especialidadeObjectID;
 }
 
 relation Root {
@@ -77,4 +93,14 @@ relation EstabelecimentoContainsMedico {
 relation EstabelecimentoContainsRegisto {
 	Estabelecimento playsRole estabelecimento { multiplicity 1; }
 	Registo playsRole registosDoEstabelecimento { multiplicity *;}
+}
+
+relation RootContainsPoliticaDeEspecialidade {
+	PoliticaDeEspecialidade playsRole politicaDeEspecialidade { multiplicity *; }
+	MedDBRoot playsRole root { multiplicity 1; }
+}
+
+relation RootContainsMedicoBanidoDeEspecialidade {
+	MedicoBanidoDeEspecialidade playsRole medicoBanidoDeEspecialidade { multiplicity *; }
+	MedDBRoot playsRole root { multiplicity 1; }
 }

@@ -7,6 +7,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.apache.commons.codec.binary.Base64;
+
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.sirs.domain.MedDBRoot;
+import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.MedicoBanidoDeEspecialidade;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 
@@ -17,7 +23,8 @@ import pt.ist.sirs.domain.Registo;
  * autorizado a aceder-lhes.
  * 
  * @author Afonso F. Garcia (70001)
- * @see {@link Registo}, {@link Pessoa}
+ * @see Registo
+ * @see Pessoa
  */
 public abstract class Permissao implements Serializable {
 
@@ -49,22 +56,17 @@ public abstract class Permissao implements Serializable {
      */
     @Override
     public String toString() {
-        String object = null;
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos;
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-
+            oos = new ObjectOutputStream(baos);
             oos.writeObject(this);
-            object = baos.toString();
-
             oos.close();
         } catch (IOException e) {
-            System.out.println("FAILED: Could not serialize permission for object " + registo.getObjectId() + ".");
-            e.printStackTrace();
+            System.out.println("Erro na serializacao da permissao!");
         }
-
-        return object;
+        return new String(Base64.encodeBase64(baos.toByteArray()));
     }
 
     /**
@@ -74,24 +76,17 @@ public abstract class Permissao implements Serializable {
      * @return Permissão reconstruída.
      */
     public static Permissao fromString(String perm) {
-        Permissao permissao = null;
-
+        byte[] data = Base64.decodeBase64(perm);
+        ObjectInputStream ois;
+        Permissao p = null;
         try {
-            ByteArrayInputStream bais = new ByteArrayInputStream(perm.getBytes());
-            ObjectInputStream ois = new ObjectInputStream(bais);
-
-            permissao = (Permissao) ois.readObject();
-
+            ois = new ObjectInputStream(new ByteArrayInputStream(data));
+            p = (Permissao) ois.readObject();
             ois.close();
-        } catch (IOException e) {
-            System.out.println("FAILED: Could not deserialize permission.");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("FAILED: Could not materialize permission.");
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Erro na serializacao da permissao!");
         }
-
-        return permissao;
+        return p;
     }
 
     /**
@@ -112,4 +107,14 @@ public abstract class Permissao implements Serializable {
         this.registo = registo;
     }
 
+    protected boolean medicoBanido(Medico medico) {
+        MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
+        for (MedicoBanidoDeEspecialidade m : root.getMedicoBanidoDeEspecialidade()) {
+            if (this.registo.getEspecialidade().getObjectId().equals(m.getEspecialidadeObjectID())
+                    && medico.getObjectId().equals(m.getMedicoObjectID())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
