@@ -64,8 +64,7 @@ public abstract class Permissao implements Serializable {
             oos.writeObject(this);
             oos.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Erro na serializacao da permissao!");
         }
         return new String(Base64.encodeBase64(baos.toByteArray()));
     }
@@ -84,12 +83,8 @@ public abstract class Permissao implements Serializable {
             ois = new ObjectInputStream(new ByteArrayInputStream(data));
             p = (Permissao) ois.readObject();
             ois.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Erro na serializacao da permissao!");
         }
         return p;
     }
