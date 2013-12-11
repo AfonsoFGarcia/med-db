@@ -94,9 +94,9 @@ public class MedDBApp {
         System.out.println();
         System.out.println("1 - Permitir acesso a registo");
         System.out.println("2 - Negar acesso a registo");
-        System.out.println("3 - Permitir acesso a especialidade");
-        System.out.println("4 - Negar acesso a especialidade");
-        System.out.println("5 - Medico de Urgencia(T/F)");
+        System.out.println("3 - Associar medico a especialidade");
+        System.out.println("4 - Negar acesso de medico a especialidade");
+        System.out.println("5 - Alterar estatuto de Urgencia");
 
         System.out.println("0 - Logout");
         System.out.println();
@@ -140,7 +140,7 @@ public class MedDBApp {
         ToogleMedicoUrgenciaService tmuServ = new ToogleMedicoUrgenciaService(usernameMedico);
         try {
             tmuServ.execute();
-            System.out.println("Alterado com sucesso");
+            System.out.println(usernameMedico + " alterado para " + tmuServ.getEstadoActual());
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }

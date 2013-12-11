@@ -8,6 +8,7 @@ import pt.ist.sirs.exceptions.MedDBException;
 public class ToogleMedicoUrgenciaService extends MedDBService {
 
     private String usernameMedico;
+    private String estadoActual;
 
     public ToogleMedicoUrgenciaService(String usernameMedico) {
         this.usernameMedico = usernameMedico;
@@ -21,10 +22,15 @@ public class ToogleMedicoUrgenciaService extends MedDBService {
         Medico medico = (Medico) root.getPersonByUsername(this.usernameMedico);
         if (medico.getMedicoDeUrgencia()) {
             medico.setMedicoDeUrgencia(false);
+            estadoActual = "falso";
         } else {
             medico.setMedicoDeUrgencia(true);
+            estadoActual = "verdadeiro";
         }
+    }
 
+    public String getEstadoActual() {
+        return estadoActual;
     }
 
 }
