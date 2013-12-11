@@ -22,6 +22,7 @@ import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
+import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
 /**
@@ -95,6 +96,7 @@ public class MedDBApp {
         System.out.println("2 - Negar acesso a registo");
         System.out.println("3 - Permitir acesso a especialidade");
         System.out.println("4 - Negar acesso a especialidade");
+        System.out.println("5 - Medico de Urgencia(T/F)");
 
         System.out.println("0 - Logout");
         System.out.println();
@@ -122,12 +124,27 @@ public class MedDBApp {
         case 4:
             negarAcessoAEspecialidade();
             break;
-
+        case 5:
+            toogleMedicoUrgencia();
+            break;
         default:
             break;
         }
 
         LoggedPerson.getInstance().removeLoggedPerson();
+    }
+
+    private static void toogleMedicoUrgencia() {
+        System.out.print("Indique o username do Medico: ");
+        String usernameMedico = System.console().readLine();
+        ToogleMedicoUrgenciaService tmuServ = new ToogleMedicoUrgenciaService(usernameMedico);
+        try {
+            tmuServ.execute();
+            System.out.println("Alterado com sucesso");
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private static void permitirAcessoAEspecialidade() {
