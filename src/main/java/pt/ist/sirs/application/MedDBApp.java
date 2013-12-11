@@ -10,6 +10,7 @@ import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.AdicionarEspecialidadeAMedicoService;
 import pt.ist.sirs.services.AdminLoginService;
+import pt.ist.sirs.services.AlterarPermissaoDefaultService;
 import pt.ist.sirs.services.ChangePermissaoService;
 import pt.ist.sirs.services.CreateEspecialidadeService;
 import pt.ist.sirs.services.CreateEstabelecimentoService;
@@ -91,47 +92,72 @@ public class MedDBApp {
     }
 
     private static void printAdminMenu() {
-        System.out.println();
-        System.out.println("1 - Permitir acesso a registo");
-        System.out.println("2 - Negar acesso a registo");
-        System.out.println("3 - Associar medico a especialidade");
-        System.out.println("4 - Negar acesso de medico a especialidade");
-        System.out.println("5 - Alterar estatuto de Urgencia");
+        while (true) {
+            System.out.println();
+            System.out.println("1 - Permitir acesso a registo");
+            System.out.println("2 - Negar acesso a registo");
+            System.out.println("3 - Associar medico a especialidade");
+            System.out.println("4 - Negar acesso de medico a especialidade");
+            System.out.println("5 - Alterar estatuto de Urgencia");
+            System.out.println("6 - Modificar permissao default do registo");
+            System.out.println("9 - Ajuda");
 
-        System.out.println("0 - Logout");
-        System.out.println();
-        System.out.print("Seleccione a opcao pretendida: ");
-        String opcao = System.console().readLine();
+            System.out.println("0 - Logout");
+            System.out.println();
+            System.out.print("Seleccione a opcao pretendida: ");
+            String opcao = System.console().readLine();
 
-        Integer num;
+            Integer num;
+
+            try {
+                num = Integer.parseInt(opcao);
+            } catch (Exception e) {
+                num = 69;
+            }
+
+            switch (num) {
+            case 1:
+                reporAcessoARegisto();
+                break;
+            case 2:
+                negarAcessoARegisto();
+                break;
+            case 3:
+                permitirAcessoAEspecialidade();
+                break;
+            case 4:
+                negarAcessoAEspecialidade();
+                break;
+            case 5:
+                toogleMedicoUrgencia();
+                break;
+            case 6:
+                writeNewDefaultPermission();
+                break;
+            case 9:
+                printAjudaPaciente();
+                break;
+            case 0:
+                LoggedPerson.getInstance().removeLoggedPerson();
+                return;
+            default:
+                System.out.println("Opcao inválida!");
+                break;
+            }
+        }
+    }
+
+    private static void writeNewDefaultPermission() {
+        System.out.print("Insira a nova permissao default: ");
+        String newPerm = System.console().readLine();
+
+        AlterarPermissaoDefaultService serv = new AlterarPermissaoDefaultService(newPerm);
 
         try {
-            num = Integer.parseInt(opcao);
-        } catch (Exception e) {
-            num = 69;
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
         }
-
-        switch (num) {
-        case 1:
-            reporAcessoARegisto();
-            break;
-        case 2:
-            negarAcessoARegisto();
-            break;
-        case 3:
-            permitirAcessoAEspecialidade();
-            break;
-        case 4:
-            negarAcessoAEspecialidade();
-            break;
-        case 5:
-            toogleMedicoUrgencia();
-            break;
-        default:
-            break;
-        }
-
-        LoggedPerson.getInstance().removeLoggedPerson();
     }
 
     private static void toogleMedicoUrgencia() {
