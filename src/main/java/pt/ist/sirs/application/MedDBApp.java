@@ -225,7 +225,6 @@ public class MedDBApp {
             System.out.println(e.getMessage());
         }
         if (registos != null && registos.size() > 0) {
-
             for (RegistoDTO registoDTO : registos) {
                 System.out.println("ID: " + registoDTO.getObjectID());
                 System.out.println("  -P: " + registoDTO.getNomePaciente());
@@ -338,7 +337,8 @@ public class MedDBApp {
         try {
             idEspecialidade = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            idEspecialidade = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
         AdicionarEspecialidadeAMedicoService aemServ = new AdicionarEspecialidadeAMedicoService(usernameMedico, idEspecialidade);
         try {
@@ -346,7 +346,6 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private static void negarAcessoAEspecialidade() {
@@ -359,7 +358,8 @@ public class MedDBApp {
         try {
             idEspecialidade = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            idEspecialidade = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
 
         CreateMedicoBanidoDeEspecialidadeService cmbeServ =
@@ -369,7 +369,6 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private static void devolverAcessoAEspecialidade() {
@@ -382,7 +381,8 @@ public class MedDBApp {
         try {
             idEspecialidade = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            idEspecialidade = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
 
         RemoveMedicoBanidoDeEspecialidadeService cmbeServ =
@@ -392,7 +392,6 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private static void negarAcessoARegisto() {
@@ -419,7 +418,8 @@ public class MedDBApp {
         try {
             idRegisto = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            idRegisto = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
 
         System.out.print("Introduza o username do medico: ");
@@ -432,7 +432,6 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private static void criarNovoRegisto() {
@@ -443,14 +442,16 @@ public class MedDBApp {
         try {
             especialidade = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            especialidade = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
         System.out.print("Introduza o id do estabelecimento: ");
         Integer estabelecimento;
         try {
             estabelecimento = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            estabelecimento = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
         System.out.println();
         System.out.print("Conteudo: ");
@@ -519,7 +520,8 @@ public class MedDBApp {
         try {
             especialidade = Integer.parseInt(System.console().readLine());
         } catch (Exception e) {
-            especialidade = -1;
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
         }
         RegistosByEspecialidadeService rbeServ = new RegistosByEspecialidadeService(especialidade);
         ArrayList<RegistoDTO> registos = null;
@@ -530,7 +532,6 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
-
         if (registos != null && registos.size() > 0) {
 
             for (RegistoDTO registo : registos) {
@@ -541,7 +542,6 @@ public class MedDBApp {
         } else {
             System.out.println("Nao ha registos para mostrar!");
         }
-
     }
 
     private static void createPessoa() {
