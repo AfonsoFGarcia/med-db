@@ -234,7 +234,7 @@ public class MedDBRoot extends MedDBRoot_Base {
             if (object instanceof Registo) {
                 Registo r = (Registo) object;
                 Pessoa m = LoggedPerson.getInstance().getLoggedPerson();
-                if (r.getPermissao().isAllowed(m) && r.getEspecialidade().getObjectId().equals(idEspecialidade))) {
+                if (r.getPermissao().isAllowed(m) && r.getEspecialidade().getObjectId().equals(idEspecialidade)) {
                     registos.add(r);
                     continue;
                 }
