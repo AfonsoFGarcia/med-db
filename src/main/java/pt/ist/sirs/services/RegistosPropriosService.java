@@ -3,8 +3,8 @@ package pt.ist.sirs.services;
 import java.util.ArrayList;
 
 import pt.ist.sirs.exceptions.MedDBException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.dto.RegistoDTO;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

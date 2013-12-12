@@ -12,7 +12,7 @@ import pt.ist.sirs.exceptions.EstabelecimentoNaoExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
 import pt.ist.sirs.exceptions.RegistoJaExisteException;
-import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

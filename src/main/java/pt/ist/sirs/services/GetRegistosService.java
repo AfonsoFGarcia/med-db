@@ -7,8 +7,8 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.dto.RegistoDTO;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

@@ -6,8 +6,8 @@ import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.AcessoRecusadoException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.RegistoNaoExisteException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.dto.RegistoDTO;
+import pt.ist.sirs.utils.LoggedPerson;
 
 public class GetRegistoService extends MedDBService {
 

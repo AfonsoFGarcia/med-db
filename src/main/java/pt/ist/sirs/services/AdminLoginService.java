@@ -6,7 +6,7 @@ import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.IncorrectPasswordException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
-import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

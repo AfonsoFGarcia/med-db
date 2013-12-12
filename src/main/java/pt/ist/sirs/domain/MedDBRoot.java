@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
-import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * Classe <b>MedDBRoot</b>. <br>

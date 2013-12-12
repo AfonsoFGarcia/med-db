@@ -7,7 +7,6 @@ import pt.ist.sirs.Bootstrap;
 import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.MedDBException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.AdicionarAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.AdicionarEspecialidadeAMedicoService;
 import pt.ist.sirs.services.AdminLoginService;
@@ -35,6 +34,7 @@ import pt.ist.sirs.services.ToggleAdminService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * Classe <b>MedDBApp</b>. <br>

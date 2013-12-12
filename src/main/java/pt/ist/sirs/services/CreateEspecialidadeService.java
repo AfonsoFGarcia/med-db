@@ -6,7 +6,7 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.exceptions.EspecialidadeJaExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
-import pt.ist.sirs.login.LoggedPerson;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

@@ -7,11 +7,11 @@ import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.MedicoNaoExisteException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.exceptions.RegistoNaoExisteException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.PermissaoComposta;
 import pt.ist.sirs.permissoes.PermissaoMedico;
 import pt.ist.sirs.permissoes.logicas.PermissaoNaoLogico;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

@@ -7,9 +7,9 @@ import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.OperacaoNaoPermitidaException;
 import pt.ist.sirs.exceptions.PermissaoIncorrectaException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.PermissaoBuilderParser;
+import pt.ist.sirs.utils.LoggedPerson;
 
 /**
  * 

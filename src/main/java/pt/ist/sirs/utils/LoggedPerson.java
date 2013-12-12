@@ -1,4 +1,4 @@
-package pt.ist.sirs.login;
+package pt.ist.sirs.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
