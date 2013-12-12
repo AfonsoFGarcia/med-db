@@ -313,9 +313,19 @@ public class MedDBApp {
         System.out.print("Introduza o username do paciente: ");
         String paciente = System.console().readLine();
         System.out.print("Introduza o id da especialidade: ");
-        Integer especialidade = Integer.parseInt(System.console().readLine());
+        Integer especialidade;
+        try {
+            especialidade = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            especialidade = -1;
+        }
         System.out.print("Introduza o id do estabelecimento: ");
-        Integer estabelecimento = Integer.parseInt(System.console().readLine());
+        Integer estabelecimento;
+        try {
+            estabelecimento = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            estabelecimento = -1;
+        }
         System.out.println();
         System.out.print("Conteudo: ");
         String conteudo = System.console().readLine();

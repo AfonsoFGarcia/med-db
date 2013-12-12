@@ -101,6 +101,15 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    public boolean hasEstabelecimento(Integer idEstabelecimento) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Estabelecimento && ((Estabelecimento) object).getObjectId().equals(idEstabelecimento)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasEspecialidade(String nome) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Especialidade && ((Especialidade) object).getNome().equals(nome)) {
