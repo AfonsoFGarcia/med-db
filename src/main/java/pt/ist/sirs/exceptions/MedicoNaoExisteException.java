@@ -1,5 +1,9 @@
 package pt.ist.sirs.exceptions;
 
+/**
+ * 
+ * @author José Góis (79261)
+ */
 public class MedicoNaoExisteException extends MedDBException {
 
     /**

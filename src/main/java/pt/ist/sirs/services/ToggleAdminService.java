@@ -2,22 +2,23 @@ package pt.ist.sirs.services;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
-import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
+import pt.ist.sirs.exceptions.OperacaoNaoPermitidaException;
 import pt.ist.sirs.login.LoggedPerson;
 
 /**
  * 
- * @author Afonso F. Garcia (70001), José Góis (79261)
+ * @author Afonso F. Garcia (70001)
  */
-public class ToogleMedicoUrgenciaService extends MedDBService {
+public class ToggleAdminService extends MedDBService {
 
-    private String usernameMedico;
+    private String username;
     private String estadoActual;
 
-    public ToogleMedicoUrgenciaService(String usernameMedico) {
-        this.usernameMedico = usernameMedico;
+    public ToggleAdminService(String username) {
+        this.username = username;
 
     }
 
@@ -26,14 +27,18 @@ public class ToogleMedicoUrgenciaService extends MedDBService {
         if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
         }
+
+        if (LoggedPerson.getInstance().getLoggedPerson().getUsername().equals(username)) {
+            throw new OperacaoNaoPermitidaException("alterar proprio status de admin", username);
+        }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
 
-        Medico medico = (Medico) root.getPersonByUsername(this.usernameMedico);
-        if (medico.getMedicoDeUrgencia()) {
-            medico.setMedicoDeUrgencia(false);
+        Pessoa pessoa = root.getPersonByUsername(this.username);
+        if (pessoa.getAdmin()) {
+            pessoa.setAdmin(false);
             estadoActual = "falso";
         } else {
-            medico.setMedicoDeUrgencia(true);
+            pessoa.setAdmin(true);
             estadoActual = "verdadeiro";
         }
     }

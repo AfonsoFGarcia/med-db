@@ -8,6 +8,10 @@ import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class CreateEstabelecimentoService extends MedDBService {
 
     private String nome;

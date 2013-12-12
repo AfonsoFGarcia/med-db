@@ -3,10 +3,15 @@ package pt.ist.sirs.services;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.PoliticaDeEspecialidade;
+import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class RemoverAcessoDeEspecialidadeService extends MedDBService {
 
     private Integer idAcessora;
@@ -23,10 +28,18 @@ public class RemoverAcessoDeEspecialidadeService extends MedDBService {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
         }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        for (PoliticaDeEspecialidade p : root.getPoliticaDeEspecialidade()) {
-            if (p.getAcedidaObjectID().equals(idAcedida) && p.getAcessorObjectID().equals(idAcessora)) {
-                root.removePoliticaDeEspecialidade(p);
+        if (root.hasEspecialidade(idAcedida)) {
+            if (root.hasEspecialidade(idAcessora)) {
+                for (PoliticaDeEspecialidade p : root.getPoliticaDeEspecialidade()) {
+                    if (p.getAcedidaObjectID().equals(idAcedida) && p.getAcessorObjectID().equals(idAcessora)) {
+                        root.removePoliticaDeEspecialidade(p);
+                    }
+                }
+            } else {
+                throw new EspecialidadeNaoExisteException(idAcessora);
             }
+        } else {
+            throw new EspecialidadeNaoExisteException(idAcedida);
         }
     }
 }

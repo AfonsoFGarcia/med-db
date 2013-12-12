@@ -1,5 +1,10 @@
 package pt.ist.sirs.exceptions;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
+
 public class EstabelecimentoJaExisteException extends MedDBException {
 
     /**

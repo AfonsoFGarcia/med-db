@@ -7,11 +7,17 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
-import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
+import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
+import pt.ist.sirs.exceptions.EstabelecimentoNaoExisteException;
+import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
 import pt.ist.sirs.exceptions.RegistoJaExisteException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class CreateRegistoService extends MedDBService {
 
     private String conteudo;
@@ -27,22 +33,35 @@ public class CreateRegistoService extends MedDBService {
     }
 
     @Override
-    public void run() throws RegistoJaExisteException, PessoaNaoExisteException, ObjectoNaoExisteException {
+    public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
         Medico medico = (Medico) LoggedPerson.getInstance().getLoggedPerson();
-        Pessoa pessoa = (Pessoa) root.getPersonByUsername(userPessoa);
-        Especialidade especialidade = (Especialidade) root.getObjectByObjectID(idEspecialidade);
-        Estabelecimento estabelecimento = (Estabelecimento) root.getObjectByObjectID(idEstabelecimento);
-        if (!root.hasRegisto(medico, pessoa, this.conteudo, especialidade, estabelecimento)) {
-            Registo novoRegisto = new Registo();
-            novoRegisto.setConteudo(this.conteudo);
-            novoRegisto.setEspecialidade(especialidade);
-            novoRegisto.setMedico(medico);
-            novoRegisto.setPaciente(pessoa);
-            novoRegisto.setEstabelecimento(estabelecimento);
-            pessoa.addMedicos(medico);
+        if (root.hasPerson(userPessoa)) {
+            Pessoa pessoa = (Pessoa) root.getPersonByUsername(userPessoa);
+            if (root.hasEspecialidade(idEspecialidade)) {
+                Especialidade especialidade = (Especialidade) root.getObjectByObjectID(idEspecialidade);
+                if (root.hasEstabelecimento(idEstabelecimento)) {
+                    Estabelecimento estabelecimento = (Estabelecimento) root.getObjectByObjectID(idEstabelecimento);
+                    if (!root.hasRegisto(medico, pessoa, this.conteudo, especialidade, estabelecimento)) {
+                        Registo novoRegisto = new Registo();
+                        novoRegisto.setConteudo(this.conteudo);
+                        novoRegisto.setEspecialidade(especialidade);
+                        novoRegisto.setMedico(medico);
+                        novoRegisto.setPaciente(pessoa);
+                        novoRegisto.setEstabelecimento(estabelecimento);
+                        pessoa.addMedicos(medico);
+                    } else {
+                        throw new RegistoJaExisteException();
+                    }
+                } else {
+                    throw new EstabelecimentoNaoExisteException(idEstabelecimento);
+                }
+            } else {
+                throw new EspecialidadeNaoExisteException(idEspecialidade);
+            }
         } else {
-            throw new RegistoJaExisteException();
+            throw new PessoaNaoExisteException(userPessoa);
+
         }
     }
 }

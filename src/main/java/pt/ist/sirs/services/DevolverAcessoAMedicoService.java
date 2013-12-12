@@ -4,13 +4,19 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
+import pt.ist.sirs.exceptions.MedicoNaoExisteException;
 import pt.ist.sirs.exceptions.NotAdminException;
+import pt.ist.sirs.exceptions.RegistoNaoExisteException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.PermissaoComposta;
 import pt.ist.sirs.permissoes.PermissaoMedico;
 import pt.ist.sirs.permissoes.logicas.PermissaoNaoLogico;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class DevolverAcessoAMedicoService extends MedDBService {
 
     private String userMedico;
@@ -27,13 +33,21 @@ public class DevolverAcessoAMedicoService extends MedDBService {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
         }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        Registo registo = (Registo) root.getObjectByObjectID(idRegisto);
+        if (root.hasRegisto(idRegisto)) {
+            if (root.hasPerson(userMedico)) {
+                Registo registo = (Registo) root.getObjectByObjectID(idRegisto);
 
-        PermissaoComposta pc = (PermissaoComposta) registo.getPermissao();
-        PermissaoNaoLogico pnl = getPermissao(pc);
-        pc.removePermissao(pnl);
+                PermissaoComposta pc = (PermissaoComposta) registo.getPermissao();
+                PermissaoNaoLogico pnl = getPermissao(pc);
+                pc.removePermissao(pnl);
 
-        registo.setPermissao(pc);
+                registo.setPermissao(pc);
+            } else {
+                throw new MedicoNaoExisteException(userMedico);
+            }
+        } else {
+            throw new RegistoNaoExisteException(idRegisto);
+        }
     }
 
     private PermissaoNaoLogico getPermissao(PermissaoComposta pc) {

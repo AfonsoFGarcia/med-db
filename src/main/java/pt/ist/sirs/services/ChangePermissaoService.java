@@ -11,6 +11,10 @@ import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.permissoes.Permissao;
 import pt.ist.sirs.permissoes.PermissaoBuilderParser;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class ChangePermissaoService extends MedDBService {
 
     private String perm;

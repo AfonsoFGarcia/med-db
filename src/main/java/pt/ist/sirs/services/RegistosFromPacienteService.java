@@ -6,8 +6,13 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
+import pt.ist.sirs.exceptions.PessoaNaoExisteException;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class RegistosFromPacienteService extends MedDBService {
 
     private ArrayList<RegistoDTO> registos;
@@ -21,13 +26,18 @@ public class RegistosFromPacienteService extends MedDBService {
     @Override
     public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        ArrayList<Registo> registos = root.getRegistosFromPaciente(pacienteUsername);
+        if (root.hasPerson(pacienteUsername)) {
+            ArrayList<Registo> registos = root.getRegistosFromPaciente(pacienteUsername);
 
-        for (Registo registo : registos) {
-            RegistoDTO registoDto =
-                    new RegistoDTO(registo.getConteudo(), registo.getPaciente().getNome(), registo.getMedico().getNome(), registo
-                            .getEspecialidade().getNome(), registo.getEstabelecimento().getNome(), registo.getObjectId());
-            this.registos.add(registoDto);
+            for (Registo registo : registos) {
+                RegistoDTO registoDto =
+                        new RegistoDTO(registo.getConteudo(), registo.getPaciente().getNome(), registo.getMedico().getNome(),
+                                registo.getEspecialidade().getNome(), registo.getEstabelecimento().getNome(),
+                                registo.getObjectId());
+                this.registos.add(registoDto);
+            }
+        } else {
+            throw new PessoaNaoExisteException(pacienteUsername);
         }
     }
 

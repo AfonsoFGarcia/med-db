@@ -12,7 +12,7 @@ import pt.ist.sirs.login.LoggedPerson;
  * Disponibiliza a gestão centralizada de identificadores únicos utilizados pela classe {@link MedDBCommon}. <br>
  * Permite a procura de objectos pelo identificador.
  * 
- * @author Afonso F. Garcia (70001)
+ * @author Afonso F. Garcia (70001), José Góis (79261)
  */
 public class MedDBRoot extends MedDBRoot_Base {
 
@@ -63,6 +63,15 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    public boolean hasRegisto(Integer id) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Registo && ((Registo) object).getObjectId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasRegisto(Medico medico, Pessoa paciente, String conteudo, Especialidade especialidade,
             Estabelecimento estabelecimento) {
         for (MedDBCommon object : this.getObject()) {
@@ -95,6 +104,15 @@ public class MedDBRoot extends MedDBRoot_Base {
     public boolean hasEstabelecimento(String nome) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Estabelecimento && ((Estabelecimento) object).getNome().equals(nome)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasEstabelecimento(Integer idEstabelecimento) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Estabelecimento && ((Estabelecimento) object).getObjectId().equals(idEstabelecimento)) {
                 return true;
             }
         }
@@ -148,6 +166,32 @@ public class MedDBRoot extends MedDBRoot_Base {
                     registos.add(r);
                     continue;
                 }
+            }
+        }
+
+        return registos;
+    }
+
+    public ArrayList<Especialidade> getEspecialidades() {
+        ArrayList<Especialidade> especialidades = new ArrayList<Especialidade>();
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Especialidade) {
+                Especialidade e = (Especialidade) object;
+                especialidades.add(e);
+                continue;
+            }
+        }
+
+        return especialidades;
+    }
+
+    public ArrayList<Registo> getRegistos() {
+        ArrayList<Registo> registos = new ArrayList<Registo>();
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Registo) {
+                Registo r = (Registo) object;
+                registos.add(r);
+                continue;
             }
         }
 

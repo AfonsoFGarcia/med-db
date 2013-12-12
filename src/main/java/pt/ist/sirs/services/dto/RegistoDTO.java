@@ -1,5 +1,9 @@
 package pt.ist.sirs.services.dto;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class RegistoDTO {
 
     private String conteudo;

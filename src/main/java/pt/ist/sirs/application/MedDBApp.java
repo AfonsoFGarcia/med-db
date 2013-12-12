@@ -20,13 +20,18 @@ import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.DevolverAcessoAMedicoService;
+import pt.ist.sirs.services.GetEspecialidadesService;
+import pt.ist.sirs.services.GetRegistosService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
+import pt.ist.sirs.services.RegistosPropriosService;
 import pt.ist.sirs.services.RemoveMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
+import pt.ist.sirs.services.ToggleAdminService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
+import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
 /**
@@ -34,7 +39,7 @@ import pt.ist.sirs.services.dto.RegistoDTO;
  * <br>
  * Implementa a interface de utilizador do Med-DB.
  * 
- * @author Afonso F. Garcia (70001)
+ * @author Afonso F. Garcia (70001), José Góis (79261)
  */
 public class MedDBApp {
 
@@ -70,7 +75,7 @@ public class MedDBApp {
         try {
             num = Integer.parseInt(opcao);
         } catch (Exception e) {
-            num = 69;
+            num = -1;
         }
 
         switch (num) {
@@ -110,6 +115,7 @@ public class MedDBApp {
             System.out.println("11 - Registar Especialidade");
             System.out.println("12 - Adicionar politica de especialidade");
             System.out.println("13 - Remover politica de especialidade");
+            System.out.println("14 - Alterar estatuto de admin");
             System.out.println("99 - Ajuda");
 
             System.out.println(" 0 - Logout");
@@ -122,7 +128,7 @@ public class MedDBApp {
             try {
                 num = Integer.parseInt(opcao);
             } catch (Exception e) {
-                num = 69;
+                num = -1;
             }
 
             switch (num) {
@@ -165,6 +171,9 @@ public class MedDBApp {
             case 13:
                 removerAcessoDeEspecialidade();
                 break;
+            case 14:
+                toggleAdmin();
+                break;
             case 99:
                 printAjudaPaciente();
                 break;
@@ -178,31 +187,84 @@ public class MedDBApp {
         }
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void adicionarAcessoDeEspecialidade() {
-        System.out.print("Introduza o ID da especialidade acessora: ");
-        Integer idAcessora = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o ID da especialidade acedida: ");
-        Integer idAcedida = Integer.parseInt(System.console().readLine());
-
-        AdicionarAcessoDeEspecialidadeService serv = new AdicionarAcessoDeEspecialidadeService(idAcessora, idAcedida);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            serv.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+
+            System.out.print("Introduza o ID da especialidade acessora: ");
+            Integer idAcessora;
+            try {
+                idAcessora = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcessora = -1;
+            }
+            System.out.print("Introduza o ID da especialidade acedida: ");
+            Integer idAcedida;
+            try {
+                idAcedida = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcedida = -1;
+            }
+            AdicionarAcessoDeEspecialidadeService serv = new AdicionarAcessoDeEspecialidadeService(idAcessora, idAcedida);
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
+        }
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void removerAcessoDeEspecialidade() {
-        System.out.print("Introduza o ID da especialidade acessora: ");
-        Integer idAcessora = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o ID da especialidade acedida: ");
-        Integer idAcedida = Integer.parseInt(System.console().readLine());
-
-        RemoverAcessoDeEspecialidadeService serv = new RemoverAcessoDeEspecialidadeService(idAcessora, idAcedida);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            serv.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+            System.out.print("Introduza o ID da especialidade acessora: ");
+            Integer idAcessora;
+            try {
+                idAcessora = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcessora = -1;
+            }
+            System.out.print("Introduza o ID da especialidade acedida: ");
+            Integer idAcedida;
+            try {
+                idAcedida = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcedida = -1;
+            }
+            RemoverAcessoDeEspecialidadeService serv = new RemoverAcessoDeEspecialidadeService(idAcessora, idAcedida);
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
         }
     }
 
@@ -232,80 +294,214 @@ public class MedDBApp {
 
     }
 
+    private static void toggleAdmin() {
+        System.out.print("Indique o username: ");
+        String usernameMedico = System.console().readLine();
+        ToggleAdminService serv = new ToggleAdminService(usernameMedico);
+        try {
+            serv.execute();
+            System.out.println(usernameMedico + " alterado para " + serv.getEstadoActual());
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    // TODO: Alterar display de especialidades para menu proprio
     private static void permitirAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
 
-        System.out.print("Indique o id da Especialidade: ");
-        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
-
-        AdicionarEspecialidadeAMedicoService aemServ = new AdicionarEspecialidadeAMedicoService(usernameMedico, idEspecialidade);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            aemServ.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+            System.out.print("Indique o id da Especialidade: ");
+
+            Integer idEspecialidade;
+            try {
+                idEspecialidade = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idEspecialidade = -1;
+            }
+            AdicionarEspecialidadeAMedicoService aemServ =
+                    new AdicionarEspecialidadeAMedicoService(usernameMedico, idEspecialidade);
+            try {
+                aemServ.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
+        }
+
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void negarAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
 
-        System.out.print("Indique o id da Especialidade: ");
-        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
-
-        CreateMedicoBanidoDeEspecialidadeService cmbeServ =
-                new CreateMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            cmbeServ.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+            System.out.print("Indique o id da Especialidade: ");
+
+            Integer idEspecialidade;
+            try {
+                idEspecialidade = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idEspecialidade = -1;
+            }
+
+            CreateMedicoBanidoDeEspecialidadeService cmbeServ =
+                    new CreateMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+            try {
+                cmbeServ.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
+        }
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void devolverAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
 
-        System.out.print("Indique o id da Especialidade: ");
-        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
-
-        RemoveMedicoBanidoDeEspecialidadeService cmbeServ =
-                new RemoveMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            cmbeServ.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+            System.out.print("Indique o id da Especialidade: ");
+
+            Integer idEspecialidade;
+            try {
+                idEspecialidade = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idEspecialidade = -1;
+            }
+
+            RemoveMedicoBanidoDeEspecialidadeService cmbeServ =
+                    new RemoveMedicoBanidoDeEspecialidadeService(usernameMedico, idEspecialidade);
+            try {
+                cmbeServ.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
+        }
     }
 
+    // TODO: Alterar display de registos para menu proprio
     private static void negarAcessoARegisto() {
-        System.out.print("Introduza o ID do registo: ");
-        Integer idRegisto = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o username do medico: ");
-        String userMedico = System.console().readLine();
-
-        ProibirAcessoAMedicoService serv = new ProibirAcessoAMedicoService(userMedico, idRegisto);
-
+        GetRegistosService greServ = new GetRegistosService();
+        ArrayList<RegistoDTO> registos = null;
         try {
-            serv.execute();
+            greServ.execute();
+            registos = greServ.getRegistos();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+        if (registos != null && registos.size() > 0) {
+
+            for (RegistoDTO registoDTO : registos) {
+                System.out.println("ID: " + registoDTO.getObjectID());
+                System.out.println("  -P: " + registoDTO.getNomePaciente());
+                System.out.println("  -M: " + registoDTO.getNomeMedico());
+                System.out.println("  -E: " + registoDTO.getNomeEspecialidade());
+                System.out.println("  -Est: " + registoDTO.getNomeEstabelecimento());
+                System.out.println("  -C: " + registoDTO.getConteudo());
+            }
+            System.out.print("Introduza o ID do registo: ");
+            Integer idRegisto = Integer.parseInt(System.console().readLine());
+            System.out.print("Introduza o username do medico: ");
+            String userMedico = System.console().readLine();
+
+            ProibirAcessoAMedicoService serv = new ProibirAcessoAMedicoService(userMedico, idRegisto);
+
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Nao existem registos no sistema");
+        }
     }
 
+    // TODO: Alterar display de registos para menu proprio
     private static void reporAcessoARegisto() {
-        System.out.print("Introduza o ID do registo: ");
-        Integer idRegisto = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o username do medico: ");
-        String userMedico = System.console().readLine();
-
-        DevolverAcessoAMedicoService serv = new DevolverAcessoAMedicoService(userMedico, idRegisto);
-
+        GetRegistosService greServ = new GetRegistosService();
+        ArrayList<RegistoDTO> registos = null;
         try {
-            serv.execute();
+            greServ.execute();
+            registos = greServ.getRegistos();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+        if (registos != null && registos.size() > 0) {
+
+            for (RegistoDTO registoDTO : registos) {
+                System.out.println("ID: " + registoDTO.getObjectID());
+                System.out.println("  -P: " + registoDTO.getNomePaciente());
+                System.out.println("  -M: " + registoDTO.getNomeMedico());
+                System.out.println("  -E: " + registoDTO.getNomeEspecialidade());
+                System.out.println("  -Est: " + registoDTO.getNomeEstabelecimento());
+                System.out.println("  -C: " + registoDTO.getConteudo());
+            }
+
+            System.out.print("Introduza o ID do registo: ");
+            Integer idRegisto;
+            try {
+                idRegisto = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idRegisto = -1;
+            }
+
+            System.out.print("Introduza o username do medico: ");
+            String userMedico = System.console().readLine();
+
+            DevolverAcessoAMedicoService serv = new DevolverAcessoAMedicoService(userMedico, idRegisto);
+
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Nao existem registos no sistema");
         }
     }
 
@@ -313,9 +509,19 @@ public class MedDBApp {
         System.out.print("Introduza o username do paciente: ");
         String paciente = System.console().readLine();
         System.out.print("Introduza o id da especialidade: ");
-        Integer especialidade = Integer.parseInt(System.console().readLine());
+        Integer especialidade;
+        try {
+            especialidade = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            especialidade = -1;
+        }
         System.out.print("Introduza o id do estabelecimento: ");
-        Integer estabelecimento = Integer.parseInt(System.console().readLine());
+        Integer estabelecimento;
+        try {
+            estabelecimento = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            estabelecimento = -1;
+        }
         System.out.println();
         System.out.print("Conteudo: ");
         String conteudo = System.console().readLine();
@@ -354,14 +560,12 @@ public class MedDBApp {
 
     }
 
-    private static void registosPorEspecialidade() {
-        System.out.print("Introduza o id da especialidade: ");
-        Integer especialidade = Integer.parseInt(System.console().readLine());
-        RegistosByEspecialidadeService rbeServ = new RegistosByEspecialidadeService(especialidade);
+    private static void registosProprios() {
         ArrayList<RegistoDTO> registos = null;
+        RegistosPropriosService rfpServ = new RegistosPropriosService();
         try {
-            rbeServ.execute();
-            registos = rbeServ.getRegistos();
+            rfpServ.execute();
+            registos = rfpServ.getRegistos();
 
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
@@ -369,20 +573,69 @@ public class MedDBApp {
 
         if (registos != null && registos.size() > 0) {
             for (RegistoDTO registo : registos) {
-                System.out.println(registo.getObjectID() + "- Paciente: " + registo.getNomePaciente() + " - Medico: "
+                System.out.println(registo.getObjectID() + "- Especialidade: " + registo.getNomeEspecialidade() + " - Medico: "
                         + registo.getNomeMedico());
                 System.out.println("Conteudo: " + registo.getConteudo());
             }
         } else {
             System.out.println("Nao ha registos para mostrar");
         }
+    }
+
+    private static void registosPorEspecialidade() {
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
+        try {
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+
+            System.out.print("Introduza o id da especialidade: ");
+            Integer especialidade;
+            try {
+                especialidade = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                especialidade = -1;
+            }
+            RegistosByEspecialidadeService rbeServ = new RegistosByEspecialidadeService(especialidade);
+            ArrayList<RegistoDTO> registos = null;
+            try {
+                rbeServ.execute();
+                registos = rbeServ.getRegistos();
+
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+
+            if (registos != null && registos.size() > 0) {
+
+                for (RegistoDTO registo : registos) {
+                    System.out.println(registo.getObjectID() + "- Paciente: " + registo.getNomePaciente() + " - Medico: "
+                            + registo.getNomeMedico());
+                    System.out.println("Conteudo: " + registo.getConteudo());
+                }
+            } else {
+                System.out.println("Nao ha registos para mostrar!");
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
+        }
 
     }
 
     private static void createPessoa() {
-
-        System.out.print("Introduza o username: ");
-        String username = System.console().readLine();
+        String username;
+        do {
+            System.out.print("Introduza o username: ");
+            username = System.console().readLine();
+        } while (username.length() == 0);
         String password;
 
         while (true) {
@@ -412,8 +665,11 @@ public class MedDBApp {
     }
 
     private static void createMedico() {
-        System.out.print("Introduza o username: ");
-        String username = System.console().readLine();
+        String username;
+        do {
+            System.out.print("Introduza o username: ");
+            username = System.console().readLine();
+        } while (username.length() == 0);
         String password;
         Boolean medicoDeUrgencia;
 
@@ -476,7 +732,7 @@ public class MedDBApp {
                 try {
                     num = Integer.parseInt(opcao);
                 } catch (Exception e) {
-                    num = 69;
+                    num = -1;
                 }
 
                 switch (num) {
@@ -499,7 +755,8 @@ public class MedDBApp {
 
     private static void printPacienteMenu() {
         System.out.println();
-        System.out.println("1 - Alterar permissao de registo");
+        System.out.println("1 - Ver os meus registos");
+        System.out.println("2 - Alterar permissao de registo");
         System.out.println("9 - Ajuda");
         System.out.println("0 - Sair");
         System.out.println();
@@ -511,7 +768,7 @@ public class MedDBApp {
         try {
             num = Integer.parseInt(opcao);
         } catch (Exception e) {
-            num = 69;
+            num = -1;
         }
 
         switch (num) {
@@ -519,6 +776,9 @@ public class MedDBApp {
             LoggedPerson.getInstance().removeLoggedPerson();
             return;
         case 1:
+            registosProprios();
+            break;
+        case 2:
             changePermReg();
             break;
         case 9:
@@ -574,10 +834,12 @@ public class MedDBApp {
     }
 
     private static void createEstabelecimento() {
-        System.out.println();
-        System.out.print("Introduza o nome do estabelecimento: ");
-        String nome = System.console().readLine();
-
+        String nome;
+        do {
+            System.out.println();
+            System.out.print("Introduza o nome do estabelecimento: ");
+            nome = System.console().readLine();
+        } while (nome.length() == 0);
         CreateEstabelecimentoService serv = new CreateEstabelecimentoService(nome);
 
         try {
@@ -589,10 +851,12 @@ public class MedDBApp {
     }
 
     private static void createEspecialidade() {
-        System.out.println();
-        System.out.print("Introduza o nome da especialidade: ");
-        String nome = System.console().readLine();
-
+        String nome;
+        do {
+            System.out.println();
+            System.out.print("Introduza o nome da especialidade: ");
+            nome = System.console().readLine();
+        } while (nome.length() == 0);
         CreateEspecialidadeService serv = new CreateEspecialidadeService(nome);
 
         try {
