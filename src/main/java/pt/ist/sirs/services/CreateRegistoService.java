@@ -13,6 +13,7 @@ import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
 import pt.ist.sirs.exceptions.RegistoJaExisteException;
 import pt.ist.sirs.utils.LoggedPerson;
+import pt.ist.sirs.utils.Seguranca;
 
 /**
  * 
@@ -36,15 +37,18 @@ public class CreateRegistoService extends MedDBService {
     public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
         Medico medico = (Medico) LoggedPerson.getInstance().getLoggedPerson();
+
+        String conteudo = Seguranca.encrypt(this.conteudo);
+
         if (root.hasPerson(userPessoa)) {
             Pessoa pessoa = (Pessoa) root.getPersonByUsername(userPessoa);
             if (root.hasEspecialidade(idEspecialidade)) {
                 Especialidade especialidade = (Especialidade) root.getObjectByObjectID(idEspecialidade);
                 if (root.hasEstabelecimento(idEstabelecimento)) {
                     Estabelecimento estabelecimento = (Estabelecimento) root.getObjectByObjectID(idEstabelecimento);
-                    if (!root.hasRegisto(medico, pessoa, this.conteudo, especialidade, estabelecimento)) {
+                    if (!root.hasRegisto(medico, pessoa, conteudo, especialidade, estabelecimento)) {
                         Registo novoRegisto = new Registo();
-                        novoRegisto.setConteudo(this.conteudo);
+                        novoRegisto.setConteudo(conteudo);
                         novoRegisto.setEspecialidade(especialidade);
                         novoRegisto.setMedico(medico);
                         novoRegisto.setPaciente(pessoa);

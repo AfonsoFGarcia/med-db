@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class Seguranca {
 
     private static String fileFolder;
@@ -54,5 +60,51 @@ public class Seguranca {
         in.close();
         byte[] encoded = Base64.decodeBase64(data);
         return new SecretKeySpec(encoded, "AES");
+    }
+
+    public static String encrypt(String encrypt) {
+        Cipher c;
+        SecretKey sysKey;
+        byte[] base64Conteudo = Base64.encodeBase64(encrypt.getBytes());
+        byte[] encrypted;
+
+        try {
+            byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            IvParameterSpec ivspec = new IvParameterSpec(iv);
+            c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            sysKey = Seguranca.getKeyFromFile();
+            c.init(Cipher.ENCRYPT_MODE, sysKey, ivspec);
+            encrypted = new byte[c.getOutputSize(base64Conteudo.length)];
+            int enc_len = c.update(base64Conteudo, 0, base64Conteudo.length, encrypted, 0);
+            enc_len += c.doFinal(encrypted, enc_len);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return Base64.encodeBase64String(encrypted);
+    }
+
+    public static String decrypt(String enc) {
+        Cipher c;
+        SecretKey sysKey;
+        byte[] encrypted = Base64.decodeBase64(enc);
+        byte[] base64Conteudo;
+
+        try {
+            byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            IvParameterSpec ivspec = new IvParameterSpec(iv);
+            c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            sysKey = Seguranca.getKeyFromFile();
+            c.init(Cipher.DECRYPT_MODE, sysKey, ivspec);
+            base64Conteudo = new byte[c.getOutputSize(encrypted.length)];
+            int dec_len = c.update(encrypted, 0, encrypted.length, base64Conteudo, 0);
+            dec_len += c.doFinal(base64Conteudo, dec_len);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return new String(Base64.decodeBase64(base64Conteudo));
     }
 }

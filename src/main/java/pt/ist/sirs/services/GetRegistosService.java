@@ -9,6 +9,7 @@ import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.services.dto.RegistoDTO;
 import pt.ist.sirs.utils.LoggedPerson;
+import pt.ist.sirs.utils.Seguranca;
 
 /**
  * 
@@ -30,8 +31,9 @@ public class GetRegistosService extends MedDBService {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
         for (Registo registo : root.getRegistos()) {
             RegistoDTO r =
-                    new RegistoDTO(registo.getConteudo(), registo.getPaciente().getNome(), registo.getMedico().getNome(), registo
-                            .getEspecialidade().getNome(), registo.getEstabelecimento().getNome(), registo.getObjectId());
+                    new RegistoDTO(Seguranca.decrypt(registo.getConteudo()), registo.getPaciente().getNome(), registo.getMedico()
+                            .getNome(), registo.getEspecialidade().getNome(), registo.getEstabelecimento().getNome(),
+                            registo.getObjectId());
             this.registos.add(r);
         }
 

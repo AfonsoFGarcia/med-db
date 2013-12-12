@@ -8,6 +8,7 @@ import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.RegistoNaoExisteException;
 import pt.ist.sirs.services.dto.RegistoDTO;
 import pt.ist.sirs.utils.LoggedPerson;
+import pt.ist.sirs.utils.Seguranca;
 
 public class GetRegistoService extends MedDBService {
 
@@ -26,8 +27,9 @@ public class GetRegistoService extends MedDBService {
 
             if (reg.getPermissao().isAllowed(LoggedPerson.getInstance().getLoggedPerson())) {
                 registo =
-                        new RegistoDTO(reg.getConteudo(), reg.getPaciente().getNome(), reg.getMedico().getNome(), reg
-                                .getEspecialidade().getNome(), reg.getEstabelecimento().getNome(), reg.getObjectId());
+                        new RegistoDTO(Seguranca.decrypt(reg.getConteudo()), reg.getPaciente().getNome(), reg.getMedico()
+                                .getNome(), reg.getEspecialidade().getNome(), reg.getEstabelecimento().getNome(),
+                                reg.getObjectId());
             } else {
                 throw new AcessoRecusadoException(idRegisto, LoggedPerson.getInstance().getLoggedPerson().getUsername());
             }
