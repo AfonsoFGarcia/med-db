@@ -12,6 +12,7 @@ import pt.ist.sirs.services.AdicionarAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.AdicionarEspecialidadeAMedicoService;
 import pt.ist.sirs.services.AdminLoginService;
 import pt.ist.sirs.services.AlterarPermissaoDefaultService;
+import pt.ist.sirs.services.AssociarMedicoAEstabelecimentoService;
 import pt.ist.sirs.services.ChangePermissaoService;
 import pt.ist.sirs.services.CreateEspecialidadeService;
 import pt.ist.sirs.services.CreateEstabelecimentoService;
@@ -220,7 +221,6 @@ public class MedDBApp {
         }
         RemoverMedicoDeEstabelecimentoService rmdeServ =
                 new RemoverMedicoDeEstabelecimentoService(usernameMedico, idEstabelecimento);
-        System.out.println("USERNAME" + usernameMedico);
         try {
             rmdeServ.execute();
         } catch (MedDBException e) {
@@ -230,7 +230,25 @@ public class MedDBApp {
     }
 
     private static void associarMedicoAEstabelecimento() {
-        // TODO Auto-generated method stub
+        System.out.print("Indique o username do Medico: ");
+        String usernameMedico = System.console().readLine();
+
+        System.out.print("Indique o id do Estabelecimento: ");
+
+        Integer idEstabelecimento;
+        try {
+            idEstabelecimento = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
+        }
+        AssociarMedicoAEstabelecimentoService amaeServ =
+                new AssociarMedicoAEstabelecimentoService(usernameMedico, idEstabelecimento);
+        try {
+            amaeServ.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
