@@ -8,6 +8,10 @@ import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
+/**
+ * 
+ * @author José Góis (79261)
+ */
 public class GetRegistosService extends MedDBService {
 
     private ArrayList<RegistoDTO> registos;

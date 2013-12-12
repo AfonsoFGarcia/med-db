@@ -8,6 +8,10 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.services.dto.EspecialidadeDTO;
 
+/**
+ * 
+ * @author José Góis (79261)
+ */
 public class GetEspecialidadesService extends MedDBService {
 
     private ArrayList<EspecialidadeDTO> especialidades;

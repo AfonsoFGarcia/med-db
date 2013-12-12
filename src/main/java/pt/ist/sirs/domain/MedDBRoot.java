@@ -12,7 +12,7 @@ import pt.ist.sirs.login.LoggedPerson;
  * Disponibiliza a gestão centralizada de identificadores únicos utilizados pela classe {@link MedDBCommon}. <br>
  * Permite a procura de objectos pelo identificador.
  * 
- * @author Afonso F. Garcia (70001)
+ * @author Afonso F. Garcia (70001), José Góis (79261)
  */
 public class MedDBRoot extends MedDBRoot_Base {
 

@@ -3,6 +3,10 @@ package pt.ist.sirs.domain;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class PoliticaDeEspecialidade extends PoliticaDeEspecialidade_Base {
 
     public PoliticaDeEspecialidade() {

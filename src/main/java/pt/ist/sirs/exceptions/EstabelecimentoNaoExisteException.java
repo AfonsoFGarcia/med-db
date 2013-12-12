@@ -1,6 +1,10 @@
 package pt.ist.sirs.exceptions;
 
-public class EstabelecimentoNãoExisteException extends MedDBException {
+/**
+ * 
+ * @author José Góis (79261)
+ */
+public class EstabelecimentoNaoExisteException extends MedDBException {
 
     /**
      * 
@@ -9,7 +13,7 @@ public class EstabelecimentoNãoExisteException extends MedDBException {
 
     private Integer id;
 
-    public EstabelecimentoNãoExisteException(Integer idEstabelecimento) {
+    public EstabelecimentoNaoExisteException(Integer idEstabelecimento) {
         this.id = idEstabelecimento;
     }
 

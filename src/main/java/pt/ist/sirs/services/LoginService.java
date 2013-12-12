@@ -5,6 +5,10 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class LoginService extends MedDBService {
 
     private String username;

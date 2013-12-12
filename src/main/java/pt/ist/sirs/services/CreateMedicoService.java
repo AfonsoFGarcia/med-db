@@ -12,6 +12,10 @@ import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.exceptions.UsernameJaExisteException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class CreateMedicoService extends MedDBService {
 
     private String nome;

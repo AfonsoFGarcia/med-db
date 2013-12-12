@@ -9,6 +9,10 @@ import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class RegistosByEspecialidadeService extends MedDBService {
 
     private ArrayList<RegistoDTO> registos;

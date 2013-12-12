@@ -20,8 +20,6 @@ import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.DevolverAcessoAMedicoService;
-import pt.ist.sirs.services.GetEspecialidadesService;
-import pt.ist.sirs.services.GetRegistosService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
@@ -29,7 +27,6 @@ import pt.ist.sirs.services.RegistosFromPacienteService;
 import pt.ist.sirs.services.RemoveMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
-import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
 /**
@@ -37,7 +34,7 @@ import pt.ist.sirs.services.dto.RegistoDTO;
  * <br>
  * Implementa a interface de utilizador do Med-DB.
  * 
- * @author Afonso F. Garcia (70001)
+ * @author Afonso F. Garcia (70001), José Góis (79261)
  */
 public class MedDBApp {
 

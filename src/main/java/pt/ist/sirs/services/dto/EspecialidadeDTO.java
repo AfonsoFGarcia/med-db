@@ -1,5 +1,9 @@
 package pt.ist.sirs.services.dto;
 
+/**
+ * 
+ * @author José Góis (79261)
+ */
 public class EspecialidadeDTO {
     private Integer ObjectId;
     private String nome;

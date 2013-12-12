@@ -10,6 +10,10 @@ import pt.ist.sirs.exceptions.MedicoNaoExisteException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class AdicionarEspecialidadeAMedicoService extends MedDBService {
 
     private String usernameMedico;

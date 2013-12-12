@@ -5,6 +5,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.IncorrectPasswordException;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001)
+ */
 public class LoggedPerson {
 
     private Pessoa loggedPerson;

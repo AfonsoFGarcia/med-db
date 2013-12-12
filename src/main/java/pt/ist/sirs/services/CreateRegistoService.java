@@ -8,12 +8,16 @@ import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
-import pt.ist.sirs.exceptions.EstabelecimentoNãoExisteException;
+import pt.ist.sirs.exceptions.EstabelecimentoNaoExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
 import pt.ist.sirs.exceptions.RegistoJaExisteException;
 import pt.ist.sirs.login.LoggedPerson;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class CreateRegistoService extends MedDBService {
 
     private String conteudo;
@@ -50,7 +54,7 @@ public class CreateRegistoService extends MedDBService {
                         throw new RegistoJaExisteException();
                     }
                 } else {
-                    throw new EstabelecimentoNãoExisteException(idEstabelecimento);
+                    throw new EstabelecimentoNaoExisteException(idEstabelecimento);
                 }
             } else {
                 throw new EspecialidadeNaoExisteException(idEspecialidade);

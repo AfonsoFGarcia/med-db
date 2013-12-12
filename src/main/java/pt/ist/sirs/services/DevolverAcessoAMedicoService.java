@@ -13,6 +13,10 @@ import pt.ist.sirs.permissoes.PermissaoComposta;
 import pt.ist.sirs.permissoes.PermissaoMedico;
 import pt.ist.sirs.permissoes.logicas.PermissaoNaoLogico;
 
+/**
+ * 
+ * @author Afonso F. Garcia (70001), José Góis (79261)
+ */
 public class DevolverAcessoAMedicoService extends MedDBService {
 
     private String userMedico;
