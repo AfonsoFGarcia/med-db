@@ -283,17 +283,38 @@ public class MedDBApp {
     }
 
     private static void negarAcessoARegisto() {
-        System.out.print("Introduza o ID do registo: ");
-        Integer idRegisto = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o username do medico: ");
-        String userMedico = System.console().readLine();
-
-        ProibirAcessoAMedicoService serv = new ProibirAcessoAMedicoService(userMedico, idRegisto);
-
+        GetRegistosService greServ = new GetRegistosService();
+        ArrayList<RegistoDTO> registos = null;
         try {
-            serv.execute();
+            greServ.execute();
+            registos = greServ.getRegistos();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+        if (registos != null && registos.size() > 0) {
+
+            for (RegistoDTO registoDTO : registos) {
+                System.out.println("ID: " + registoDTO.getObjectID());
+                System.out.println("  -P: " + registoDTO.getNomePaciente());
+                System.out.println("  -M: " + registoDTO.getNomeMedico());
+                System.out.println("  -E: " + registoDTO.getNomeEspecialidade());
+                System.out.println("  -Est: " + registoDTO.getNomeEstabelecimento());
+                System.out.println("  -C: " + registoDTO.getConteudo());
+            }
+            System.out.print("Introduza o ID do registo: ");
+            Integer idRegisto = Integer.parseInt(System.console().readLine());
+            System.out.print("Introduza o username do medico: ");
+            String userMedico = System.console().readLine();
+
+            ProibirAcessoAMedicoService serv = new ProibirAcessoAMedicoService(userMedico, idRegisto);
+
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Nao existem registos no sistema");
         }
     }
 

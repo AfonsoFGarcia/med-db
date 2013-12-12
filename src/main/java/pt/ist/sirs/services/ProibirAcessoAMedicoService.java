@@ -5,7 +5,9 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Medico;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.MedDBException;
+import pt.ist.sirs.exceptions.MedicoNaoExisteException;
 import pt.ist.sirs.exceptions.NotAdminException;
+import pt.ist.sirs.exceptions.RegistoNaoExisteException;
 import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.permissoes.PermissaoMedico;
 import pt.ist.sirs.permissoes.logicas.PermissaoELogico;
@@ -27,16 +29,24 @@ public class ProibirAcessoAMedicoService extends MedDBService {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
         }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        Registo registo = (Registo) root.getObjectByObjectID(idRegisto);
-        Medico medico = (Medico) root.getPersonByUsername(userMedico);
+        if (root.hasRegisto(idRegisto)) {
+            Registo registo = (Registo) root.getObjectByObjectID(idRegisto);
+            if (root.hasPerson(userMedico)) {
+                Medico medico = (Medico) root.getPersonByUsername(userMedico);
 
-        PermissaoMedico pm = new PermissaoMedico(registo, medico);
-        PermissaoNaoLogico pnl = new PermissaoNaoLogico(registo, pm);
-        PermissaoELogico pel = new PermissaoELogico(registo);
-        pel.addPermissao(pnl);
-        pel.addPermissao(registo.getPermissao());
+                PermissaoMedico pm = new PermissaoMedico(registo, medico);
+                PermissaoNaoLogico pnl = new PermissaoNaoLogico(registo, pm);
+                PermissaoELogico pel = new PermissaoELogico(registo);
+                pel.addPermissao(pnl);
+                pel.addPermissao(registo.getPermissao());
 
-        registo.setPermissao(pel);
+                registo.setPermissao(pel);
+            } else {
+                throw new MedicoNaoExisteException(userMedico);
+            }
+        } else {
+            throw new RegistoNaoExisteException(idRegisto);
+        }
     }
 
 }
