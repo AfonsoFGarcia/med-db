@@ -36,6 +36,13 @@ public class MedDBRoot extends MedDBRoot_Base {
         return newObjectId;
     }
 
+    /**
+     * Devolve o objecto de dominio com o ID desejado
+     * 
+     * @param objectID ID do objecto a ser retornado
+     * @return Objecto de dominio com o ID objectID
+     * @throws ObjectoNaoExisteException
+     */
     public MedDBCommon getObjectByObjectID(Integer objectID) throws ObjectoNaoExisteException {
         for (MedDBCommon object : this.getObject()) {
             if (object.getObjectId().equals(objectID)) {
@@ -45,6 +52,13 @@ public class MedDBRoot extends MedDBRoot_Base {
         throw new ObjectoNaoExisteException(objectID);
     }
 
+    /**
+     * Devolve a {@link Pessoa} com o username desejado
+     * 
+     * @param username Username da pessoa a ser retornada
+     * @return Pessoa com o username username
+     * @throws PessoaNaoExisteException
+     */
     public Pessoa getPersonByUsername(String username) throws PessoaNaoExisteException {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Pessoa && ((Pessoa) object).getUsername().equals(username)) {
@@ -54,6 +68,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         throw new PessoaNaoExisteException(username);
     }
 
+    /**
+     * Verifica se a {@link Pessoa} existe
+     * 
+     * @param username Username da pessoa a verificar
+     * @return true, se a pessoa existir
+     */
     public boolean hasPerson(String username) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Pessoa && ((Pessoa) object).getUsername().equals(username)) {
@@ -63,6 +83,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se o {@link Registo} existe
+     * 
+     * @param id ID do registo a verificar
+     * @return true, se o registo existir
+     */
     public boolean hasRegisto(Integer id) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Registo && ((Registo) object).getObjectId().equals(id)) {
@@ -72,6 +98,16 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se o {@link Registo} existe
+     * 
+     * @param medico Medico do registo
+     * @param paciente Paciente do registo
+     * @param conteudo Conteudo do registo
+     * @param especialidade Especialidade do registo
+     * @param estabelecimento Estabelecimento do registo
+     * @return true, se o registo existir
+     */
     public boolean hasRegisto(Medico medico, Pessoa paciente, String conteudo, Especialidade especialidade,
             Estabelecimento estabelecimento) {
         for (MedDBCommon object : this.getObject()) {
@@ -88,9 +124,9 @@ public class MedDBRoot extends MedDBRoot_Base {
     /**
      * Verifica o acesso à especialidade na lista de pares <Especialidade, Especialidade> (associações permitidas estão na lista).
      * 
-     * @param acessor Especialidade que quer aceder à acedida.
+     * @param acessor Especialidade que quer aceder à acedida
      * @param acedida Especialidade que vai ser acedida
-     * @return true, se encontrar um par igual ao passado como argumento.
+     * @return true, se encontrar um par igual ao passado como argumento
      */
     public boolean verificaAcessoAEspecialidade(Especialidade acessor, Especialidade acedida) {
         for (PoliticaDeEspecialidade p : this.getPoliticaDeEspecialidade()) {
@@ -101,6 +137,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se o {@link Estabelecimento} existe
+     * 
+     * @param nome Nome do estabelecimento
+     * @return true, se o estabelecimento exisir
+     */
     public boolean hasEstabelecimento(String nome) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Estabelecimento && ((Estabelecimento) object).getNome().equals(nome)) {
@@ -110,6 +152,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se o {@link Estabelecimento} existe
+     * 
+     * @param idEstabelecimento ID do estabelecimento
+     * @return true, se o estabelecimento existir
+     */
     public boolean hasEstabelecimento(Integer idEstabelecimento) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Estabelecimento && ((Estabelecimento) object).getObjectId().equals(idEstabelecimento)) {
@@ -119,6 +167,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se a {@link Especialidade} existe
+     * 
+     * @param nome Nome da especialidade
+     * @return true, se a especialidade existir
+     */
     public boolean hasEspecialidade(String nome) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Especialidade && ((Especialidade) object).getNome().equals(nome)) {
@@ -128,6 +182,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se a {@link Especialidade} existe
+     * 
+     * @param id ID da especialidade
+     * @return true, se a especialidade existir
+     */
     public boolean hasEspecialidade(Integer id) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Especialidade && ((Especialidade) object).getObjectId().equals(id)) {
@@ -137,13 +197,19 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Obtem os registos de um paciente que a pessoa com login feito tem acesso
+     * 
+     * @param pacienteUsername Username do paciente
+     * @return Lista de registos do paciente
+     */
     public ArrayList<Registo> getRegistosFromPaciente(String pacienteUsername) {
         ArrayList<Registo> registos = new ArrayList<Registo>();
 
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Registo && ((Registo) object).getPaciente().getUsername().equals(pacienteUsername)) {
                 Registo r = (Registo) object;
-                Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
+                Pessoa m = LoggedPerson.getInstance().getLoggedPerson();
                 if (r.getPermissao().isAllowed(m)) {
                     registos.add(r);
                     continue;
@@ -155,13 +221,19 @@ public class MedDBRoot extends MedDBRoot_Base {
 
     }
 
+    /**
+     * Obtem os registos de uma especialidade que a pessoa com login feito tem acesso
+     * 
+     * @param idEspecialidade ID da especialidade
+     * @return Lista de registos da especialidade
+     */
     public ArrayList<Registo> getRegistosByEspecialidade(Integer idEspecialidade) {
         ArrayList<Registo> registos = new ArrayList<Registo>();
 
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Registo) {
                 Registo r = (Registo) object;
-                Medico m = (Medico) LoggedPerson.getInstance().getLoggedPerson();
+                Pessoa m = LoggedPerson.getInstance().getLoggedPerson();
                 if (r.getPermissao().isAllowed(m)) {
                     registos.add(r);
                     continue;
@@ -172,6 +244,11 @@ public class MedDBRoot extends MedDBRoot_Base {
         return registos;
     }
 
+    /**
+     * Obtem as especialidades existentes no sistema
+     * 
+     * @return Lista de especialidades
+     */
     public ArrayList<Especialidade> getEspecialidades() {
         ArrayList<Especialidade> especialidades = new ArrayList<Especialidade>();
         for (MedDBCommon object : this.getObject()) {
@@ -185,6 +262,13 @@ public class MedDBRoot extends MedDBRoot_Base {
         return especialidades;
     }
 
+    /**
+     * Obtem os registos existentes no sistema<br>
+     * <br>
+     * <b>ATENCAO! So usar em servicos de administracao!</b>
+     * 
+     * @return Lista de registos
+     */
     public ArrayList<Registo> getRegistos() {
         ArrayList<Registo> registos = new ArrayList<Registo>();
         for (MedDBCommon object : this.getObject()) {
