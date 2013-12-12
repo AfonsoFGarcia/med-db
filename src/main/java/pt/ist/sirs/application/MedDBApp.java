@@ -21,6 +21,7 @@ import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.DevolverAcessoAMedicoService;
 import pt.ist.sirs.services.GetEspecialidadesService;
+import pt.ist.sirs.services.GetRegistosService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
@@ -297,23 +298,45 @@ public class MedDBApp {
     }
 
     private static void reporAcessoARegisto() {
-        System.out.print("Introduza o ID do registo: ");
-        Integer idRegisto;
+        GetRegistosService greServ = new GetRegistosService();
+        ArrayList<RegistoDTO> registos = null;
         try {
-            idRegisto = Integer.parseInt(System.console().readLine());
-        } catch (Exception e) {
-            idRegisto = -1;
-        }
-
-        System.out.print("Introduza o username do medico: ");
-        String userMedico = System.console().readLine();
-
-        DevolverAcessoAMedicoService serv = new DevolverAcessoAMedicoService(userMedico, idRegisto);
-
-        try {
-            serv.execute();
+            greServ.execute();
+            registos = greServ.getRegistos();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+        if (registos != null && registos.size() > 0) {
+
+            for (RegistoDTO registoDTO : registos) {
+                System.out.println("ID: " + registoDTO.getObjectID());
+                System.out.println("  -P: " + registoDTO.getNomePaciente());
+                System.out.println("  -M: " + registoDTO.getNomeMedico());
+                System.out.println("  -E: " + registoDTO.getNomeEspecialidade());
+                System.out.println("  -Est: " + registoDTO.getNomeEstabelecimento());
+                System.out.println("  -C: " + registoDTO.getConteudo());
+            }
+
+            System.out.print("Introduza o ID do registo: ");
+            Integer idRegisto;
+            try {
+                idRegisto = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idRegisto = -1;
+            }
+
+            System.out.print("Introduza o username do medico: ");
+            String userMedico = System.console().readLine();
+
+            DevolverAcessoAMedicoService serv = new DevolverAcessoAMedicoService(userMedico, idRegisto);
+
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Nao existem registos no sistema");
         }
     }
 
