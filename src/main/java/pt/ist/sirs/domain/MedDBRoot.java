@@ -83,6 +83,12 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    /**
+     * Verifica se o {@link Medico} existe
+     * 
+     * @param username Username do medico a verificar
+     * @return true, se o medico existir
+     */
     public boolean hasMedico(String username) {
         for (MedDBCommon object : this.getObject()) {
             if (object instanceof Medico && ((Medico) object).getUsername().equals(username)) {
