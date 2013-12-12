@@ -16,8 +16,14 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Seguranca {
 
+    private static String fileFolder;
+
+    public static void setFileName(String f) {
+        fileFolder = f;
+    }
+
     public static void generateSystemKey() {
-        System.out.println("A gerar a chave assimetrica do sistema");
+        System.out.println("A gerar a chave assimetrica do sistema...");
 
         KeyGenerator keyGen = null;
         try {
@@ -33,7 +39,7 @@ public class Seguranca {
         String local = System.console().readLine();
 
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(local));
+            BufferedWriter out = new BufferedWriter(new FileWriter(local + "key.scr"));
             out.write(key);
             out.close();
         } catch (Exception e) {
@@ -42,8 +48,8 @@ public class Seguranca {
         }
     }
 
-    public static SecretKey getKeyFromFile(String file) throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(file));
+    public static SecretKey getKeyFromFile() throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader(fileFolder + "key.scr"));
         String data = in.readLine();
         in.close();
         byte[] encoded = Base64.decodeBase64(data);
