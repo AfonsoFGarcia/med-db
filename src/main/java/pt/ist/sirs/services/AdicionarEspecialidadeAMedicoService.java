@@ -34,7 +34,7 @@ public class AdicionarEspecialidadeAMedicoService extends MedDBService {
             Medico medico = (Medico) root.getPersonByUsername(this.usernameMedico);
             if (root.hasEspecialidade(idEspecialidade)) {
                 Especialidade especialidade = (Especialidade) root.getObjectByObjectID(this.idEspecialidade);
-                medico.getEspecialidades().add(especialidade);
+                medico.addEspecialidades(especialidade);
             } else {
                 throw new EspecialidadeNaoExisteException(idEspecialidade);
             }
