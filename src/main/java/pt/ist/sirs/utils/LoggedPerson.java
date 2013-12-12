@@ -1,5 +1,6 @@
 package pt.ist.sirs.utils;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import pt.ist.sirs.domain.Pessoa;
@@ -28,7 +29,7 @@ public class LoggedPerson {
 
     public void setLoggedPerson(Pessoa p, String password) throws IncorrectPasswordException {
         String salt = p.getSalt();
-        String saltedPass = new String(DigestUtils.sha1(password + salt));
+        String saltedPass = Base64.encodeBase64String(DigestUtils.sha1(password + salt));
 
         if (p.getPassword().equals(saltedPass)) {
             this.loggedPerson = p;
