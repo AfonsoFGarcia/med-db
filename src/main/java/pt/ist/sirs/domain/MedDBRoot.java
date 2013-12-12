@@ -162,4 +162,17 @@ public class MedDBRoot extends MedDBRoot_Base {
 
         return registos;
     }
+
+    public ArrayList<Especialidade> getEspecialidades() {
+        ArrayList<Especialidade> especialidades = new ArrayList<Especialidade>();
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Especialidade) {
+                Especialidade e = (Especialidade) object;
+                especialidades.add(e);
+                continue;
+            }
+        }
+
+        return especialidades;
+    }
 }
