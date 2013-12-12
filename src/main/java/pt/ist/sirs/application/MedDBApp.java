@@ -29,6 +29,7 @@ import pt.ist.sirs.services.RegistosFromPacienteService;
 import pt.ist.sirs.services.RegistosPropriosService;
 import pt.ist.sirs.services.RemoveMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
+import pt.ist.sirs.services.RemoverMedicoDeEstabelecimentoService;
 import pt.ist.sirs.services.ToggleAdminService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.EspecialidadeDTO;
@@ -109,15 +110,17 @@ public class MedDBApp {
             System.out.println(" 5 - Associar medico a especialidade");
             System.out.println(" 6 - Negar acesso de medico a especialidade");
             System.out.println(" 7 - Devolver acesso de medico a especialidade");
-            System.out.println(" 8 - Alterar estatuto de Urgencia");
-            System.out.println(" 9 - Modificar permissao default do registo");
-            System.out.println("10 - Registar Medico");
-            System.out.println("11 - Registar Pessoa");
-            System.out.println("12 - Registar Estabelecimento");
-            System.out.println("13 - Registar Especialidade");
-            System.out.println("14 - Adicionar politica de especialidade");
-            System.out.println("15 - Remover politica de especialidade");
-            System.out.println("16 - Alterar estatuto de admin");
+            System.out.println(" 8 - Associar medico a estabelecimento");
+            System.out.println(" 9 - Remover medico de estabelecimento");
+            System.out.println("10 - Alterar estatuto de Urgencia");
+            System.out.println("11 - Modificar permissao default do registo");
+            System.out.println("12 - Registar Medico");
+            System.out.println("13 - Registar Pessoa");
+            System.out.println("14 - Registar Estabelecimento");
+            System.out.println("15 - Registar Especialidade");
+            System.out.println("16 - Adicionar politica de especialidade");
+            System.out.println("17 - Remover politica de especialidade");
+            System.out.println("18 - Alterar estatuto de admin");
             System.out.println("99 - Ajuda");
 
             System.out.println(" 0 - Logout");
@@ -157,30 +160,36 @@ public class MedDBApp {
                 devolverAcessoAEspecialidade();
                 break;
             case 8:
-                toogleMedicoUrgencia();
+                associarMedicoAEstabelecimento();
                 break;
             case 9:
-                writeNewDefaultPermission();
+                removerMedicoDeEstabelecimento();
                 break;
             case 10:
-                createMedico();
+                toogleMedicoUrgencia();
                 break;
             case 11:
-                createPessoa();
+                writeNewDefaultPermission();
                 break;
             case 12:
-                createEstabelecimento();
+                createMedico();
                 break;
             case 13:
-                createEspecialidade();
+                createPessoa();
                 break;
             case 14:
-                adicionarAcessoDeEspecialidade();
+                createEstabelecimento();
                 break;
             case 15:
-                removerAcessoDeEspecialidade();
+                createEspecialidade();
                 break;
             case 16:
+                adicionarAcessoDeEspecialidade();
+                break;
+            case 17:
+                removerAcessoDeEspecialidade();
+                break;
+            case 18:
                 toggleAdmin();
                 break;
             case 99:
@@ -194,6 +203,35 @@ public class MedDBApp {
                 break;
             }
         }
+    }
+
+    private static void removerMedicoDeEstabelecimento() {
+        System.out.print("Indique o username do Medico: ");
+        String usernameMedico = System.console().readLine();
+
+        System.out.print("Indique o id do Estabelecimento: ");
+
+        Integer idEstabelecimento;
+        try {
+            idEstabelecimento = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
+        }
+        RemoverMedicoDeEstabelecimentoService rmdeServ =
+                new RemoverMedicoDeEstabelecimentoService(usernameMedico, idEstabelecimento);
+        System.out.println("USERNAME" + usernameMedico);
+        try {
+            rmdeServ.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private static void associarMedicoAEstabelecimento() {
+        // TODO Auto-generated method stub
+
     }
 
     private static void consultarTodasAsEspecialidades() {

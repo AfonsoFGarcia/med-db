@@ -83,6 +83,15 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    public boolean hasMedico(String username) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Medico && ((Medico) object).getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Verifica se o {@link Registo} existe
      * 
