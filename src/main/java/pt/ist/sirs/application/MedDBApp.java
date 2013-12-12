@@ -366,7 +366,12 @@ public class MedDBApp {
 
     private static void registosPorEspecialidade() {
         System.out.print("Introduza o id da especialidade: ");
-        Integer especialidade = Integer.parseInt(System.console().readLine());
+        Integer especialidade;
+        try {
+            especialidade = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            especialidade = -1;
+        }
         RegistosByEspecialidadeService rbeServ = new RegistosByEspecialidadeService(especialidade);
         ArrayList<RegistoDTO> registos = null;
         try {

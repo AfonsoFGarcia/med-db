@@ -9,7 +9,7 @@ import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
 import pt.ist.sirs.exceptions.EstabelecimentoNãoExisteException;
-import pt.ist.sirs.exceptions.ObjectoNaoExisteException;
+import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.PessoaNaoExisteException;
 import pt.ist.sirs.exceptions.RegistoJaExisteException;
 import pt.ist.sirs.login.LoggedPerson;
@@ -29,8 +29,7 @@ public class CreateRegistoService extends MedDBService {
     }
 
     @Override
-    public void run() throws RegistoJaExisteException, PessoaNaoExisteException, ObjectoNaoExisteException,
-            EspecialidadeNaoExisteException, EstabelecimentoNãoExisteException {
+    public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
         Medico medico = (Medico) LoggedPerson.getInstance().getLoggedPerson();
         if (root.hasPerson(userPessoa)) {
