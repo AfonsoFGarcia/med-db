@@ -75,7 +75,7 @@ public class MedDBApp {
         try {
             num = Integer.parseInt(opcao);
         } catch (Exception e) {
-            num = 69;
+            num = -1;
         }
 
         switch (num) {
@@ -128,7 +128,7 @@ public class MedDBApp {
             try {
                 num = Integer.parseInt(opcao);
             } catch (Exception e) {
-                num = 69;
+                num = -1;
             }
 
             switch (num) {
@@ -187,6 +187,7 @@ public class MedDBApp {
         }
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void adicionarAcessoDeEspecialidade() {
         GetEspecialidadesService gespServ = new GetEspecialidadesService();
         ArrayList<EspecialidadeDTO> especialidades = null;
@@ -227,6 +228,7 @@ public class MedDBApp {
         }
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void removerAcessoDeEspecialidade() {
         GetEspecialidadesService gespServ = new GetEspecialidadesService();
         ArrayList<EspecialidadeDTO> especialidades = null;
@@ -305,6 +307,7 @@ public class MedDBApp {
 
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void permitirAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
@@ -343,6 +346,7 @@ public class MedDBApp {
 
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void negarAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
@@ -381,6 +385,7 @@ public class MedDBApp {
         }
     }
 
+    // TODO: Alterar display de especialidades para menu proprio
     private static void devolverAcessoAEspecialidade() {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
@@ -419,6 +424,7 @@ public class MedDBApp {
         }
     }
 
+    // TODO: Alterar display de registos para menu proprio
     private static void negarAcessoARegisto() {
         GetRegistosService greServ = new GetRegistosService();
         ArrayList<RegistoDTO> registos = null;
@@ -455,6 +461,7 @@ public class MedDBApp {
         }
     }
 
+    // TODO: Alterar display de registos para menu proprio
     private static void reporAcessoARegisto() {
         GetRegistosService greServ = new GetRegistosService();
         ArrayList<RegistoDTO> registos = null;
@@ -725,7 +732,7 @@ public class MedDBApp {
                 try {
                     num = Integer.parseInt(opcao);
                 } catch (Exception e) {
-                    num = 69;
+                    num = -1;
                 }
 
                 switch (num) {
@@ -761,7 +768,7 @@ public class MedDBApp {
         try {
             num = Integer.parseInt(opcao);
         } catch (Exception e) {
-            num = 69;
+            num = -1;
         }
 
         switch (num) {
