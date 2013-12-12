@@ -583,9 +583,11 @@ public class MedDBApp {
     }
 
     private static void createPessoa() {
-
-        System.out.print("Introduza o username: ");
-        String username = System.console().readLine();
+        String username;
+        do {
+            System.out.print("Introduza o username: ");
+            username = System.console().readLine();
+        } while (username.length() == 0);
         String password;
 
         while (true) {
@@ -615,8 +617,11 @@ public class MedDBApp {
     }
 
     private static void createMedico() {
-        System.out.print("Introduza o username: ");
-        String username = System.console().readLine();
+        String username;
+        do {
+            System.out.print("Introduza o username: ");
+            username = System.console().readLine();
+        } while (username.length() == 0);
         String password;
         Boolean medicoDeUrgencia;
 
@@ -777,10 +782,12 @@ public class MedDBApp {
     }
 
     private static void createEstabelecimento() {
-        System.out.println();
-        System.out.print("Introduza o nome do estabelecimento: ");
-        String nome = System.console().readLine();
-
+        String nome;
+        do {
+            System.out.println();
+            System.out.print("Introduza o nome do estabelecimento: ");
+            nome = System.console().readLine();
+        } while (nome.length() == 0);
         CreateEstabelecimentoService serv = new CreateEstabelecimentoService(nome);
 
         try {
@@ -792,10 +799,12 @@ public class MedDBApp {
     }
 
     private static void createEspecialidade() {
-        System.out.println();
-        System.out.print("Introduza o nome da especialidade: ");
-        String nome = System.console().readLine();
-
+        String nome;
+        do {
+            System.out.println();
+            System.out.print("Introduza o nome da especialidade: ");
+            nome = System.console().readLine();
+        } while (nome.length() == 0);
         CreateEspecialidadeService serv = new CreateEspecialidadeService(nome);
 
         try {
