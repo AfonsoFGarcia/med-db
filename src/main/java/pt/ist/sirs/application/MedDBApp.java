@@ -298,7 +298,13 @@ public class MedDBApp {
 
     private static void reporAcessoARegisto() {
         System.out.print("Introduza o ID do registo: ");
-        Integer idRegisto = Integer.parseInt(System.console().readLine());
+        Integer idRegisto;
+        try {
+            idRegisto = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            idRegisto = -1;
+        }
+
         System.out.print("Introduza o username do medico: ");
         String userMedico = System.console().readLine();
 

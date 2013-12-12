@@ -63,6 +63,15 @@ public class MedDBRoot extends MedDBRoot_Base {
         return false;
     }
 
+    public boolean hasRegisto(Integer id) {
+        for (MedDBCommon object : this.getObject()) {
+            if (object instanceof Registo && ((Registo) object).getObjectId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasRegisto(Medico medico, Pessoa paciente, String conteudo, Especialidade especialidade,
             Estabelecimento estabelecimento) {
         for (MedDBCommon object : this.getObject()) {
