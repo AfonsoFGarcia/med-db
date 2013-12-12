@@ -5,6 +5,7 @@ import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Pessoa;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.exceptions.NotAdminException;
+import pt.ist.sirs.exceptions.OperacaoNaoPermitidaException;
 import pt.ist.sirs.login.LoggedPerson;
 
 /**
@@ -25,6 +26,10 @@ public class ToggleAdminService extends MedDBService {
     public void run() throws MedDBException {
         if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
+        }
+
+        if (LoggedPerson.getInstance().getLoggedPerson().getUsername().equals(username)) {
+            throw new OperacaoNaoPermitidaException("alterar proprio status de admin", username);
         }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
 

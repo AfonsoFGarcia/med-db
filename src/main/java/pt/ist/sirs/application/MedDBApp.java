@@ -20,13 +20,17 @@ import pt.ist.sirs.services.CreateMedicoService;
 import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.DevolverAcessoAMedicoService;
+import pt.ist.sirs.services.GetEspecialidadesService;
+import pt.ist.sirs.services.GetRegistosService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
 import pt.ist.sirs.services.RemoveMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
+import pt.ist.sirs.services.ToggleAdminService;
 import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
+import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
 
 /**
@@ -110,6 +114,7 @@ public class MedDBApp {
             System.out.println("11 - Registar Especialidade");
             System.out.println("12 - Adicionar politica de especialidade");
             System.out.println("13 - Remover politica de especialidade");
+            System.out.println("14 - Alterar estatuto de admin");
             System.out.println("99 - Ajuda");
 
             System.out.println(" 0 - Logout");
@@ -164,6 +169,9 @@ public class MedDBApp {
                 break;
             case 13:
                 removerAcessoDeEspecialidade();
+                break;
+            case 14:
+                toggleAdmin();
                 break;
             case 99:
                 printAjudaPaciente();
@@ -277,6 +285,19 @@ public class MedDBApp {
         try {
             tmuServ.execute();
             System.out.println(usernameMedico + " alterado para " + tmuServ.getEstadoActual());
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private static void toggleAdmin() {
+        System.out.print("Indique o username: ");
+        String usernameMedico = System.console().readLine();
+        ToggleAdminService serv = new ToggleAdminService(usernameMedico);
+        try {
+            serv.execute();
+            System.out.println(usernameMedico + " alterado para " + serv.getEstadoActual());
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
