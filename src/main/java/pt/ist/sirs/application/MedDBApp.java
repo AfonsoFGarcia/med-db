@@ -26,6 +26,7 @@ import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
 import pt.ist.sirs.services.RegistosByEspecialidadeService;
 import pt.ist.sirs.services.RegistosFromPacienteService;
+import pt.ist.sirs.services.RegistosPropriosService;
 import pt.ist.sirs.services.RemoveMedicoBanidoDeEspecialidadeService;
 import pt.ist.sirs.services.RemoverAcessoDeEspecialidadeService;
 import pt.ist.sirs.services.ToggleAdminService;
@@ -552,6 +553,28 @@ public class MedDBApp {
 
     }
 
+    private static void registosProprios() {
+        ArrayList<RegistoDTO> registos = null;
+        RegistosPropriosService rfpServ = new RegistosPropriosService();
+        try {
+            rfpServ.execute();
+            registos = rfpServ.getRegistos();
+
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+        if (registos != null && registos.size() > 0) {
+            for (RegistoDTO registo : registos) {
+                System.out.println(registo.getObjectID() + "- Especialidade: " + registo.getNomeEspecialidade() + " - Medico: "
+                        + registo.getNomeMedico());
+                System.out.println("Conteudo: " + registo.getConteudo());
+            }
+        } else {
+            System.out.println("Nao ha registos para mostrar");
+        }
+    }
+
     private static void registosPorEspecialidade() {
         GetEspecialidadesService gespServ = new GetEspecialidadesService();
         ArrayList<EspecialidadeDTO> especialidades = null;
@@ -725,7 +748,8 @@ public class MedDBApp {
 
     private static void printPacienteMenu() {
         System.out.println();
-        System.out.println("1 - Alterar permissao de registo");
+        System.out.println("1 - Ver os meus registos");
+        System.out.println("2 - Alterar permissao de registo");
         System.out.println("9 - Ajuda");
         System.out.println("0 - Sair");
         System.out.println();
@@ -745,6 +769,9 @@ public class MedDBApp {
             LoggedPerson.getInstance().removeLoggedPerson();
             return;
         case 1:
+            registosProprios();
+            break;
+        case 2:
             changePermReg();
             break;
         case 9:
