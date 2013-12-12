@@ -4,7 +4,9 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.Especialidade;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.domain.Medico;
+import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
+import pt.ist.sirs.exceptions.MedicoNaoExisteException;
 import pt.ist.sirs.exceptions.NotAdminException;
 import pt.ist.sirs.login.LoggedPerson;
 
@@ -24,11 +26,17 @@ public class AdicionarEspecialidadeAMedicoService extends MedDBService {
             throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
         }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-
-        Medico medico = (Medico) root.getPersonByUsername(this.usernameMedico);
-        Especialidade especialidade = (Especialidade) root.getObjectByObjectID(this.idEspecialidade);
-        medico.getEspecialidades().add(especialidade);
-
+        if (root.hasPerson(usernameMedico)) {
+            Medico medico = (Medico) root.getPersonByUsername(this.usernameMedico);
+            if (root.hasEspecialidade(idEspecialidade)) {
+                Especialidade especialidade = (Especialidade) root.getObjectByObjectID(this.idEspecialidade);
+                medico.getEspecialidades().add(especialidade);
+            } else {
+                throw new EspecialidadeNaoExisteException(idEspecialidade);
+            }
+        } else {
+            throw new MedicoNaoExisteException(usernameMedico);
+        }
     }
 
 }

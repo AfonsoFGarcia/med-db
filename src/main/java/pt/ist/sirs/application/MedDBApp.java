@@ -239,15 +239,38 @@ public class MedDBApp {
         System.out.print("Indique o username do Medico: ");
         String usernameMedico = System.console().readLine();
 
-        System.out.print("Indique o id da Especialidade: ");
-        Integer idEspecialidade = Integer.parseInt(System.console().readLine());
-
-        AdicionarEspecialidadeAMedicoService aemServ = new AdicionarEspecialidadeAMedicoService(usernameMedico, idEspecialidade);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            aemServ.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+            System.out.print("Indique o id da Especialidade: ");
+
+            Integer idEspecialidade;
+            try {
+                idEspecialidade = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idEspecialidade = -1;
+            }
+            AdicionarEspecialidadeAMedicoService aemServ =
+                    new AdicionarEspecialidadeAMedicoService(usernameMedico, idEspecialidade);
+            try {
+                aemServ.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
+        }
+
     }
 
     private static void negarAcessoAEspecialidade() {
