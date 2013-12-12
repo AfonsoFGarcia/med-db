@@ -182,30 +182,81 @@ public class MedDBApp {
     }
 
     private static void adicionarAcessoDeEspecialidade() {
-        System.out.print("Introduza o ID da especialidade acessora: ");
-        Integer idAcessora = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o ID da especialidade acedida: ");
-        Integer idAcedida = Integer.parseInt(System.console().readLine());
-
-        AdicionarAcessoDeEspecialidadeService serv = new AdicionarAcessoDeEspecialidadeService(idAcessora, idAcedida);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            serv.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+
+            System.out.print("Introduza o ID da especialidade acessora: ");
+            Integer idAcessora;
+            try {
+                idAcessora = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcessora = -1;
+            }
+            System.out.print("Introduza o ID da especialidade acedida: ");
+            Integer idAcedida;
+            try {
+                idAcedida = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcedida = -1;
+            }
+            AdicionarAcessoDeEspecialidadeService serv = new AdicionarAcessoDeEspecialidadeService(idAcessora, idAcedida);
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
         }
     }
 
     private static void removerAcessoDeEspecialidade() {
-        System.out.print("Introduza o ID da especialidade acessora: ");
-        Integer idAcessora = Integer.parseInt(System.console().readLine());
-        System.out.print("Introduza o ID da especialidade acedida: ");
-        Integer idAcedida = Integer.parseInt(System.console().readLine());
-
-        RemoverAcessoDeEspecialidadeService serv = new RemoverAcessoDeEspecialidadeService(idAcessora, idAcedida);
+        GetEspecialidadesService gespServ = new GetEspecialidadesService();
+        ArrayList<EspecialidadeDTO> especialidades = null;
         try {
-            serv.execute();
+            gespServ.execute();
+            especialidades = gespServ.getEspecialidades();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+        if (especialidades != null && especialidades.size() > 0) {
+
+            for (EspecialidadeDTO especialidade : especialidades) {
+                System.out.println("ID: " + especialidade.getObjectId() + " - " + especialidade.getNome());
+            }
+            System.out.print("Introduza o ID da especialidade acessora: ");
+            Integer idAcessora;
+            try {
+                idAcessora = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcessora = -1;
+            }
+            System.out.print("Introduza o ID da especialidade acedida: ");
+            Integer idAcedida;
+            try {
+                idAcedida = Integer.parseInt(System.console().readLine());
+            } catch (Exception e) {
+                idAcedida = -1;
+            }
+            RemoverAcessoDeEspecialidadeService serv = new RemoverAcessoDeEspecialidadeService(idAcessora, idAcedida);
+            try {
+                serv.execute();
+            } catch (MedDBException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Não existem especialidades registadas!");
         }
     }
 
