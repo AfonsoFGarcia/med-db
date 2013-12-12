@@ -1,15 +1,16 @@
 package pt.ist.sirs.exceptions;
 
 /**
+ * Excepcao <b>RegistoNaoExisteException</b>.<br>
+ * <br>
+ * Representa a nao existencia do registo no sistema.
  * 
  * @author José Góis (79261)
  */
 public class RegistoNaoExisteException extends MedDBException {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     public RegistoNaoExisteException(Integer id) {

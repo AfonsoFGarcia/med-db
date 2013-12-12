@@ -10,7 +10,7 @@ import pt.ist.sirs.services.dto.EspecialidadeDTO;
 
 /**
  * 
- * @author José Góis (79261)
+ * @author Afonso F. Garcia (70001), José Góis (79261)
  */
 public class GetEspecialidadesService extends MedDBService {
 
@@ -22,7 +22,6 @@ public class GetEspecialidadesService extends MedDBService {
 
     @Override
     public void run() throws MedDBException {
-
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
         for (Especialidade especialidadade : root.getEspecialidades()) {
             EspecialidadeDTO e = new EspecialidadeDTO(especialidadade.getObjectId(), especialidadade.getNome());

@@ -15,7 +15,7 @@ import pt.ist.sirs.domain.enums.ObjectType;
 public class Pessoa extends Pessoa_Base {
 
     /**
-     * Instantiates a new pessoa.
+     * Cria um objecto Pessoa
      */
     public Pessoa() {
         super();
