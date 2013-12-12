@@ -6,8 +6,6 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.sirs.domain.Especialidade;
 import pt.ist.sirs.domain.MedDBRoot;
 import pt.ist.sirs.exceptions.MedDBException;
-import pt.ist.sirs.exceptions.NotAdminException;
-import pt.ist.sirs.login.LoggedPerson;
 import pt.ist.sirs.services.dto.EspecialidadeDTO;
 
 /**
@@ -24,9 +22,6 @@ public class GetEspecialidadesService extends MedDBService {
 
     @Override
     public void run() throws MedDBException {
-        if (!LoggedPerson.getInstance().loggedPersonIsAdmin()) {
-            throw new NotAdminException(LoggedPerson.getInstance().getLoggedPerson().getNome());
-        }
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
         for (Especialidade especialidadade : root.getEspecialidades()) {
             EspecialidadeDTO e = new EspecialidadeDTO(especialidadade.getObjectId(), especialidadade.getNome());
