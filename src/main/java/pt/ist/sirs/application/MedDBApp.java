@@ -35,6 +35,20 @@ import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
 import pt.ist.sirs.utils.LoggedPerson;
+import edu.vt.middleware.password.AlphabeticalSequenceRule;
+import edu.vt.middleware.password.CharacterCharacteristicsRule;
+import edu.vt.middleware.password.DigitCharacterRule;
+import edu.vt.middleware.password.LengthRule;
+import edu.vt.middleware.password.NonAlphanumericCharacterRule;
+import edu.vt.middleware.password.NumericalSequenceRule;
+import edu.vt.middleware.password.Password;
+import edu.vt.middleware.password.PasswordData;
+import edu.vt.middleware.password.PasswordValidator;
+import edu.vt.middleware.password.QwertySequenceRule;
+import edu.vt.middleware.password.RepeatCharacterRegexRule;
+import edu.vt.middleware.password.Rule;
+import edu.vt.middleware.password.RuleResult;
+import edu.vt.middleware.password.WhitespaceRule;
 
 /**
  * Classe <b>MedDBApp</b>. <br>
@@ -601,6 +615,7 @@ public class MedDBApp {
     }
 
     private static void createPessoa() {
+
         String username;
         do {
             System.out.print("Introduza o username: ");
@@ -611,14 +626,20 @@ public class MedDBApp {
         while (true) {
             System.out.print("Introduza a password: ");
             password = new String(System.console().readPassword());
-            System.out.print("Confirme a password: ");
-            String passconf = new String(System.console().readPassword());
+            if (checkPasswordStenght(password)) {
+                System.out.print("Confirme a password: ");
+                String passconf = new String(System.console().readPassword());
 
-            if (password.equals(passconf)) {
-                break;
+                if (password.equals(passconf)) {
+                    break;
+                } else {
+                    System.out.println();
+                    System.out.println("Passwords nao iguais!");
+                }
             } else {
                 System.out.println();
-                System.out.println("Passwords nao iguais!");
+                System.out.println("A password não cumpre os requisitos!");
+                printRequisitosPassword();
             }
         }
 
@@ -646,15 +667,22 @@ public class MedDBApp {
         while (true) {
             System.out.print("Introduza a password: ");
             password = new String(System.console().readPassword());
-            System.out.print("Confirme a password: ");
-            String passconf = new String(System.console().readPassword());
+            if (checkPasswordStenght(password)) {
+                System.out.print("Confirme a password: ");
+                String passconf = new String(System.console().readPassword());
 
-            if (password.equals(passconf)) {
-                break;
+                if (password.equals(passconf)) {
+                    break;
+                } else {
+                    System.out.println();
+                    System.out.println("Passwords nao iguais!");
+                }
             } else {
                 System.out.println();
-                System.out.println("Passwords nao iguais!");
+                System.out.println("A password não cumpre os requisitos!");
+                printRequisitosPassword();
             }
+
         }
 
         System.out.print("Introduza o nome: ");
@@ -679,6 +707,50 @@ public class MedDBApp {
             serv.execute();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private static void printRequisitosPassword() {
+        System.out.println("A password deve conter:");
+        System.out.println(" - Entre 6 e 18 carateres");
+        System.out.println(" - Pelo menos 1 digito");
+        System.out.println(" - Pelo menos 1 carater nao alfanumerico");
+        System.out.println("A password não pode conter:");
+        System.out.println(" - Espacos em branco");
+        System.out.println(" - Sequencias de digitos ou alfanumericas");
+        System.out.println(" - 3 carateres seguidos repetidos");
+        System.out.println(" - sequencias do tipo \"qwerty\"");
+    }
+
+    private static boolean checkPasswordStenght(String password) {
+        LengthRule lenghtR = new LengthRule(6, 18);
+        WhitespaceRule whiteSpaceR = new WhitespaceRule();
+        CharacterCharacteristicsRule characterCR = new CharacterCharacteristicsRule();
+        characterCR.getRules().add(new DigitCharacterRule(1));
+        characterCR.getRules().add(new NonAlphanumericCharacterRule(1));
+        AlphabeticalSequenceRule alphabeticalSeqR = new AlphabeticalSequenceRule();
+        NumericalSequenceRule numericalSeqR = new NumericalSequenceRule();
+        QwertySequenceRule qweertySeqR = new QwertySequenceRule();
+        RepeatCharacterRegexRule repeatCharacterR = new RepeatCharacterRegexRule(3);
+
+        ArrayList<Rule> rules = new ArrayList<Rule>();
+        rules.add(lenghtR);
+        rules.add(whiteSpaceR);
+        rules.add(characterCR);
+        rules.add(alphabeticalSeqR);
+        rules.add(numericalSeqR);
+        rules.add(qweertySeqR);
+        rules.add(repeatCharacterR);
+
+        PasswordValidator passwValidator = new PasswordValidator(rules);
+        PasswordData passwordData = new PasswordData(new Password(password));
+        RuleResult result = passwValidator.validate(passwordData);
+
+        if (result.isValid()) {
+            return true;
+        } else {
+            return false;
+
         }
     }
 
