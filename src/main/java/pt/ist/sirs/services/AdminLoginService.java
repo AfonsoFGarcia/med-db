@@ -26,7 +26,7 @@ public class AdminLoginService extends MedDBService {
     @Override
     public void run() throws MedDBException {
         MedDBRoot root = (MedDBRoot) FenixFramework.getRoot();
-        Pessoa person = new Pessoa();
+        Pessoa person = null;
         try {
             person = root.getPersonByUsername(username);
         } catch (Exception e) {
