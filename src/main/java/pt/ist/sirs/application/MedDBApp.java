@@ -980,6 +980,7 @@ public class MedDBApp {
             serv.execute();
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
+            return;
         }
 
         RegistoDTO dto = serv.getRegisto();
