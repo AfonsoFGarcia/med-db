@@ -21,6 +21,7 @@ import pt.ist.sirs.services.CreatePessoaService;
 import pt.ist.sirs.services.CreateRegistoService;
 import pt.ist.sirs.services.DevolverAcessoAMedicoService;
 import pt.ist.sirs.services.GetEspecialidadesService;
+import pt.ist.sirs.services.GetRegistoService;
 import pt.ist.sirs.services.GetRegistosService;
 import pt.ist.sirs.services.LoginService;
 import pt.ist.sirs.services.ProibirAcessoAMedicoService;
@@ -89,6 +90,7 @@ public class MedDBApp {
         System.out.println("1 - Criar Novo Registo");
         System.out.println("2 - Consultar Registos por Paciente");
         System.out.println("3 - Consultar Registos por Especialidade");
+        System.out.println("4 - Ver registo");
         System.out.println("0 - Logout");
         System.out.println();
         System.out.print("Seleccione a opcao pretendida: ");
@@ -111,10 +113,12 @@ public class MedDBApp {
             break;
         case 2:
             registosPorPaciente();
-
             break;
         case 3:
             registosPorEspecialidade();
+            break;
+        case 4:
+            verRegisto();
             break;
         default:
             System.out.println("Opcao inválida!");
@@ -807,6 +811,7 @@ public class MedDBApp {
         System.out.println();
         System.out.println("1 - Ver os meus registos");
         System.out.println("2 - Alterar permissao de registo");
+        System.out.println("3 - Ver registo");
         System.out.println("9 - Ajuda");
         System.out.println("0 - Sair");
         System.out.println();
@@ -830,6 +835,9 @@ public class MedDBApp {
             break;
         case 2:
             changePermReg();
+            break;
+        case 3:
+            verRegisto();
             break;
         case 9:
             printAjudaPaciente();
@@ -953,5 +961,31 @@ public class MedDBApp {
         } catch (MedDBException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static void verRegisto() {
+        System.out.println();
+        System.out.print("Introduzir o ID do registo: ");
+        Integer registo;
+        try {
+            registo = Integer.parseInt(System.console().readLine());
+        } catch (Exception e) {
+            System.out.println("O valor introduzido nao e um inteiro!");
+            return;
+        }
+
+        GetRegistoService serv = new GetRegistoService(registo);
+
+        try {
+            serv.execute();
+        } catch (MedDBException e) {
+            System.out.println(e.getMessage());
+        }
+
+        RegistoDTO dto = serv.getRegisto();
+
+        System.out.println(dto.getObjectID() + "- Especialidade: " + dto.getNomeEspecialidade() + " - Medico: "
+                + dto.getNomeMedico());
+        System.out.println("Conteudo: " + dto.getConteudo());
     }
 }
