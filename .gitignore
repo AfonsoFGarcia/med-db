@@ -12,3 +12,6 @@ target
 
 # Bootstrap - Sensivel #
 src/main/java/pt/ist/sirs/Bootstrap.java
+
+# Keys #
+*key.scr
