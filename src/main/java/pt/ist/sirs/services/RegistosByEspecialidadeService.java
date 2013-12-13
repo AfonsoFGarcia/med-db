@@ -8,6 +8,7 @@ import pt.ist.sirs.domain.Registo;
 import pt.ist.sirs.exceptions.EspecialidadeNaoExisteException;
 import pt.ist.sirs.exceptions.MedDBException;
 import pt.ist.sirs.services.dto.RegistoDTO;
+import pt.ist.sirs.utils.Seguranca;
 
 /**
  * 
@@ -32,9 +33,9 @@ public class RegistosByEspecialidadeService extends MedDBService {
 
             for (Registo registo : registos) {
                 RegistoDTO registoDto =
-                        new RegistoDTO(registo.getConteudo(), registo.getPaciente().getNome(), registo.getMedico().getNome(),
-                                registo.getEspecialidade().getNome(), registo.getEstabelecimento().getNome(),
-                                registo.getObjectId());
+                        new RegistoDTO(Seguranca.decrypt(registo.getConteudo()), registo.getPaciente().getNome(), registo
+                                .getMedico().getNome(), registo.getEspecialidade().getNome(), registo.getEstabelecimento()
+                                .getNome(), registo.getObjectId());
                 this.registos.add(registoDto);
             }
         } else {

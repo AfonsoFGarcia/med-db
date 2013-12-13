@@ -2,6 +2,7 @@ package pt.ist.sirs.services;
 
 import java.security.SecureRandom;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -45,8 +46,8 @@ public class CreateMedicoService extends MedDBService {
             SecureRandom rand = new SecureRandom(novoMedico.getObjectId().toString().getBytes());
             byte[] saltBytes = new byte[32];
             rand.nextBytes(saltBytes);
-            String salt = new String(saltBytes);
-            String saltedPass = new String(DigestUtils.sha1(this.password + salt));
+            String salt = Base64.encodeBase64String(saltBytes);
+            String saltedPass = Base64.encodeBase64String(DigestUtils.sha1(this.password + salt));
 
             novoMedico.setPassword(saltedPass);
             novoMedico.setSalt(salt);

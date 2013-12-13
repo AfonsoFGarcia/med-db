@@ -35,6 +35,7 @@ import pt.ist.sirs.services.ToogleMedicoUrgenciaService;
 import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
 import pt.ist.sirs.utils.LoggedPerson;
+import pt.ist.sirs.utils.Seguranca;
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
 import edu.vt.middleware.password.DigitCharacterRule;
@@ -69,6 +70,13 @@ public class MedDBApp {
         Bootstrap.init();
 
         System.out.println("######################## MED_DB_APP BEGIN ###########################");
+
+        if (args.length < 1) {
+            System.out.println("Nao foi especificada a localizacao da chave secreta!");
+            System.exit(-1);
+        }
+
+        Seguranca.setFileName(args[0]);
 
         printMenu();
 

@@ -20,7 +20,7 @@ O Med-DB usa a Fénix Framework como abstracção entre o mundo relacional e o m
 Começo Rápido
 -----
 
-Ciclo rápido: `mvn clean package exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
+Ciclo rápido: `mvn clean package exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp" -Dexec.args="<pasta da chave>"`
 
 Compilar domínio: `mvn dml:generate-domain` (apenas é necessário depois de alterar a dml)
 
@@ -28,7 +28,7 @@ Compilar projecto: `mvn package`
 
 Preencher base de dados: `mvn exec:java -Dexec.mainClass="pt.ist.sirs.application.PopulateDB"`
 
-Correr projecto: `mvn exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp"`
+Correr projecto: `mvn exec:java -Dexec.mainClass="pt.ist.sirs.application.MedDBApp" -Dexec.args="<pasta da chave>"`
 
 Limpar base de dados: `mvn sql:execute`
 
