@@ -1,6 +1,7 @@
 package pt.ist.sirs.application;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 import pt.ist.sirs.Bootstrap;
@@ -37,8 +38,12 @@ import pt.ist.sirs.services.dto.EspecialidadeDTO;
 import pt.ist.sirs.services.dto.RegistoDTO;
 import pt.ist.sirs.utils.LoggedPerson;
 import pt.ist.sirs.utils.Seguranca;
+import edu.vt.middleware.dictionary.ArrayWordList;
+import edu.vt.middleware.dictionary.FileWordList;
+import edu.vt.middleware.dictionary.WordListDictionary;
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
+import edu.vt.middleware.password.DictionarySubstringRule;
 import edu.vt.middleware.password.DigitCharacterRule;
 import edu.vt.middleware.password.LengthRule;
 import edu.vt.middleware.password.NonAlphanumericCharacterRule;
@@ -745,6 +750,36 @@ public class MedDBApp {
         QwertySequenceRule qweertySeqR = new QwertySequenceRule();
         RepeatCharacterRegexRule repeatCharacterR = new RepeatCharacterRegexRule(3);
 
+        //Dicionario
+        String currDir = System.getProperty("user.dir") + "/Dictionaries";
+        ArrayWordList listaPalavras = null;
+        FileWordList f1, f2, f3 = null;
+        try {
+
+            f1 = new FileWordList(new RandomAccessFile(currDir + "/10001frequ", "r"));
+
+        } catch (Exception e) {
+            f1 = null;
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            f2 = new FileWordList(new RandomAccessFile(currDir + "/10196places", "r"));
+
+        } catch (Exception e) {
+            f2 = null;
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            f3 = new FileWordList(new RandomAccessFile(currDir + "/21986names", "r"));
+
+        } catch (Exception e) {
+            f3 = null;
+            System.out.println(e.getMessage());
+
+        }
+
         ArrayList<Rule> rules = new ArrayList<Rule>();
         rules.add(lenghtR);
         rules.add(whiteSpaceR);
@@ -753,6 +788,15 @@ public class MedDBApp {
         rules.add(numericalSeqR);
         rules.add(qweertySeqR);
         rules.add(repeatCharacterR);
+
+        if (f1 != null) {
+            System.out.println("DIC ACTIVO");
+            WordListDictionary dic = new WordListDictionary(f1);
+            DictionarySubstringRule dicR = new DictionarySubstringRule(dic);
+            dicR.setMatchBackwards(true);
+            rules.add(dicR);
+
+        }
 
         PasswordValidator passwValidator = new PasswordValidator(rules);
         PasswordData passwordData = new PasswordData(new Password(password));
