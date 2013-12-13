@@ -1,7 +1,8 @@
 package pt.ist.sirs.application;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import pt.ist.sirs.Bootstrap;
@@ -39,8 +40,8 @@ import pt.ist.sirs.services.dto.RegistoDTO;
 import pt.ist.sirs.utils.LoggedPerson;
 import pt.ist.sirs.utils.Seguranca;
 import edu.vt.middleware.dictionary.ArrayWordList;
-import edu.vt.middleware.dictionary.FileWordList;
 import edu.vt.middleware.dictionary.WordListDictionary;
+import edu.vt.middleware.dictionary.sort.QuickSort;
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
 import edu.vt.middleware.password.DictionarySubstringRule;
@@ -739,6 +740,32 @@ public class MedDBApp {
         System.out.println(" - sequencias do tipo \"qwerty\"");
     }
 
+    private static String[] getArrayFromFile(String filename) throws IOException {
+        ArrayList<String> returnV = new ArrayList<String>();
+
+        ClassLoader c = Thread.currentThread().getContextClassLoader();
+        if (c == null) {
+            c = Class.class.getClassLoader();
+        }
+        BufferedReader in = new BufferedReader(new InputStreamReader(c.getResourceAsStream(filename)));
+        String s = in.readLine();
+
+        while (s != null) {
+            if (s != null && !s.equals("")) {
+                returnV.add(s);
+            }
+            s = in.readLine();
+        }
+
+        String[] returnValue = new String[returnV.size()];
+
+        Integer i = 0;
+        for (String val : returnV) {
+            returnValue[i++] = val;
+        }
+        return returnValue;
+    }
+
     private static boolean checkPasswordStenght(String password) {
         LengthRule lenghtR = new LengthRule(6, 18);
         WhitespaceRule whiteSpaceR = new WhitespaceRule();
@@ -751,33 +778,26 @@ public class MedDBApp {
         RepeatCharacterRegexRule repeatCharacterR = new RepeatCharacterRegexRule(3);
 
         //Dicionario
-        String currDir = System.getProperty("user.dir") + "/Dictionaries";
-        ArrayWordList listaPalavras = null;
-        FileWordList f1, f2, f3 = null;
+        ArrayWordList f1, f2, f3;
+
         try {
-
-            f1 = new FileWordList(new RandomAccessFile(currDir + "/10001frequ", "r"));
-
+            f1 = new ArrayWordList(getArrayFromFile("dictionaries/10001frequ"), false, new QuickSort());
         } catch (Exception e) {
             f1 = null;
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         try {
-
-            f2 = new FileWordList(new RandomAccessFile(currDir + "/10196places", "r"));
-
+            f2 = new ArrayWordList(getArrayFromFile("dictionaries/10196places"), false, new QuickSort());
         } catch (Exception e) {
             f2 = null;
             System.out.println(e.getMessage());
         }
         try {
-
-            f3 = new FileWordList(new RandomAccessFile(currDir + "/21986names", "r"));
-
+            f3 = new ArrayWordList(getArrayFromFile("dictionaries/21986names"), false, new QuickSort());
         } catch (Exception e) {
             f3 = null;
             System.out.println(e.getMessage());
-
         }
 
         ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -790,12 +810,24 @@ public class MedDBApp {
         rules.add(repeatCharacterR);
 
         if (f1 != null) {
-            System.out.println("DIC ACTIVO");
             WordListDictionary dic = new WordListDictionary(f1);
             DictionarySubstringRule dicR = new DictionarySubstringRule(dic);
             dicR.setMatchBackwards(true);
             rules.add(dicR);
+        }
 
+        if (f2 != null) {
+            WordListDictionary dic = new WordListDictionary(f2);
+            DictionarySubstringRule dicR = new DictionarySubstringRule(dic);
+            dicR.setMatchBackwards(true);
+            rules.add(dicR);
+        }
+
+        if (f3 != null) {
+            WordListDictionary dic = new WordListDictionary(f3);
+            DictionarySubstringRule dicR = new DictionarySubstringRule(dic);
+            dicR.setMatchBackwards(true);
+            rules.add(dicR);
         }
 
         PasswordValidator passwValidator = new PasswordValidator(rules);
